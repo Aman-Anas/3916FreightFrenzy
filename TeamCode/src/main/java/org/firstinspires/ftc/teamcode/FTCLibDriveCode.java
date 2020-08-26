@@ -25,31 +25,38 @@ import java.util.List;
  * NOTICE: all dimensions are measured in meters (in case not specified). all measurements should be taken in meters or else calculations will absolutely mess up
  * NOTICE: all angles are measured in radians (in case not specified). please don't ever use degrees for angles
  *
- * @author will simpson of apex robotics 3916
+ * @author Will Simpson
+ * @author Gabrian Chua
+ * @author Aman Anas
+ *
  * @since December 2018
+ * @version August 2020
+ *
  */
-public class FTCLibRobot {
-    // defines what omni_drive types can be used
+public class FTCLibDriveCode {
+    // defines what drivetrain types can be used
     public enum DriveType {Tank, Omni, Mechanum}
 
     // stores what kind of DriveType is currently being used
+    public DriveType activeDriveType;
 
-    public DriveType currentDriveType;
-    //all electronic components for the robot
+    // cached HardwareMap in case needed for future
+    private HardwareMap hw;
 
 
+    /**
+     * Robot drivetrain dimensions and wheel Information
+     */
     // METERS; radius of the robot based on the circle traced by its wheels when turning
     private static final double BOT_RADIUS = .535; // not real, actual value tbd
     // METERS; radius of one of the robot's wheels
     private static final double WHEEL_RADIUS = .1; // not real, actual value tbd
-    // RADIANS; angle created by the grabber system completely raised against the arm and an abstract horizontal line level with servo
-    // NOTICE: this is specific to how the servos are mounted and may differ for other configurations
-    public static final double GRABBER_LIFT_UP = 1; // not real, actual value tbd
-    // RADIANS; angle created by grabber system equal to abstract horizontal line level with servo
-    public static final double GRABBER_LIFT_DOWN = 0; // not real, actual value tbd
+    // amount of motor ticks per revolution for current drivetrain motors.
+    private static final double TICKS_PER_REV = 1120;
 
-    // amount of motor ticks per revolution for 40:1 REV hex motor. other motors may have different TPR
-    private static final double TICKS_PER_REV = 2440;
+    /**
+     * Current drivetrain motors
+     */
 
 
 
@@ -65,7 +72,7 @@ public class FTCLibRobot {
      * @param hw - HardwareMap supplied from drive class
      */
     public void init(HardwareMap hw, DriveType driveType) {
-
+        activeDriveType = driveType;
     }
 
 
