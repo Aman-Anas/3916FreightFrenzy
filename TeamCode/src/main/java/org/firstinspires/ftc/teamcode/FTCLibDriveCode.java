@@ -9,6 +9,11 @@ Most classes will create a Robot object from this class for behavior.
 
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.drivebase.HDrive;
+import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotor;
 import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -35,15 +40,21 @@ import java.util.List;
  *
  */
 public class FTCLibDriveCode {
-    // defines what drivetrain types can be used
-    public enum DriveType {Tank, Omni, Mechanum}
+    // defines which drivetrain types can be used
+    public enum DriveType {Tank, Omni, Mecanum}
+
+    /**
+     * Tank drive: 2 motor drivetrain, very simple
+     * Omni drive: 4 motor holonomic drivetrain, can strafe. Wheels mounted at 45 degree angles facing outwards.
+     * Mecanum drive: 4 motor holonomic drivetrain, can strafe. Wheels mounted similarly to a tank drivetrain.
+     */
 
     // stores what kind of DriveType is currently being used
     public DriveType activeDriveType;
 
+
     // cached HardwareMap in case needed for future
     private HardwareMap hw;
-
 
     /**
      * Robot drivetrain dimensions and wheel Information
@@ -58,34 +69,71 @@ public class FTCLibDriveCode {
     /**
      * Current drivetrain motors
      */
+
+    //Mecanum Drivetrain
     private SimpleMotorEx mecanum_frontLeft;
     private SimpleMotorEx mecanum_frontRight;
-    private SimpleMotorEx mecanum_bottomLeft;
-    private SimpleMotorEx mecanum_bottomRight;
+    private SimpleMotorEx mecanum_backLeft;
+    private SimpleMotorEx mecanum_backRight;
+
+    public MecanumDrive mecanumDrivetrain;
 
 
+    //Holonomic Omni Drivetrain
+    private SimpleMotorEx omni_frontLeft;
+    private SimpleMotorEx omni_frontRight;
+    private SimpleMotorEx omni_backLeft;
+    private SimpleMotorEx omni_backRight;
+
+    public HDrive omniDrivetrain;
+
+
+    //Tank Drivetrain
+    private SimpleMotorEx tank_left;
+    private SimpleMotorEx tank_right;
+
+    public Tank_Drive tankDrivetrain;
 
     /**
-     * initialize robot components; will allow motors and servos to tighten and not freely move
-     *
-     * COMPONENT SPECS:
-     * motor power range - -1 to 1
-     * servo power range - 0 to 1
-     * servo angle range (default 180 deg/ pi rad) - 0 to 1
-     *
+     * initialize drivetrain
      * @param hw - HardwareMap supplied from drive class
      */
+
     public void init(HardwareMap hw, DriveType driveType) {
         activeDriveType = driveType;
+        switch (driveType){
+            case Mecanum:
+                //Assign motors using their hardware map names, each drivetype can have different names if needed
+                mecanum_frontLeft = new SimpleMotorEx("left front", hw, TICKS_PER_REV);
+                mecanum_frontRight = new SimpleMotorEx("right front", hw, TICKS_PER_REV);
+                mecanum_backLeft = new SimpleMotorEx("left back", hw, TICKS_PER_REV);
+                mecanum_backRight = new SimpleMotorEx("right back", hw, TICKS_PER_REV);
+                //Initialize the FTCLib drivebase
+                mecanumDrivetrain = new MecanumDrive(mecanum_frontLeft,mecanum_frontRight,
+                                               mecanum_backLeft, mecanum_backRight);
+            case Omni:
+                //Assign motors using their hardware map names, each drivetype can have different names if needed
+                omni_frontLeft = new SimpleMotorEx("left front", hw, TICKS_PER_REV);
+                omni_frontRight = new SimpleMotorEx("right front", hw, TICKS_PER_REV);
+                omni_backLeft = new SimpleMotorEx("left back", hw, TICKS_PER_REV);
+                omni_backRight = new SimpleMotorEx("right back", hw, TICKS_PER_REV);
+                //Initialize the FTCLib drivebase
+                omniDrivetrain = new HDrive(omni_frontLeft, omni_frontRight,
+                                    omni_backLeft, omni_backRight);
+
+            case Tank:
+                //Assign motors using their hardware map names, each drivetype can have different names if needed
+                tank_left = new SimpleMotorEx("left front", hw, TICKS_PER_REV);
+                tank_right = new SimpleMotorEx("right front", hw, TICKS_PER_REV);
+                //Initialize a simple custom drivebase
+                tankDrivetrain = new Tank_Drive(tank_left, tank_right);
+
+
+        }
+
+
+
     }
-
-
-    /**
-     * Move a mechanum style drive using the stick values
-     * @param stickX - stick value in the x direction
-     * @param stickY - stick value in the y direction
-     */
-
 
     /**
      * determines if any motors supplied are busy (only return false when !isBusy() for all)
@@ -93,10 +141,11 @@ public class FTCLibDriveCode {
      * @return - true if >= 1 are busy, false if 0 are busy
      */
 
-    private boolean motorsAreBusy(List<DcMotor> motors) {
+    /*
+    private boolean motorsAreBusy(List<? extends Motor> motors) {
         int finished = 0;
 
-        for (DcMotor m : motors) {
+        for (Motor m : motors) {
             if (!m.isBusy())
                 finished++;
 
@@ -106,30 +155,14 @@ public class FTCLibDriveCode {
 
         return true;
     }
+    */
 
     /**
      * start a thread to pause an action but not pausing all other concurrent actions
      */
-    private class Wait implements Runnable {
-        private String component;
-        private long duration;
 
-        Wait(String component, long duration) {
-            this.component = component;
-            this.duration = duration;
-        }
 
-        @Override
-        public void run() {
-            try {
-                // do something if we need to use this
 
-                Thread.sleep(duration);
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
-    }
 
 
 }
