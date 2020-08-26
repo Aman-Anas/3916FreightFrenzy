@@ -65,9 +65,12 @@ public class TeleOp_FTCLib extends LinearOpMode {
                 x = 0;
             }
 
+
+            /*
             if (Gamepad1.getButton(GamepadKeys.Button.X)){
                 bot.moveArmUpALittleBit();
             }
+            */
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
