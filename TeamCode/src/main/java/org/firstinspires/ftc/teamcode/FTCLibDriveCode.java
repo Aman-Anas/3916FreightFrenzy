@@ -54,7 +54,7 @@ public class FTCLibDriveCode {
 
 
     // cached HardwareMap in case needed for future
-    private HardwareMap hw;
+    public HardwareMap hw;
 
     /**
      * Robot drivetrain dimensions and wheel Information
@@ -101,6 +101,8 @@ public class FTCLibDriveCode {
 
     public void init(HardwareMap hw, DriveType driveType) {
         activeDriveType = driveType;
+        this.hw = hw;
+
         switch (driveType){
             case Mecanum:
                 //Assign motors using their hardware map names, each drivetype can have different names if needed

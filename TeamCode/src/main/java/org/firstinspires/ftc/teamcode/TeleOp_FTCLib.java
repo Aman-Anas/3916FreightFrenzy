@@ -6,11 +6,13 @@ Uses a Mecanum-style drivetrain for movement.
 
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp(name="FTCLib TeleOp", group="Apex Robotics 3916")
 //@Disabled
@@ -62,6 +64,11 @@ public class TeleOp_FTCLib extends LinearOpMode {
             } else {
                 x = 0;
             }
+
+            if (Gamepad1.getButton(GamepadKeys.Button.X)){
+                bot.moveArmUpALittleBit();
+            }
+
 
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x,y,z);
