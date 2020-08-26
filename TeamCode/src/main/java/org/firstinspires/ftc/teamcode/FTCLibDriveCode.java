@@ -9,6 +9,7 @@ Most classes will create a Robot object from this class for behavior.
 
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -51,13 +52,16 @@ public class FTCLibDriveCode {
     private static final double BOT_RADIUS = .535; // not real, actual value tbd
     // METERS; radius of one of the robot's wheels
     private static final double WHEEL_RADIUS = .1; // not real, actual value tbd
-    // amount of motor ticks per revolution for current drivetrain motors.
+    // Number of motor ticks per revolution for current drivetrain motors.
     private static final double TICKS_PER_REV = 1120;
 
     /**
      * Current drivetrain motors
      */
-
+    private SimpleMotorEx mecanum_frontLeft;
+    private SimpleMotorEx mecanum_frontRight;
+    private SimpleMotorEx mecanum_bottomLeft;
+    private SimpleMotorEx mecanum_bottomRight;
 
 
 
