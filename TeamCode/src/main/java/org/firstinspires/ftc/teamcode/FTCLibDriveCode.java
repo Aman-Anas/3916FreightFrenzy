@@ -133,38 +133,5 @@ public class FTCLibDriveCode {
 
         }
 
-
-
     }
-
-    /**
-     * determines if any motors supplied are busy (only return false when !isBusy() for all)
-     * @param motors - list of motors to test
-     * @return - true if >= 1 are busy, false if 0 are busy
-     */
-
-    /*
-    private boolean motorsAreBusy(List<? extends Motor> motors) {
-        int finished = 0;
-
-        for (Motor m : motors) {
-            if (!m.isBusy())
-                finished++;
-
-            if (finished == motors.size())
-                return false;
-        }
-
-        return true;
-    }
-    */
-
-    /**
-     * start a thread to pause an action but not pausing all other concurrent actions
-     */
-
-
-
-
-
 }
