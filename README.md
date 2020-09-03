@@ -1,3 +1,7 @@
+# What is this?
+
+This is the Junkyard branch. It is an archived version of our code containing all the Drive modes in case we need them later. This branch is deprecated and should not be pushed to.
+
 # FTC Team 3916 - Apex Robotics
 This is our repo for the 2020-2021 game year - Ultimate Goal
 
