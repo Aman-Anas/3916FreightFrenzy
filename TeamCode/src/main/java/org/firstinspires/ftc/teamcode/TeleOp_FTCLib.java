@@ -38,16 +38,12 @@ public class TeleOp_FTCLib extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
-
-            if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1) {
+            if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
-                z = -1 * Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-
-            } else if (Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1 ) {
+                z = -Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+            } else if (Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > STICK_DEAD_ZONE) {
                 //update z with right trigger
                 z = Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-
             } else {
                 z = 0;
             }
@@ -65,13 +61,11 @@ public class TeleOp_FTCLib extends LinearOpMode {
                 x = 0;
             }
 
-
             /*
             if (Gamepad1.getButton(GamepadKeys.Button.X)){
                 bot.moveArmUpALittleBit();
             }
             */
-
 
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x,y,z);
@@ -79,8 +73,6 @@ public class TeleOp_FTCLib extends LinearOpMode {
             //Add a little telemetry
             telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             telemetry.update();
-
-
         }
     }
 }

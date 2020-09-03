@@ -129,9 +129,6 @@ public class FTCLibDriveCode {
                 tank_right = new SimpleMotorEx("right front", hw, TICKS_PER_REV);
                 //Initialize a simple custom drivebase
                 tankDrivetrain = new Tank_Drive(tank_left, tank_right);
-
-
         }
-
     }
 }
