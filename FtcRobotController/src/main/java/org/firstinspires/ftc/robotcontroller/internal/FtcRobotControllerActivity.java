@@ -480,7 +480,7 @@ public class FtcRobotControllerActivity extends Activity
   }
 
   protected void logPackageVersions() {
-    RobotLog.logBuildConfig(BuildConfig.class);
+    RobotLog.logBuildConfig(com.qualcomm.ftcrobotcontroller.BuildConfig.class);
     RobotLog.logBuildConfig(com.qualcomm.robotcore.BuildConfig.class);
     RobotLog.logBuildConfig(com.qualcomm.hardware.BuildConfig.class);
     RobotLog.logBuildConfig(com.qualcomm.ftccommon.BuildConfig.class);
@@ -505,7 +505,7 @@ public class FtcRobotControllerActivity extends Activity
     //
     // Control hubs are always running the access point model.  Everything else, for the time
     // being always runs the wifi direct model.
-    if (Device.isRevControlHub()) {
+    if (Device.isRevControlHub() == true) {
       networkType = NetworkType.RCWIRELESSAP;
     } else {
       networkType = NetworkType.fromString(preferencesHelper.readString(context.getString(R.string.pref_pairing_kind), NetworkType.globalDefaultAsString()));
