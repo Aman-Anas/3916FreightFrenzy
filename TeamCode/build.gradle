@@ -13,7 +13,13 @@
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
+
+repositories {
+    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+}
+
 dependencies {
+    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
     implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
     implementation 'org.openftc:easyopencv:1.4.1'
 
