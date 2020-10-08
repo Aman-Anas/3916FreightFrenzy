@@ -70,9 +70,9 @@ public class DriveConstants {
      * Resulting in 49.47380110873206 in/s.
      * This is only 80% of the theoretical maximum velocity of the bot, following the recommendation above.
      * This is capped at 80% because there are a number of variables that will prevent your bot from actually
-     * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiences, etc.
+     * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
      * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
-     * max velocity. The theoreticaly maximum velocity is 61.84225138591508 in/s.
+     * max velocity. The theoretically maximum velocity is 61.84225138591508 in/s.
      * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
      * affected if it is aiming for a velocity not actually possible.
      *
