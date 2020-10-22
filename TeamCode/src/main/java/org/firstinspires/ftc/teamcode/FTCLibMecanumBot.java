@@ -38,9 +38,6 @@ import java.util.List;
  *
  */
 public class FTCLibMecanumBot {
-    // defines which drivetrain types can be used
-    public enum DriveType {Tank, Omni, Mecanum}
-
     /*
         This class only uses Mecanum Drive. See Junkyard branch for archived code for other drive types.
      */
@@ -76,6 +73,7 @@ public class FTCLibMecanumBot {
      */
 
     public void init(HardwareMap hw) {
+        //cache the HardwareMap
         this.hw = hw;
 
         //Assign motors using their hardware map names, each drivetype can have different names if needed
