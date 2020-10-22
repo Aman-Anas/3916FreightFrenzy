@@ -9,6 +9,8 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.hardware.GyroEx;
+import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -33,6 +35,10 @@ public class TeleOp_FTCLib extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
+
+        RevIMU imuAngle = new RevIMU(hardwareMap, "imu");
+        imuAngle.init();
+        imuAngle.reset();
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -62,16 +68,17 @@ public class TeleOp_FTCLib extends LinearOpMode {
             }
 
             /*
+            example code
             if (Gamepad1.getButton(GamepadKeys.Button.X)){
                 bot.moveArmUpALittleBit();
             }
             */
 
             //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x,y,z);
+            bot.mecanumDrivetrain.driveFieldCentric(x, y, z, imuAngle.getHeading());
 
             //Add a little telemetry
-            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z + "angle:" + imuAngle.getHeading());
             telemetry.update();
         }
     }
