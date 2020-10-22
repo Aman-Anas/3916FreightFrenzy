@@ -23,8 +23,8 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 537.6;
-    public static final double MAX_RPM = 312.5;
+    public static final double TICKS_PER_REV = 1120;
+    public static final double MAX_RPM = 150;
 
     /*
      * Set the first flag appropriately. If using the built-in motor velocity PID, update
@@ -42,7 +42,7 @@ public class DriveConstants {
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
     public static double WHEEL_RADIUS = 1.9685; // in
-    public static double GEAR_RATIO = 0.05; // output (wheel) speed / input (motor) speed
+    public static double GEAR_RATIO = 2; // output (wheel) speed / input (motor) speed
     public static double TRACK_WIDTH = 16; // in
 
     /*
@@ -67,25 +67,25 @@ public class DriveConstants {
      * Note from LearnRoadRunner.com:
      * The velocity and acceleration constraints were calculated based on the following equation:
      * ((MAX_RPM / 60) * GEAR_RATIO * WHEEL_RADIUS * 2 * Math.PI) * 0.8
-     * Resulting in 45.18607167930861 in/s.
+     * Resulting in 49.47380110873206 in/s.
      * This is only 80% of the theoretical maximum velocity of the bot, following the recommendation above.
      * This is capped at 80% because there are a number of variables that will prevent your bot from actually
-     * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiences, etc.
-     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically 
-     * max velocity. The theoreticaly maximum velocity is 56.482589599135764 in/s.
+     * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
+     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
+     * max velocity. The theoretically maximum velocity is 61.84225138591508 in/s.
      * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
      * affected if it is aiming for a velocity not actually possible.
-     * 
+     *
      * The maximum acceleration is somewhat arbitrary and it is recommended that you tweak this yourself based on
      * actual testing. Just set it at a reasonable value and keep increasing until your path following starts
-     * to degrade. As of now, it simply mirrors the velocity results in 45.18607167930861 in/s/s
+     * to degrade. As of now, it simply mirrors the velocity results in 49.47380110873206 in/s/s
      *
      * Maximum Angular Velocity is calculated as: maximum velocity / (trackWidth / 2) * (180 / Math.PI)
-     
+
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            45.18607167930861, 45.18607167930861, 0.0,
-            Math.toRadians(323.62139999999994), Math.toRadians(323.62139999999994), 0.0
+            49.47380110873206, 49.47380110873206, 0.0,
+            Math.toRadians(354.33), Math.toRadians(354.33), 0.0
     );
 
 
