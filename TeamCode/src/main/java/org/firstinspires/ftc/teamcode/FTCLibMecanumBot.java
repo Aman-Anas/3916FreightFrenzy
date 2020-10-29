@@ -12,8 +12,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.drivebase.HDrive;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotor;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -22,6 +21,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_RPM;
 
 /**
  * -- TEAM 3916 --
@@ -60,10 +61,10 @@ public class FTCLibMecanumBot {
      */
 
     //Mecanum Drivetrain
-    private SimpleMotorEx motor_frontLeft;
-    private SimpleMotorEx motor_frontRight;
-    private SimpleMotorEx motor_backLeft;
-    private SimpleMotorEx motor_backRight;
+    private MotorEx motor_frontLeft;
+    private MotorEx motor_frontRight;
+    private MotorEx motor_backLeft;
+    private MotorEx motor_backRight;
 
     public MecanumDrive mecanumDrivetrain;
 
@@ -77,10 +78,10 @@ public class FTCLibMecanumBot {
         this.hw = hw;
 
         //Assign motors using their hardware map names, each drivetype can have different names if needed
-        motor_frontLeft = new SimpleMotorEx("left front", hw, TICKS_PER_REV);
-        motor_frontRight = new SimpleMotorEx("right front", hw, TICKS_PER_REV);
-        motor_backLeft = new SimpleMotorEx("left back", hw, TICKS_PER_REV);
-        motor_backRight = new SimpleMotorEx("right back", hw, TICKS_PER_REV);
+        motor_frontLeft = new MotorEx(hw, "left front", TICKS_PER_REV, MAX_RPM);
+        motor_frontRight = new MotorEx(hw, "right front", TICKS_PER_REV, MAX_RPM);
+        motor_backLeft = new MotorEx(hw, "left back", TICKS_PER_REV, MAX_RPM);
+        motor_backRight = new MotorEx(hw, "right back", TICKS_PER_REV, MAX_RPM);
         //Initialize the FTCLib drivebase
         mecanumDrivetrain = new MecanumDrive(motor_frontLeft,motor_frontRight,
                 motor_backLeft, motor_backRight);

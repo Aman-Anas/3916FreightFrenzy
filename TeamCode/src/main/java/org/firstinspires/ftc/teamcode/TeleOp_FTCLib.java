@@ -66,6 +66,12 @@ public class TeleOp_FTCLib extends LinearOpMode {
             } else {
                 x = 0;
             }
+            if(Math.abs(Gamepad2.getRightY())>STICK_DEAD_ZONE) {
+                bot.SetFlywheel(Gamepad2.getRightY());
+            } else {
+                bot.SetFlywheel(0);
+            }
+
 
             /*
             example code
