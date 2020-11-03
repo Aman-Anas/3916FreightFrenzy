@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 
 public class FTCLibRobotFunctions extends FTCLibMecanumBot {
@@ -14,5 +15,18 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     MotorEx flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
     public void setFlywheel(double speed) {
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
+    }
+    SimpleServo leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
+    SimpleServo rightPincer = new SimpleServo(hw, "rightPincer", 180, 0);
+    boolean pincerOpen = false;
+    public void togglePincers () {
+        if (pincerOpen == true) {
+            leftPincer.turnToAngle(0);
+            rightPincer.turnToAngle(0);
+        } else {
+            leftPincer.turnToAngle(180);
+            rightPincer.turnToAngle(180);
+        }
+        pincerOpen = !pincerOpen;
     }
 }
