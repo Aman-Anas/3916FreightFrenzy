@@ -40,6 +40,7 @@ public class TeleOp_FTCLib extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            //gamepad 1 controls
             if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
                 z = -Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
@@ -62,6 +63,8 @@ public class TeleOp_FTCLib extends LinearOpMode {
             } else {
                 x = 0;
             }
+
+            //gamepad 2 controls
             if(Math.abs(Gamepad2.getRightY())>STICK_DEAD_ZONE) {
                 bot.setFlywheel(Gamepad2.getRightY());
             } else {
