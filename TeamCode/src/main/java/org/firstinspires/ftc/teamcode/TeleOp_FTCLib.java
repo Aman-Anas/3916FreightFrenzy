@@ -70,7 +70,9 @@ public class TeleOp_FTCLib extends LinearOpMode {
             } else {
                 bot.setFlywheel(0);
             }
-
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                bot.togglePincers();
+            }
 
             /*
             example code
