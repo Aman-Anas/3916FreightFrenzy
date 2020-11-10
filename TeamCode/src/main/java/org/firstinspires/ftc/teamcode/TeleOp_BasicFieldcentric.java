@@ -12,9 +12,9 @@ import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Fieldcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="Basic Fieldcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_FTCLib extends LinearOpMode {
+public class TeleOp_BasicFieldcentric extends LinearOpMode {
 
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
@@ -62,16 +62,6 @@ public class TeleOp_FTCLib extends LinearOpMode {
                 x = Gamepad1.getLeftX();
             } else {
                 x = 0;
-            }
-
-            //gamepad 2 controls
-            if(Math.abs(Gamepad2.getRightY())>STICK_DEAD_ZONE) {
-                bot.setFlywheel(Gamepad2.getRightY());
-            } else {
-                bot.setFlywheel(0);
-            }
-            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
-                bot.togglePincers();
             }
 
             /*

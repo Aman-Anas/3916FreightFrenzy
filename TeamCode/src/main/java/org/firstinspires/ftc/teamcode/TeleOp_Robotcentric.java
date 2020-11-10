@@ -12,9 +12,9 @@ import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Fieldcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_FTCLib extends LinearOpMode {
+public class TeleOp_Robotcentric extends LinearOpMode {
 
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
@@ -31,10 +31,6 @@ public class TeleOp_FTCLib extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
-
-        RevIMU imuAngle = new RevIMU(hardwareMap, "imu");
-        imuAngle.init();
-        imuAngle.reset();
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -82,10 +78,10 @@ public class TeleOp_FTCLib extends LinearOpMode {
             */
 
             //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveFieldCentric(x, y, z, imuAngle.getHeading());
+            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
             //Add a little telemetry
-            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z + "angle:" + imuAngle.getHeading());
+            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             telemetry.update();
         }
     }
