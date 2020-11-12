@@ -20,6 +20,15 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 @Config
 public class DriveConstants {
 
+    // controller constants
+    public static final double OLD_MAX = 1.0;
+    public static final double OLD_MIN = 0.1;
+    public static final double NEW_MAX = 1.0;
+    public static final double NEW_MIN = 0;
+
+    public static final double OLD_RANGE = OLD_MAX - OLD_MIN;
+    public static final double NEW_RANGE = NEW_MAX - NEW_MIN;
+
     /*
      * These are motor constants that should be listed online for your motors.
      */

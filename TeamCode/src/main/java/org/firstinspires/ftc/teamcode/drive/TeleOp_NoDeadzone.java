@@ -12,15 +12,9 @@ import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_MIN;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_RANGE;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
-
-
-@TeleOp(name="Robotcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="No Deadzone Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_Robotcentric extends LinearOpMode {
+public class TeleOp_NoDeadzone extends LinearOpMode {
 
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
@@ -43,35 +37,25 @@ public class TeleOp_Robotcentric extends LinearOpMode {
 
         while (opModeIsActive()) {
             //gamepad 1 controls
-            double leftTrigger = Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-            double rightTrigger = Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-            double leftY = Gamepad1.getLeftY();
-            double leftX = Gamepad1.getLeftX();
-
-            if (leftTrigger > STICK_DEAD_ZONE) {
+            if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
-                z = -((leftTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (rightTrigger > STICK_DEAD_ZONE) {
+                z = -Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+            } else if (Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > STICK_DEAD_ZONE) {
                 //update z with right trigger
-                z = ((rightTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                z = Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
             } else {
                 z = 0;
             }
 
-            if (leftY > STICK_DEAD_ZONE) {
+            if (Math.abs(Gamepad1.getLeftY()) > STICK_DEAD_ZONE) {
                 //update y with current y position
-                y = ((leftY - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftY < -STICK_DEAD_ZONE) {
-                y = -((Math.abs(leftY) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                y = Gamepad1.getLeftY();
             } else {
                 y = 0;
             }
-
-            if (leftX > STICK_DEAD_ZONE) {
+            if (Math.abs(Gamepad1.getLeftX()) > STICK_DEAD_ZONE) {
                 //update x with current x position
-                x = ((leftX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftX < STICK_DEAD_ZONE) {
-                x = -((Math.abs(leftX) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                x = Gamepad1.getLeftX();
             } else {
                 x = 0;
             }
