@@ -22,7 +22,7 @@ public class TeleOp_FTCLib extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Initialize code and variables
 
-        bot.init(hardwareMap);
+        bot.initBot(hardwareMap);
 
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
