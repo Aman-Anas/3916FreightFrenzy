@@ -81,12 +81,13 @@ public class TeleOp_FTCLib extends LinearOpMode {
 
             //gamepad 2 controls
             if(Math.abs(Gamepad2.getRightY())>STICK_DEAD_ZONE) {
-                bot.setFlywheel(Gamepad2.getRightY());
+                //Commented out as flywheel has not been installed on robot yet
+                //bot.setFlywheel(Gamepad2.getRightY());
             } else {
-                bot.setFlywheel(0);
+                //bot.setFlywheel(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
-                bot.togglePincers();
+                //bot.togglePincers();
             }
 
             /*

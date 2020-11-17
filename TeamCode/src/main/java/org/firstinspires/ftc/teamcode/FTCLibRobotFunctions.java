@@ -14,7 +14,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     private final static int RPM = 6000;
     private final static double MAX_TICKS_PER_SECOND = (double)CPR * (double)RPM / 60;
     private boolean pincerOpen = false;
-
+    /*
     //motors and servos
     private MotorEx flywheelMotor;
     private SimpleServo leftPincer;
@@ -24,6 +24,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void setFlywheel(double speed) {
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
     }
+
     public void togglePincers() {
         if (pincerOpen) {
             leftPincer.turnToAngle(0);
@@ -34,17 +35,23 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         }
         pincerOpen = !pincerOpen;
     }
+
+
     //reset our pincer servos
+
     public void resetPincers() {
         leftPincer.turnToAngle(0);
         rightPincer.turnToAngle(0);
     }
+    */
     //reset bot
     public void initBot(HardwareMap hw) {
         super.init(hw);
-        flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
-        leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
-        rightPincer = new SimpleServo(hw, "rightPincer", 180, 0);
-        resetPincers();
+
+        //Commented out as these motors have not been installed on robot yet
+        //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
+        //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
+        //rightPincer = new SimpleServo(hw, "rightPincer", 180, 0);
+        //resetPincers();
     }
 }

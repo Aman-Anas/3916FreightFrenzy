@@ -19,6 +19,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,10 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_RPM;
  * @author Aman Anas
  *
  * @since December 2018
- * @version August 2020
+ * @version November 2020
  *
  */
+
 public class FTCLibMecanumBot {
     /*
         This class only uses Mecanum Drive. See Junkyard branch for archived code for other drive types.
@@ -54,7 +57,7 @@ public class FTCLibMecanumBot {
     // METERS; radius of one of the robot's wheels
     private static final double WHEEL_RADIUS = .1; // not real, actual value tbd
     // Number of motor ticks per revolution for current drivetrain motors.
-    private static final double TICKS_PER_REV = 1120;
+    private static final double TICKS_PER_REV = DriveConstants.TICKS_PER_REV;
 
     /**
      * Current drivetrain motors

@@ -12,6 +12,7 @@ import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 @TeleOp(name="No Deadzone Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_NoDeadzone extends LinearOpMode {
@@ -37,28 +38,14 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
 
         while (opModeIsActive()) {
             //gamepad 1 controls
-            if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > STICK_DEAD_ZONE) {
-                //update z with left trigger, negative since left
-                z = -Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-            } else if (Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > STICK_DEAD_ZONE) {
-                //update z with right trigger
-                z = Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-            } else {
-                z = 0;
-            }
 
-            if (Math.abs(Gamepad1.getLeftY()) > STICK_DEAD_ZONE) {
-                //update y with current y position
-                y = Gamepad1.getLeftY();
-            } else {
-                y = 0;
-            }
-            if (Math.abs(Gamepad1.getLeftX()) > STICK_DEAD_ZONE) {
-                //update x with current x position
-                x = Gamepad1.getLeftX();
-            } else {
-                x = 0;
-            }
+            //update z with current z position from right stick
+            z = Gamepad1.getRightX();
+            //update y with current y position from left stick
+            y = Gamepad1.getLeftY();
+            //update x with current x position from left stick
+            x = Gamepad1.getLeftX();
+
 
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
