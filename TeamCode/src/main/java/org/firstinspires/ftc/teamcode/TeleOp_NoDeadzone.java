@@ -36,6 +36,11 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
         //Wait for the driver to hit Start
         waitForStart();
 
+        boolean motorsCameUpNull = false;
+        if (bot.motor_frontLeft == null || bot.motor_frontRight == null || bot.motor_backLeft == null || bot.motor_backRight == null) {
+            motorsCameUpNull = true;
+        }
+
         while (opModeIsActive()) {
             //gamepad 1 controls
 
@@ -50,8 +55,12 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
-            //Add a little telemetry
-            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            if (motorsCameUpNull) {
+                telemetry.addData("Status", "AAAAAAAAAAA MOTORS BAD");
+            } else {
+                //Add a little telemetry
+                telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            }
             telemetry.update();
         }
     }

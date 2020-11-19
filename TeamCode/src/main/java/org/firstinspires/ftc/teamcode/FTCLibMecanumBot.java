@@ -64,6 +64,10 @@ public class FTCLibMecanumBot {
      */
 
     //Mecanum Drivetrain
+    public MotorEx motor_frontLeft;
+    public MotorEx motor_frontRight;
+    public MotorEx motor_backLeft;
+    public MotorEx motor_backRight;
     public MecanumDrive mecanumDrivetrain;
 
     /**
@@ -76,10 +80,11 @@ public class FTCLibMecanumBot {
         this.hw = hw;
 
         //Assign motors using their hardware map names, each drivetype can have different names if needed
-        MotorEx motor_frontLeft = new MotorEx(hw, "left front", TICKS_PER_REV, MAX_RPM);
-        MotorEx motor_frontRight = new MotorEx(hw, "right front", TICKS_PER_REV, MAX_RPM);
-        MotorEx motor_backLeft = new MotorEx(hw, "left back", TICKS_PER_REV, MAX_RPM);
-        MotorEx motor_backRight = new MotorEx(hw, "right back", TICKS_PER_REV, MAX_RPM);
+        motor_frontLeft = new MotorEx(hw, "left front", TICKS_PER_REV, MAX_RPM);
+        motor_frontRight = new MotorEx(hw, "right front", TICKS_PER_REV, MAX_RPM);
+        motor_backLeft = new MotorEx(hw, "left back", TICKS_PER_REV, MAX_RPM);
+        motor_backRight = new MotorEx(hw, "right back", TICKS_PER_REV, MAX_RPM);
+
         //Initialize the FTCLib drivebase
         mecanumDrivetrain = new MecanumDrive(motor_frontLeft, motor_frontRight,
                 motor_backLeft, motor_backRight);
