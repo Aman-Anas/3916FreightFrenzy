@@ -51,13 +51,11 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
             //update x with current x position from left stick
             x = Gamepad1.getLeftX();
 
-
-            //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
-
             if (motorsCameUpNull) {
                 telemetry.addData("Status", "AAAAAAAAAAA MOTORS BAD");
             } else {
+                //Send the X, Y, and rotation (Z) to the mecanum method
+                bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
                 //Add a little telemetry
                 telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             }
