@@ -19,7 +19,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
 
 @TeleOp(name="Fieldcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_FTCLib extends LinearOpMode {
+public class TeleOp_Fieldcentric extends LinearOpMode {
 
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
