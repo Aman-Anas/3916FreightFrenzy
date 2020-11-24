@@ -73,7 +73,7 @@ public class TeleOp_BasicFieldcentric extends LinearOpMode {
             if (leftX > STICK_DEAD_ZONE) {
                 //update x with current x position
                 x = ((leftX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftX < STICK_DEAD_ZONE) {
+            } else if (leftX < -STICK_DEAD_ZONE) {
                 x = -((Math.abs(leftX) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
                 x = 0;
