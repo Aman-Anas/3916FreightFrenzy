@@ -58,6 +58,11 @@ public class TeleOp_FallbackDeadzone extends LinearOpMode {
                 bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
                 //Add a little telemetry
                 telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+                telemetry.addData("Encoders Status", "FR:" +
+                        bot.motor_frontRight.encoder.getRawVelocity() + " BR:" +
+                        bot.motor_backRight.encoder.getRawVelocity() + " FL:" +
+                        bot.motor_frontLeft.encoder.getRawVelocity() + " BL:" +
+                        bot.motor_backLeft.encoder.getRawVelocity());
             }
             telemetry.update();
         }
