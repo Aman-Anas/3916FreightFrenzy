@@ -28,7 +28,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
     private ElapsedTime timer;
     private double maxVelocity = 0.0;
-
+    //57.05869443241105
     private VoltageSensor batteryVoltageSensor;
 
     @Override
