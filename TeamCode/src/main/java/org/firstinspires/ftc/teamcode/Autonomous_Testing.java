@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Autonomous(name="Auto Testing", group="Apex Robotics 3916")
 public class Autonomous_Testing extends LinearOpMode {
-    //Add automous stuff here.
+    //Add autonomous stuff here.
     //https://www.learnroadrunner.com/
     @Override
     public void runOpMode() throws InterruptedException {
