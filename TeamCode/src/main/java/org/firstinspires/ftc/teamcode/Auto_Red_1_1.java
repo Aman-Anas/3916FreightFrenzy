@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name="Auto Red 1 2", group="Apex Robotics 3916")
+@Autonomous(name="Auto Red 1 1", group="Apex Robotics 3916")
 public class Auto_Red_1_1 extends LinearOpMode {
     //Add automous stuff here.
     //https://www.learnroadrunner.com/
@@ -21,7 +21,7 @@ public class Auto_Red_1_1 extends LinearOpMode {
         if (isStopRequested()) return;
 
         Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                .splineToSplineHeading(new Pose2d(-62.01, -50.01), Math.toRadians(10))
+                .splineToSplineHeading(new Pose2d(-62.01, -50.01), Math.toRadians(-10))
                 .splineToSplineHeading(new Pose2d(50, -60), 0)
                 .splineToSplineHeading(new Pose2d(10, -60), 0)
                 .build();

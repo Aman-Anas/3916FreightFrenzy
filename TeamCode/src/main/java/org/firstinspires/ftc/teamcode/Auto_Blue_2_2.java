@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name="Auto Red 1 3", group="Apex Robotics 3916")
-public class Auto_Red_1_3 extends LinearOpMode {
+@Autonomous(name="Auto Blue 2 2", group="Apex Robotics 3916")
+public class Auto_Blue_2_2 extends LinearOpMode {
     //Add automous stuff here.
     //https://www.learnroadrunner.com/
     @Override
@@ -20,11 +20,10 @@ public class Auto_Red_1_3 extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                .splineToSplineHeading(new Pose2d(-62.01, -50.01), Math.toRadians(-10))
-                .splineToSplineHeading(new Pose2d(-5, -60), 0)
-                .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
-                .splineToLinearHeading(new Pose2d(10, -20), Math.toRadians(-20))
+        Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, 25, 0), 0)
+                .splineToSplineHeading(new Pose2d(-62.01, 25.01), Math.toRadians(-10))
+                .splineToSplineHeading(new Pose2d(30, 37), 0)
+                .splineToConstantHeading(new Vector2d(8, 37), 0)
                 .build();
 
         drive.followTrajectory(traj);
