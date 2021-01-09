@@ -76,6 +76,28 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 x = 0;
             }
 
+            if (Gamepad1.getButton(GamepadKeys.Button.X)){
+                bot.runWobbleMotor(0.5);
+            }
+            else if (Gamepad1.getButton(GamepadKeys.Button.A)){
+                bot.runWobbleMotor(-0.5);
+            }
+            else
+             {
+                bot.runWobbleMotor(0);
+            }
+
+            if (Gamepad1.getButton(GamepadKeys.Button.Y)){
+                bot.runWobbleServo(0.5);
+            }
+            else if (Gamepad1.getButton(GamepadKeys.Button.B)){
+                bot.runWobbleServo(-0.5);
+            }
+            else
+            {
+                bot.runWobbleServo(0);
+            }
+
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
