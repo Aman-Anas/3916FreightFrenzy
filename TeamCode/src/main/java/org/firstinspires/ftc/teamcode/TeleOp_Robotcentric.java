@@ -6,10 +6,13 @@ Uses a Mecanum-style drivetrain for movement.
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_RANGE;
@@ -36,6 +39,9 @@ public class TeleOp_Robotcentric extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
+
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -97,6 +103,8 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             //Add a little telemetry
             telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             telemetry.update();
+            dashboardTelemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            dashboardTelemetry.update();
         }
     }
 }

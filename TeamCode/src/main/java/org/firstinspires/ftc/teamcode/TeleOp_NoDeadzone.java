@@ -6,9 +6,12 @@ Uses a Mecanum-style drivetrain for movement.
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @TeleOp(name="No Deadzone Robotcentric TeleOp", group="Apex Robotics 3916")
@@ -30,6 +33,9 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
+
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -56,6 +62,8 @@ public class TeleOp_NoDeadzone extends LinearOpMode {
                 bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
                 //Add a little telemetry
                 telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+                dashboardTelemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+                dashboardTelemetry.update();
             }
             telemetry.update();
         }
