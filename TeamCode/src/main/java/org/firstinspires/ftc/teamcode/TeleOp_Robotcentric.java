@@ -20,7 +20,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
 
 
-@TeleOp(name="Robotcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="MAIN Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_Robotcentric extends LinearOpMode {
 
@@ -82,9 +82,9 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             }
 
             if (Gamepad1.getButton(GamepadKeys.Button.X)){
-                bot.runWobbleMotor(0.5);
+                bot.runWobbleMotor(1);
             } else if (Gamepad1.getButton(GamepadKeys.Button.A)){
-                bot.runWobbleMotor(-0.5);
+                bot.runWobbleMotor(-1);
             } else {
                 bot.runWobbleMotor(0);
             }

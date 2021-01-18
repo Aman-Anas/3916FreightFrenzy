@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -25,7 +26,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
     }
     public void runWobbleMotor(double speed) {
-        wobbleArmMotor.set(speed);
+        double currentPos = wobbleArmMotor.encoder.getPosition();
+        double targetPos = currentPos + speed;
+        wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
         wobbleArmServo.rotateDegrees(speed*1.5);
@@ -53,12 +56,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //reset bot
     public void initBot(HardwareMap hw) {
         super.init(hw);
+        wobbleArmMotor = new MotorEx(hw, "wobbleMotor");
+        wobbleArmMotor.setRunMode(Motor.RunMode.PositionControl);
+        wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
 
         //Commented out as these motors have not been installed on robot yet
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
-        wobbleArmMotor = new MotorEx(hw, "wobbleMotor", 1267, 800);
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
-        wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
         //rightPincer = new SimpleServo(hw, "rightPincer", 180, 0);
         //resetPincers();
     }
