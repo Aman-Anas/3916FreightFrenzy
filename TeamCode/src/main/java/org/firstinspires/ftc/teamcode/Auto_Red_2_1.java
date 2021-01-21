@@ -19,9 +19,9 @@ public class Auto_Red_2_1 extends LinearOpMode {
         if (isStopRequested()) return;
 
         Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, -25, 0), 0)
-                .splineToSplineHeading(new Pose2d(-62.01, -25.01), Math.toRadians(-40))
-                .splineToSplineHeading(new Pose2d(50, -60), 0)
-                .splineToSplineHeading(new Pose2d(10, -60), 0)
+                .splineToSplineHeading(new Pose2d(-62.01, -25.01), Math.toRadians(-40.0))
+                .splineToSplineHeading(new Pose2d(50.0, -60.0), 0.0)
+                .splineToSplineHeading(new Pose2d(10.0, -60.0), 0.0)
                 .build();
 
         drive.followTrajectory(traj);
