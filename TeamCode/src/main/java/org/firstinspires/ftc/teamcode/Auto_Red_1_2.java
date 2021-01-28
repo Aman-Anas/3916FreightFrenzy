@@ -14,6 +14,7 @@ public class Auto_Red_1_2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        //wait for start so the robot doesn't just vibe before the driver hits start
         waitForStart();
 
         if (isStopRequested()) return;
