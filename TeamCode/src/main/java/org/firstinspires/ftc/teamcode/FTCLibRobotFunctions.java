@@ -36,7 +36,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.turnToAngle(speed*180);
+        wobbleArmServo.rotateDegrees(speed*1.5);
     }
     public void runTransferServo(double speed){
         transferServo.set(speed);

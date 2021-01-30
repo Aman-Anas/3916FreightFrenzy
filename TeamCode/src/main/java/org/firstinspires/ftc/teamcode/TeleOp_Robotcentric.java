@@ -84,7 +84,17 @@ public class TeleOp_Robotcentric extends LinearOpMode {
 
             bot.runWobbleMotor(Gamepad2.getRightY());
 
-            bot.runWobbleServo(Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+            if (Gamepad2.getButton(GamepadKeys.Button.Y)){
+                bot.runWobbleServo(0.5);
+            }
+            else if (Gamepad2.getButton(GamepadKeys.Button.B)){
+                bot.runWobbleServo(-0.5);
+            }
+            else
+            {
+                bot.runWobbleServo(0);
+            }
+
             bot.runTransferServo(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
             
             //Always set flywheel speed to Gamepad 2's left stick
