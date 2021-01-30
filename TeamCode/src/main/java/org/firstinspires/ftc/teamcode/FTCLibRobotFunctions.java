@@ -23,15 +23,18 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
+        flywheelMotor.setVeloCoefficients(16,0,0);
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
+
     }
     public void runWobbleMotor(double speed) {
+        flywheelMotor.setVeloCoefficients(16,0,0);
         double currentPos = wobbleArmMotor.encoder.getPosition();
         double targetPos = currentPos + speed;
         wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.setPosition(wobbleArmServo.getPosition()+speed);
+        wobbleArmServo.setPosition(speed);
     }
     /*
     public void togglePincers() {

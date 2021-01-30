@@ -82,25 +82,19 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             }
 
 
-            if (Gamepad2.getButton(GamepadKeys.Button.X)){
-                bot.runWobbleMotor(1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.A)){
-                bot.runWobbleMotor(-1);
-            } else {
-                bot.runWobbleMotor(0);
-            }
+            bot.runWobbleMotor(Gamepad2.getRightY());
 
             if (Gamepad2.getButton(GamepadKeys.Button.Y)){
-                bot.runWobbleServo(0.5);
+                bot.runWobbleServo(1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.B)){
-                bot.runWobbleServo(-0.5);
+                bot.runWobbleServo(-1);
             } else {
                 bot.runWobbleServo(0);
             }
 
 
             //Always set flywheel speed to Gamepad 2's left stick
-            bot.setFlywheelMotor(Gamepad2.getLeftX());
+            bot.setFlywheelMotor(Gamepad2.getLeftY());
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
