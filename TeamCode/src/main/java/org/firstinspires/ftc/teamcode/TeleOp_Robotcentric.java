@@ -85,9 +85,9 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             bot.runWobbleMotor(Gamepad2.getRightY());
 
             if (Gamepad2.getButton(GamepadKeys.Button.Y)){
-                bot.runWobbleServo(1);
+                bot.runWobbleServo(0);
             } else if (Gamepad2.getButton(GamepadKeys.Button.B)){
-                bot.runWobbleServo(-1);
+                bot.runWobbleServo(180);
             } else {
                 bot.runWobbleServo(0);
             }
