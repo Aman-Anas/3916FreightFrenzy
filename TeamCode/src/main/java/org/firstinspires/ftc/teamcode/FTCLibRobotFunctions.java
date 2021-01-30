@@ -69,6 +69,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
         transferServo = new CRServo(hw, "transferServo");
+        transferServo.setRunMode(Motor.RunMode.RawPower);
+        //transferServo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         //Commented out as these motors have not been installed on robot yet
         flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
