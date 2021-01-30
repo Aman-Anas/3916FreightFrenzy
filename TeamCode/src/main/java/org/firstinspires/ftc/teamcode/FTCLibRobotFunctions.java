@@ -20,6 +20,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx flywheelMotor;
     public MotorEx wobbleArmMotor;
     public SimpleServo wobbleArmServo;
+    public SimpleServo transferServo;
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
@@ -30,11 +31,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void runWobbleMotor(double speed) {
         //wobbleArmMotor.setVeloCoefficients(16,0,0);
 
-        wobbleArmMotor.set(speed);
+        wobbleArmMotor.set(speed*0.7);
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.turnToAngle(speed);
+        wobbleArmServo.turnToAngle(speed*180);
+    }
+    public void runTransferServo(double speed){
+        transferServo.rotate(speed);
     }
     /*
     public void togglePincers() {
@@ -63,6 +67,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
+        transferServo = new SimpleServo(hw, "transferServo", 180, 0);
         //Commented out as these motors have not been installed on robot yet
         flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
