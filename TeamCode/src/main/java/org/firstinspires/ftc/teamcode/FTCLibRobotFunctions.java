@@ -30,8 +30,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void runWobbleMotor(double speed) {
         flywheelMotor.setVeloCoefficients(16,0,0);
         double currentPos = wobbleArmMotor.encoder.getPosition();
-        double targetPos = currentPos + speed;
-        wobbleArmMotor.setTargetPosition((int)targetPos);
+        double targetPos = currentPos + speed*100;
+        if (wobbleArmMotor.encoder.getPosition() > targetPos){
+            wobbleArmMotor.set(-0.5);
+        }
+        else if (wobbleArmMotor.encoder.getPosition() < targetPos){
+            wobbleArmMotor.set(0.5);
+        }
     }
     public void runWobbleServo(double speed) {
         wobbleArmServo.setPosition(speed);
