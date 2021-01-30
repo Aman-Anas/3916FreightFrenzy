@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,7 +21,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx flywheelMotor;
     public MotorEx wobbleArmMotor;
     public SimpleServo wobbleArmServo;
-    public SimpleServo transferServo;
+    public CRServo transferServo;
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
@@ -38,7 +39,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmServo.turnToAngle(speed*180);
     }
     public void runTransferServo(double speed){
-        transferServo.rotate(speed);
+        transferServo.set(speed);
     }
     /*
     public void togglePincers() {
@@ -67,7 +68,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
-        transferServo = new SimpleServo(hw, "transferServo");
+        transferServo = new CRServo(hw, "transferServo");
         //Commented out as these motors have not been installed on robot yet
         flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
