@@ -28,18 +28,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     }
     public void runWobbleMotor(double speed) {
-        wobbleArmMotor.setVeloCoefficients(16,0,0);
-        wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        if (speed>0){
-            wobbleArmMotor.set(-0.5);
-        }
-        else if (speed<0){
-            wobbleArmMotor.set(0.5);
-        }
+        //wobbleArmMotor.setVeloCoefficients(16,0,0);
+
+        wobbleArmMotor.set(speed);
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.setPosition(speed);
+        wobbleArmServo.turnToAngle(speed);
     }
     /*
     public void togglePincers() {
@@ -65,7 +60,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
         wobbleArmMotor = new MotorEx(hw, "wobbleMotor");
-        wobbleArmMotor.setRunMode(Motor.RunMode.PositionControl);
+        wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
+        wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
         //Commented out as these motors have not been installed on robot yet
         flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
