@@ -81,27 +81,39 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 x = 0;
             }
 
-            if (Gamepad1.getButton(GamepadKeys.Button.X)){
+
+            if (Gamepad2.getButton(GamepadKeys.Button.X)){
                 bot.runWobbleMotor(1);
-            } else if (Gamepad1.getButton(GamepadKeys.Button.A)){
+            } else if (Gamepad2.getButton(GamepadKeys.Button.A)){
                 bot.runWobbleMotor(-1);
             } else {
                 bot.runWobbleMotor(0);
             }
 
-            if (Gamepad1.getButton(GamepadKeys.Button.Y)){
+            if (Gamepad2.getButton(GamepadKeys.Button.Y)){
                 bot.runWobbleServo(0.5);
-            } else if (Gamepad1.getButton(GamepadKeys.Button.B)){
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)){
                 bot.runWobbleServo(-0.5);
             } else {
                 bot.runWobbleServo(0);
             }
 
+
+            //Always set flywheel speed to Gamepad 2's left stick
+            bot.setFlywheelMotor(Gamepad2.getLeftX());
+
+
             //Send the X, Y, and rotation (Z) to the mecanum method
             bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
+
+            double wobblePos = bot.wobbleArmMotor.encoder.getPosition();
+            double wobbleServoPos = bot.wobbleArmServo.getPosition();
+            double flywheelSpeed = bot.flywheelMotor.getVelocity();
+
             //Add a little telemetry
-            telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            //telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            telemetry.addData("Positions: ", "Wobble Motor: "+wobblePos+"Wobble Servo: "+wobbleServoPos+"Flywheel Speed: "+flywheelSpeed);
             telemetry.update();
             dashboardTelemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             dashboardTelemetry.update();
