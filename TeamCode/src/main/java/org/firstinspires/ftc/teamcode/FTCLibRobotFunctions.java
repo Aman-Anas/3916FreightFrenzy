@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class FTCLibRobotFunctions extends FTCLibMecanumBot {
@@ -14,7 +15,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
      */
     private final static int CPR = 28;
     private final static int RPM = 6000;
-    private final static double MAX_TICKS_PER_SECOND = (double)CPR * (double)RPM / 60;
+    public final static double MAX_TICKS_PER_SECOND = (double)CPR * (double)RPM / 60;
     private boolean pincerOpen = false;
 
     //motors and servos
@@ -25,21 +26,21 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
-        flywheelMotor.setVeloCoefficients(16,0,0);
+        flywheelMotor.setVeloCoefficients(TeleOpConfig.FLYWHEEL_KP,TeleOpConfig.FLYWHEEL_KI, TeleOpConfig.FLYWHEEL_KD);
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
-
     }
+
     public void runWobbleMotor(double speed) {
         //wobbleArmMotor.setVeloCoefficients(16,0,0);
 
-        wobbleArmMotor.set(speed*0.7);
+        wobbleArmMotor.set(speed*(TeleOpConfig.WOBBLE_ARM_MULTIPLIER));
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.rotateDegrees(speed*1.5);
+        wobbleArmServo.rotateDegrees(speed*(TeleOpConfig.WOBBLE_SERVO_MULTIPLIER));
     }
     public void runTransferServo(double speed){
-        transferServo.set(speed);
+        transferServo.set(speed*(TeleOpConfig.TRANSFER_SERVO_MULTIPLIER));
     }
     /*
     public void togglePincers() {
@@ -70,9 +71,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
         transferServo = new CRServo(hw, "transferServo");
         transferServo.setRunMode(Motor.RunMode.RawPower);
+        flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
+
         //transferServo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         //Commented out as these motors have not been installed on robot yet
-        flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
+
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);
         //rightPincer = new SimpleServo(hw, "rightPincer", 180, 0);
         //resetPincers();

@@ -7,6 +7,7 @@ Uses a Mecanum-style drivetrain for movement.
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -29,13 +30,14 @@ public class TeleOp_Robotcentric extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Initialize code and variables
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         bot.initBot(hardwareMap);
 
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
 
-        final double STICK_DEAD_ZONE = 0.1;
+        final double STICK_DEAD_ZONE = TeleOpConfig.STICK_DEAD_ZONE;
         double x = 0;
         double y = 0;
         double z = 0;
@@ -98,7 +100,8 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             bot.runTransferServo(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
             
             //Always set flywheel speed to Gamepad 2's left stick
-            bot.setFlywheelMotor(Gamepad2.getLeftY());
+            double flywheelJoy = Gamepad2.getLeftY();
+            bot.setFlywheelMotor(flywheelJoy);
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
@@ -111,10 +114,13 @@ public class TeleOp_Robotcentric extends LinearOpMode {
 
             //Add a little telemetry
             //telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
-            telemetry.addData("Positions: ", "Wobble Motor: "+wobblePos+"Wobble Servo: "+wobbleServoPos+"Flywheel Speed: "+flywheelSpeed);
+            telemetry.addData("Wobble Motor", wobblePos);
+            telemetry.addData("Wobble Servo", wobbleServoPos);
+            telemetry.addData("Flywheel Speed", flywheelSpeed);
+            telemetry.addData("Flywheel Target",(flywheelJoy*FTCLibRobotFunctions.MAX_TICKS_PER_SECOND));
             telemetry.update();
-            dashboardTelemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
-            dashboardTelemetry.update();
+            //dashboardTelemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
+            //dashboardTelemetry.update();
         }
     }
 }
