@@ -37,7 +37,7 @@ public class TeleOp_Robotcentric extends LinearOpMode {
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
 
-        final double STICK_DEAD_ZONE = TeleOpConfig.STICK_DEAD_ZONE;
+        //double STICK_DEAD_ZONE = TeleOpConfig.STICK_DEAD_ZONE;
         double x = 0;
         double y = 0;
         double z = 0;
@@ -55,29 +55,29 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             double leftY = Gamepad1.getLeftY();
             double leftX = Gamepad1.getLeftX();
 
-            if (leftTrigger > STICK_DEAD_ZONE) {
+            if (leftTrigger > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
                 z = -((leftTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (rightTrigger > STICK_DEAD_ZONE) {
+            } else if (rightTrigger > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update z with right trigger
                 z = ((rightTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
                 z = 0;
             }
 
-            if (leftY > STICK_DEAD_ZONE) {
+            if (leftY > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update y with current y position
                 y = ((leftY - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftY < -STICK_DEAD_ZONE) {
+            } else if (leftY < -TeleOpConfig.STICK_DEAD_ZONE) {
                 y = -((Math.abs(leftY) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
                 y = 0;
             }
 
-            if (leftX > STICK_DEAD_ZONE) {
+            if (leftX > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update x with current x position
                 x = ((leftX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftX < -STICK_DEAD_ZONE) {
+            } else if (leftX < -TeleOpConfig.STICK_DEAD_ZONE) {
                 x = -((Math.abs(leftX) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
                 x = 0;
@@ -98,6 +98,8 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             }
 
             bot.runTransferServo(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+
+            bot.runIntakeMotor(Gamepad1.getRightY());
             
             //Always set flywheel speed to Gamepad 2's left stick
             double flywheelJoy = Gamepad2.getLeftY();

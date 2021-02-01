@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -16,7 +17,9 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 /*
  * Copyright (c) 2020 OpenFTC Team
@@ -40,40 +43,46 @@ import org.openftc.easyopencv.OpenCvPipeline;
  */
 
 
+
+
+
 @TeleOp
 public class Auto_Red_Camera extends LinearOpMode
 {
-    OpenCvCamera phoneCam;
+
     SkystoneDeterminationPipeline pipeline;
 
     @Override
     public void runOpMode()
     {
-        //TODO: name webcam "webcam" in robot configuration
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
 
-        // old stinky
-        //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        WebcamName webcamName = hardwareMap.get(WebcamName.class,"webcam");
+        OpenCvCamera extCam = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+
+        /*phoneCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);*/
 
         pipeline = new SkystoneDeterminationPipeline();
-        phoneCam.setPipeline(pipeline);
+        extCam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
         // out when the RC activity is in portrait. We do our actual image processing assuming
-        // landscape orientation, though.
-        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        // landscape orientation, though. !Edit by Aman: Since we're using an external webcam, this is not applicable
+        //extCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        extCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                extCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                FtcDashboard.getInstance().startCameraStream(extCam,30);
             }
         });
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
         waitForStart();
 
         while (opModeIsActive())
@@ -133,7 +142,7 @@ public class Auto_Red_Camera extends LinearOpMode
     public static class SkystoneDeterminationPipeline extends OpenCvPipeline
     {
         /*
-         * An enum to define the skystone position
+         * An enum to define the ring position
          */
         public enum RingPosition
         {

@@ -13,5 +13,6 @@ public class TeleOpConfig {
     public static double WOBBLE_ARM_MULTIPLIER = 0.7;
     public static double WOBBLE_SERVO_MULTIPLIER = 1.5;
     public static double TRANSFER_SERVO_MULTIPLIER = 1;
+    public static double INTAKE_MULTIPLIER = 1.0;
 
 }

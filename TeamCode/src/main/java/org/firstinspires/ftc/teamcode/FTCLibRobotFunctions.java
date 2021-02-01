@@ -8,6 +8,21 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * -- TEAM 3916 --
+ * Robot functions using FTCLib library. Used to program season-specific robot functionality.
+ * NOTICE: all dimensions are measured in meters (in case not specified). all measurements should be taken in meters or else calculations will absolutely mess up
+ *
+ * NOTICE: all angles are measured in radians (in case not specified). please don't ever use degrees for angles
+ *
+ * @author Aman Anas
+ * @author Gabrian Chua
+ *
+ * @since November 2020
+ * @version January 2021
+ *
+ */
+
 public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     /*
        Put extra game-specific robot functionality here,
@@ -23,6 +38,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx wobbleArmMotor;
     public SimpleServo wobbleArmServo;
     public CRServo transferServo;
+    public MotorEx intakeMotor;
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
@@ -41,6 +57,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
     public void runTransferServo(double speed){
         transferServo.set(speed*(TeleOpConfig.TRANSFER_SERVO_MULTIPLIER));
+    }
+
+    public void runIntakeMotor(double speed){
+        intakeMotor.set(speed*(TeleOpConfig.INTAKE_MULTIPLIER));
     }
     /*
     public void togglePincers() {
@@ -68,12 +88,22 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         wobbleArmMotor = new MotorEx(hw, "wobbleMotor");
         wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        //Constructor needs degrees for angle
         wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
+
         transferServo = new CRServo(hw, "transferServo");
         transferServo.setRunMode(Motor.RunMode.RawPower);
+        //transferServo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE); NOT APPLICABLE since servo and not motor
+
         flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
 
-        //transferServo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        intakeMotor = new MotorEx(hw,"intake");
+        intakeMotor.setRunMode(Motor.RunMode.RawPower);
+        intakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+
+
         //Commented out as these motors have not been installed on robot yet
 
         //leftPincer = new SimpleServo(hw, "leftPincer", 180, 0);

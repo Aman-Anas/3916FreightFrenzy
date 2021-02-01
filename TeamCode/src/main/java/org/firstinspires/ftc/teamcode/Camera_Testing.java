@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -77,6 +81,7 @@ public class Camera_Testing extends LinearOpMode
                 FtcDashboard.getInstance().startCameraStream(extCam,30);
             }
         });
+        //SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();
 
@@ -86,6 +91,49 @@ public class Camera_Testing extends LinearOpMode
             telemetry.addData("Position", pipeline.position);
             telemetry.update();
 
+            /*Trajectory traj;
+            switch
+            (
+                    pipeline.position
+            )
+            //cursd
+            {
+                case FOUR:
+
+                    if (isStopRequested()) return;
+
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-62.01, -50.01,0.0), Math.toRadians(-10.0))
+                            .splineToSplineHeading(new Pose2d(50.0, -60.0), 0.0)
+                            .splineToSplineHeading(new Pose2d(10.0, -60.0), 0.0)
+                            .build();
+
+                    drive.followTrajectory(traj);
+                case ONE:
+
+                    if (isStopRequested()) return;
+
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-62.01, -50.01), Math.toRadians(-10))
+                            .splineToSplineHeading(new Pose2d(30, -37), 0)
+                            .splineToLinearHeading(new Pose2d(8, -37), 0)
+                            .build();
+
+                    drive.followTrajectory(traj);
+                case NONE:
+                    if (isStopRequested()) return;
+
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-62.01, -50.01), Math.toRadians(-10))
+                            .splineToSplineHeading(new Pose2d(-5, -60), 0)
+                            .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
+                            .splineToLinearHeading(new Pose2d(10, -20), Math.toRadians(-20))
+                            .build();
+
+                    drive.followTrajectory(traj);
+
+
+            }*/
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
         }
