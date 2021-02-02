@@ -97,7 +97,16 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runWobbleServo(0);
             }
 
-            bot.runTransferServo(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)){
+                bot.runTransferServo(1);
+            }
+            else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)){
+                bot.runTransferServo(-1);
+            }
+            else{
+                bot.runWobbleServo(0);
+            }
+
 
             bot.runIntakeMotor(Gamepad1.getRightY());
             
