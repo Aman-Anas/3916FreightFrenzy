@@ -10,10 +10,18 @@ public class TeleOpConfig {
     public static double FLYWHEEL_KP = 25;
     public static double FLYWHEEL_KI = 0;
     public static double FLYWHEEL_KD = 10;
-    public static double WOBBLE_ARM_MULTIPLIER = 0.7;
-    public static double WOBBLE_SERVO_MULTIPLIER = 3;
+    public static double WOBBLE_ARM_MULTIPLIER = 0.5;
+    public static double WOBBLE_SERVO_MULTIPLIER = 3.0;
     public static double TRANSFER_SERVO_MULTIPLIER = 0.9;
     public static double INTAKE_MULTIPLIER = 1.0;
+
+    public static double ANCHOR_POINT_X = 181;
+    public static double ANCHOR_POINT_Y = 98;
+    public static double REGION_WIDTH_X = 35;
+    public static double REGION_HEIGHT_Y = 25;
+
+    public static double FOUR_RING_THRESHOLD_CONFIG = 150;
+    public static double ONE_RING_THRESHOLD_CONFIG = 135;
 
 
 }
