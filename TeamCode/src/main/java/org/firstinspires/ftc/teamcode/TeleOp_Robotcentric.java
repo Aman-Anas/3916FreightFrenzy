@@ -104,7 +104,7 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runTransferServo(-1);
             }
             else{
-                bot.runWobbleServo(0);
+                bot.runTransferServo(0);
             }
 
 
