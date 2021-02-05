@@ -39,6 +39,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public SimpleServo wobbleArmServo;
     public SimpleServo transferServo;
     public MotorEx intakeMotor;
+    public CRServo intakeServo;
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
@@ -61,6 +62,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     public void runIntakeMotor(double speed){
         intakeMotor.set(speed*(TeleOpConfig.INTAKE_MULTIPLIER));
+    }
+
+    public void runIntakeServo(double speed) {
+        intakeServo.set(speed);
     }
     /*
     public void togglePincers() {
@@ -101,6 +106,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeMotor = new MotorEx(hw,"intake");
         intakeMotor.setRunMode(Motor.RunMode.RawPower);
         intakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        intakeServo = new CRServo(hw,"intakeServo");
 
 
 

@@ -107,6 +107,14 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runTransferServo(0);
             }
 
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+                bot.runIntakeServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                bot.runIntakeServo(-0.5);
+            } else {
+                bot.runIntakeServo(0);
+            }
+
 
             bot.runIntakeMotor(Gamepad1.getRightY());
             
