@@ -102,16 +102,15 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runWobbleServo(0);
             }
 
-            /*
-            if (Gamepad1.getButton(GamepadKeys.Button.DPAD_DOWN)){
+            if (Gamepad2.getButton(GamepadKeys.Button.A)){
                 bot.runTransferServo(1);
             }
-            else if (Gamepad1.getButton(GamepadKeys.Button.DPAD_UP)){
+            else if (Gamepad2.getButton(GamepadKeys.Button.Y)){
                 bot.runTransferServo(-1);
             }
             else{
                 bot.runTransferServo(0);
-            }*/
+            }
 
             if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
                 bot.runIntakeServo(0.5);
