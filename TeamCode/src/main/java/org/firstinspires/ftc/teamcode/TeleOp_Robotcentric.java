@@ -49,18 +49,19 @@ public class TeleOp_Robotcentric extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            //gamepad 1 controls
-            double leftTrigger = Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-            double rightTrigger = Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            /*
+                GAMEPAD 1
+             */
             double leftY = Gamepad1.getLeftY();
             double leftX = Gamepad1.getLeftX();
+            double rightX = Gamepad1.getRightX();
 
-            if (leftTrigger > TeleOpConfig.STICK_DEAD_ZONE) {
+            if (rightX > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
-                z = -((leftTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (rightTrigger > TeleOpConfig.STICK_DEAD_ZONE) {
+                z = -((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+            } else if (rightX < -TeleOpConfig.STICK_DEAD_ZONE) {
                 //update z with right trigger
-                z = ((rightTrigger - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                z = ((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
                 z = 0;
             }
@@ -82,14 +83,18 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             } else {
                 x = 0;
             }
+            //Always set flywheel speed to Gamepad 1 RT
+            double flywheelJoy = Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            bot.setFlywheelMotor(flywheelJoy);
 
+            /*
+               GAMEPAD 2
+             */
 
-            bot.runWobbleMotor(Gamepad2.getRightY());
-
-            if (Gamepad2.getButton(GamepadKeys.Button.Y)){
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)){
                 bot.runWobbleServo(0.5);
             }
-            else if (Gamepad2.getButton(GamepadKeys.Button.B)){
+            else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)){
                 bot.runWobbleServo(-0.5);
             }
             else
@@ -97,6 +102,7 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runWobbleServo(0);
             }
 
+            /*
             if (Gamepad1.getButton(GamepadKeys.Button.DPAD_DOWN)){
                 bot.runTransferServo(1);
             }
@@ -105,22 +111,18 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             }
             else{
                 bot.runTransferServo(0);
-            }
+            }*/
 
-            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+            if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
                 bot.runIntakeServo(0.5);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+            } else if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) < -TeleOpConfig.STICK_DEAD_ZONE) {
                 bot.runIntakeServo(-0.5);
             } else {
                 bot.runIntakeServo(0);
             }
 
-
-            bot.runIntakeMotor(Gamepad1.getRightY());
-            
-            //Always set flywheel speed to Gamepad 2's left stick
-            double flywheelJoy = Gamepad2.getLeftY();
-            bot.setFlywheelMotor(flywheelJoy);
+            bot.runWobbleMotor(Gamepad2.getRightY());
+            bot.runIntakeMotor(Gamepad2.getLeftY());
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
