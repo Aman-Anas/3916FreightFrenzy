@@ -92,6 +92,7 @@ public class Auto_Blue_Camera extends LinearOpMode
             telemetry.update();
 
             Trajectory traj;
+            Pose2d startPose;
             switch
             (
                     pipeline.position
@@ -100,10 +101,12 @@ public class Auto_Blue_Camera extends LinearOpMode
             {
                 case FOUR:
 
-                    if (isStopRequested()) return;
 
+                    if (isStopRequested()) return;
+                    startPose = new Pose2d(-62.0, 50, 0);
+                    drive.setPoseEstimate(startPose);
                     traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-62.01, 50.01,0.0), Math.toRadians(10.0))
+                            .splineToSplineHeading(new Pose2d(-61.99, 50, 0.0), Math.toRadians(10.0))
                             .splineToSplineHeading(new Pose2d(50.0, 60.0), 0.0)
                             .splineToSplineHeading(new Pose2d(10.0, 60.0), 0.0)
                             .build();
@@ -112,9 +115,10 @@ public class Auto_Blue_Camera extends LinearOpMode
                 case ONE:
 
                     if (isStopRequested()) return;
-
+                    startPose = new Pose2d(-62.0, 50, 0);
+                    drive.setPoseEstimate(startPose);
                     traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-62.01, 50.01), Math.toRadians(10))
+                            .splineToSplineHeading(new Pose2d(-61.99, 50), Math.toRadians(20))
                             .splineToSplineHeading(new Pose2d(30, 37), 0)
                             .splineToLinearHeading(new Pose2d(8, 37), 0)
                             .build();
@@ -122,9 +126,10 @@ public class Auto_Blue_Camera extends LinearOpMode
                     drive.followTrajectory(traj);
                 case NONE:
                     if (isStopRequested()) return;
-
+                    startPose = new Pose2d(-62.0, 50, 0);
+                    drive.setPoseEstimate(startPose);
                     traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-62.01, 50.01), Math.toRadians(10))
+                            .splineToSplineHeading(new Pose2d(-61.99, 50), Math.toRadians(10))
                             .splineToSplineHeading(new Pose2d(-5, 60), 0)
                             .splineToConstantHeading(new Vector2d(-20, 50), Math.toRadians(10))
                             .splineToLinearHeading(new Pose2d(10, 20), Math.toRadians(20))

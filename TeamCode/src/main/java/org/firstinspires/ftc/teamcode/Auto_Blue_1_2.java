@@ -18,7 +18,8 @@ public class Auto_Blue_1_2 extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-
+        Pose2d startPose = new Pose2d(-62.0, 50, 0);
+        drive.setPoseEstimate(startPose);
         Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
                 .splineToSplineHeading(new Pose2d(-61.99, 50), Math.toRadians(20))
                 .splineToSplineHeading(new Pose2d(30, 37), 0)
