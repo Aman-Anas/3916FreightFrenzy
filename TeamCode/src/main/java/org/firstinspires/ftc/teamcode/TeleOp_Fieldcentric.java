@@ -10,6 +10,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.RevIMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -19,7 +20,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_RANGE;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
-
+@Disabled
 @TeleOp(name="Fieldcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_Fieldcentric extends LinearOpMode {
