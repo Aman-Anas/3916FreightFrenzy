@@ -117,9 +117,9 @@ public class TeleOp_Competition extends LinearOpMode {
                 bot.runTransferServo(0);
             }
 
-            if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
                 bot.runIntakeServo(0.5);
-            } else if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) < -TeleOpConfig.STICK_DEAD_ZONE) {
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.runIntakeServo(-0.5);
             } else {
                 bot.runIntakeServo(0);
