@@ -210,12 +210,7 @@ public class Camera_Testing extends LinearOpMode
         public Mat processFrame(Mat input)
         {
 
-            Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(TeleOpConfig.ANCHOR_POINT_X,TeleOpConfig.ANCHOR_POINT_Y);
-            int REGION_WIDTH = (int)TeleOpConfig.REGION_WIDTH_X;
-            int REGION_HEIGHT = (int)TeleOpConfig.REGION_HEIGHT_Y;
 
-            int FOUR_RING_THRESHOLD = (int)TeleOpConfig.FOUR_RING_THRESHOLD_CONFIG;
-            int ONE_RING_THRESHOLD = (int)TeleOpConfig.ONE_RING_THRESHOLD_CONFIG;
 
             Point region1_pointA = new Point(
                     REGION1_TOPLEFT_ANCHOR_POINT.x,

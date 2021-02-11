@@ -15,7 +15,7 @@ public class TeleOpConfig {
     public static double TRANSFER_SERVO_MULTIPLIER = 0.9;
     public static double INTAKE_MULTIPLIER = 0.3;
 
-    public static double ANCHOR_POINT_X = 165;
+    public static double ANCHOR_POINT_X = 110;
     public static double ANCHOR_POINT_Y = 245;
     public static double REGION_WIDTH_X = 60;
     public static double REGION_HEIGHT_Y = 20;
