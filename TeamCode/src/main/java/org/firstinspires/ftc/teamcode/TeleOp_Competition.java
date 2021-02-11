@@ -56,8 +56,8 @@ public class TeleOp_Competition extends LinearOpMode {
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
             z = rightX;
-            y = leftY;
-            x = leftX;
+            y = -(leftY);
+            x = -(leftX);
             /*
             if (rightX > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update z with left trigger, negative since left
