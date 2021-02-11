@@ -21,7 +21,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
 
 
-@TeleOp(name="MAIN Robotcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_Robotcentric extends LinearOpMode {
 
