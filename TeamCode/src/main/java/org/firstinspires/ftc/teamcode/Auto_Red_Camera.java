@@ -89,10 +89,12 @@ public class Auto_Red_Camera extends LinearOpMode
         while (opModeIsActive())
         {
             telemetry.addData("Analysis", pipeline.getAnalysis());
-            telemetry.addData("Position", pipeline.position);
-            telemetry.update();
+            //elemetry.addData("Position", pipeline.position);
+
 
             SkystoneDeterminationPipeline.RingPosition current = pipeline.position;
+            telemetry.addData("Position", current);
+            telemetry.update();
             Trajectory traj;
             Pose2d startPose;
             if (current == SkystoneDeterminationPipeline.RingPosition.FOUR) {
