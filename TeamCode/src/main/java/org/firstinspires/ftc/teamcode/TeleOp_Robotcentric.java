@@ -53,7 +53,7 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 GAMEPAD 1
              */
             double leftY = Gamepad1.getLeftY();
-            double leftX = Gamepad1.getLeftX();
+            double leftX = -Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
 
             if (rightX > TeleOpConfig.STICK_DEAD_ZONE) {
