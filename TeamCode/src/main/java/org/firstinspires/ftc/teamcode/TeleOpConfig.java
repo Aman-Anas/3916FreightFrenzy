@@ -21,7 +21,7 @@ public class TeleOpConfig {
     public static double REGION_HEIGHT_Y = 20;
 
     public static double FOUR_RING_THRESHOLD_CONFIG = 150;
-    public static double ONE_RING_THRESHOLD_CONFIG = 135;
+    public static double ONE_RING_THRESHOLD_CONFIG = 131;
 
 
 }
