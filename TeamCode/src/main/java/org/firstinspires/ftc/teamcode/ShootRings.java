@@ -48,10 +48,11 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class Auto_Red_Camera extends LinearOpMode
+public class ShootRings extends LinearOpMode
 {
 
     SkystoneDeterminationPipeline pipeline;
+    FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
     @Override
     public void runOpMode()
@@ -84,6 +85,7 @@ public class Auto_Red_Camera extends LinearOpMode
         });
         //SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        bot.initBot(hardwareMap);
         waitForStart();
 
         while (opModeIsActive())
@@ -98,7 +100,7 @@ public class Auto_Red_Camera extends LinearOpMode
             SkystoneDeterminationPipeline.RingPosition current = pipeline.position;
             telemetry.addData("Position", current);
             telemetry.update();
-            Trajectory traj;
+            Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0)).build();
             Pose2d startPose;
             if (current == SkystoneDeterminationPipeline.RingPosition.FOUR) {
 
@@ -130,19 +132,26 @@ public class Auto_Red_Camera extends LinearOpMode
             }
 
             else if (current == SkystoneDeterminationPipeline.RingPosition.NONE){
-                    if (isStopRequested()) return;
-                    startPose = new Pose2d(-62.0, -50, 0);
-                    drive.setPoseEstimate(startPose);
-                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
-                            .splineToSplineHeading(new Pose2d(-5, -60), 0)
-                            .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
-                            .splineToLinearHeading(new Pose2d(-5, -20), Math.toRadians(-20))
-                            .build();
-                    drive.followTrajectory(traj);
+                if (isStopRequested()) return;
+                startPose = new Pose2d(-62.0, -50, 0);
+                drive.setPoseEstimate(startPose);
+                traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
+                        .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
+                        .splineToSplineHeading(new Pose2d(-5, -60), 0)
+                        .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
+                        .splineToLinearHeading(new Pose2d(-5, -20), Math.toRadians(-20))
+                        .build();
+                drive.followTrajectory(traj);
 
 
             }
+            bot.setFlywheelMotor(0.8);
+            Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
+                    .splineToConstantHeading(new Vector2d(-17,-40),Math.toRadians(0))
+                    .build();
+            drive.followTrajectory(moveShoot);
+
+
 
 
             // Don't burn CPU cycles busy-looping in this sample
