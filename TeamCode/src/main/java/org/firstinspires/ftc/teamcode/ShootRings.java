@@ -152,7 +152,7 @@ public class ShootRings extends LinearOpMode
                     .build();
             drive.followTrajectory(moveShoot);
 
-            ElapsedTime savedTime = new ElapsedTime (ElapsedTime.MILLIS_IN_NANO);
+            ElapsedTime savedTime = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
             savedTime.reset();
             while (savedTime.time() < 2000){
                 bot.setFlywheelMotor(0.8);
