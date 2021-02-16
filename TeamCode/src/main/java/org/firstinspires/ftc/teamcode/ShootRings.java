@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -150,26 +151,22 @@ public class ShootRings extends LinearOpMode
                     .splineToConstantHeading(new Vector2d(-17,-40),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveShoot);
-            long savedTime = System.currentTimeMillis();
-            while (!((System.currentTimeMillis() - savedTime)>1000)){
+
+            ElapsedTime savedTime = new ElapsedTime (ElapsedTime.MILLIS_IN_NANO);
+            savedTime.reset();
+            while (savedTime.time() < 2000){
                 bot.setFlywheelMotor(0.8);
             }
-            savedTime = System.currentTimeMillis();
-            while (!((System.currentTimeMillis() - savedTime)>2000)){
+            savedTime.reset();
+            while (savedTime.time() < 2000){
                 bot.runTransferServo(1.0);
             }
-            savedTime = System.currentTimeMillis();
-            while (!((System.currentTimeMillis() - savedTime)>2000)){
+            savedTime.reset();
+            while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
-            savedTime = System.currentTimeMillis();
-            while (!((System.currentTimeMillis() - savedTime)>2000)){
-                bot.runTransferServo(1.0);
-            }
-            savedTime = System.currentTimeMillis();
-            while (!((System.currentTimeMillis() - savedTime)>2000)){
-                bot.runTransferServo(-1.0);
-            }
+
+
 
 
 
