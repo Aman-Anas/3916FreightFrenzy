@@ -156,7 +156,7 @@ public class ShootRings extends LinearOpMode
             }
             bot.transferServo.rotateDegrees(30);
             bot.transferServo.rotateDegrees(-30);
-            while (!((System.currentTimeMillis() - savedTime)>1000)){
+            while (!((System.currentTimeMillis() - savedTime)>2000)){
                 bot.setFlywheelMotor(0.8);
             }
             bot.transferServo.rotateDegrees(30);
