@@ -167,7 +167,7 @@ public class ShootRings extends LinearOpMode
             }
 
             Trajectory moveForward = drive.trajectoryBuilder(moveShoot.end())
-                    .forward(12)
+                    .forward(15)
                     .build();
             drive.followTrajectory(moveForward);
 
