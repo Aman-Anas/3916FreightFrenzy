@@ -140,7 +140,7 @@ public class ShootRings extends LinearOpMode
                         .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
                         .splineToSplineHeading(new Pose2d(-5, -60), 0)
                         .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
-                        .splineToLinearHeading(new Pose2d(-5, -20), Math.toRadians(-20))
+                        .splineToLinearHeading(new Pose2d(4, -20), Math.toRadians(-20))
                         .build();
                 drive.followTrajectory(traj);
 
@@ -166,6 +166,10 @@ public class ShootRings extends LinearOpMode
                 bot.runTransferServo(-1.0);
             }
 
+            Trajectory moveForward = drive.trajectoryBuilder(moveShoot.end())
+                    .forward(12)
+                    .build();
+            drive.followTrajectory(moveForward);
 
 
 
