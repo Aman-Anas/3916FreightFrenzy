@@ -170,7 +170,7 @@ public class ShootRings extends LinearOpMode
                     .forward(16)
                     .build();
             drive.followTrajectory(moveForward);
-
+            bot.setFlywheelMotor(0.0);
 
 
 
