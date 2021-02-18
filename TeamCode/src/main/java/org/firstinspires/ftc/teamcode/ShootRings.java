@@ -167,7 +167,7 @@ public class ShootRings extends LinearOpMode
             }
 
             Trajectory moveForward = drive.trajectoryBuilder(moveShoot.end())
-                    .splineTo(new Vector2d(4,-40),Math.toRadians(0))
+                    .splineTo(new Vector2d(5,-40),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveForward);
             bot.setFlywheelMotor(0.0);
