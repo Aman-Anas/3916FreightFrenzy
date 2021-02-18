@@ -107,7 +107,7 @@ public class Auto_Red_Camera extends LinearOpMode
                 drive.setPoseEstimate(startPose);
                 traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
                         .splineToSplineHeading(new Pose2d(-61.99, -50, 0.0), Math.toRadians(-10.0))
-                        .splineToSplineHeading(new Pose2d(55.0, -60.0), 0.0)
+                        .splineToSplineHeading(new Pose2d(53.0, -60.0), 0.0)
                         .splineToSplineHeading(new Pose2d(10.0, -60.0), 0.0)
                         .build();
 
