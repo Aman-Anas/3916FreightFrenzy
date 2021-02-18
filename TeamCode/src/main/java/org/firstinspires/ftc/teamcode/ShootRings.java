@@ -124,7 +124,7 @@ public class ShootRings extends LinearOpMode
                 drive.setPoseEstimate(startPose);
 
                 traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                        .splineToSplineHeading(new Pose2d(-61.99, -54.5), Math.toRadians(-20))
+                        .splineToSplineHeading(new Pose2d(-41.99, -54.5), Math.toRadians(-20))
                         .splineToSplineHeading(new Pose2d(26, -40), 0)
                         .splineToLinearHeading(new Pose2d(8, -37), 0)
                         .build();
