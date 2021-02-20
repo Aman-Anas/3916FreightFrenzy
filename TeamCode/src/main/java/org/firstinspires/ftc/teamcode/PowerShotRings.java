@@ -49,7 +49,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class ShootRings extends LinearOpMode
+public class PowerShotRings extends LinearOpMode
 {
 
     SkystoneDeterminationPipeline pipeline;
@@ -129,7 +129,6 @@ public class ShootRings extends LinearOpMode
                         .splineToConstantHeading(new Vector2d(8, -37), 0)
                         .build();
 
-
                 drive.followTrajectory(traj);
             }
 
@@ -174,6 +173,11 @@ public class ShootRings extends LinearOpMode
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
+            Trajectory powerShoot = drive.trajectoryBuilder(traj.end())
+                    .strafeLeft(14)
+                    .build();
+            drive.followTrajectory(powerShoot);
+
             savedTime.reset();
             while (savedTime.time() < 2000){
                 bot.runTransferServo(1.0);
@@ -183,7 +187,7 @@ public class ShootRings extends LinearOpMode
                 bot.runTransferServo(-1.0);
             }
 
-            Trajectory moveForward = drive.trajectoryBuilder(moveShoot.end())
+            Trajectory moveForward = drive.trajectoryBuilder(powerShoot.end())
                     .splineToConstantHeading(new Vector2d(7,-40),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveForward);
