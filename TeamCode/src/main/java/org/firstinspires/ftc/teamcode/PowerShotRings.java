@@ -173,7 +173,7 @@ public class PowerShotRings extends LinearOpMode
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
-            bot.setFlywheelMotor(0.56);
+            bot.setFlywheelMotor(0.75);
             Trajectory powerShoot = drive.trajectoryBuilder(moveShoot.end())
                     .splineToConstantHeading(new Vector2d(-9.5,-20.0),0)
 
