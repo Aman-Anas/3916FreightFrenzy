@@ -110,7 +110,7 @@ public class ShootRings extends LinearOpMode
                 drive.setPoseEstimate(startPose);
                 traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
                         .splineToSplineHeading(new Pose2d(-61.99, -50, 0.0), Math.toRadians(-10.0))
-                        .splineToSplineHeading(new Pose2d(53.0, -70.0), 0.0)
+                        .splineToSplineHeading(new Pose2d(53.0, -64.0), 0.0)
                         .splineToConstantHeading(new Vector2d(8, -37), 0)
                         .build();
 
@@ -149,7 +149,7 @@ public class ShootRings extends LinearOpMode
             }
             bot.setFlywheelMotor(0.8);
             Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
-                    .splineToConstantHeading(new Vector2d(-9.5,-43.5),Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-9.5,-49.5),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveShoot);
 
