@@ -10,7 +10,7 @@ public class TeleOpConfig {
     public static double FLYWHEEL_KP = 25;
     public static double FLYWHEEL_KI = 0;
     public static double FLYWHEEL_KD = 10;
-    public static double WOBBLE_ARM_MULTIPLIER = 0.37;
+    public static double WOBBLE_ARM_MULTIPLIER = 0.45;
     public static double WOBBLE_SERVO_MULTIPLIER = 3.0;
     public static double TRANSFER_SERVO_MULTIPLIER = 0.9;
     public static double INTAKE_MULTIPLIER = 0.3;

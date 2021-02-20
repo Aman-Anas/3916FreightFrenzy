@@ -191,7 +191,7 @@ public class PowerShotRings extends LinearOpMode
 
             Trajectory moveForward = drive.trajectoryBuilder(powerShoot.end())
                     .splineToConstantHeading(new Vector2d(7,-40),Math.toRadians(0))
-                    
+
                     .build();
             drive.followTrajectory(moveForward);
             bot.setFlywheelMotor(0.0);
