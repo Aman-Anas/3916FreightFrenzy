@@ -148,7 +148,7 @@ public class PowerShotRings extends LinearOpMode
             }
             bot.setFlywheelMotor(0.8);
             Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
-                    .splineToConstantHeading(new Vector2d(-9.5,-49.5),Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-9.5,-45.5),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveShoot);
 
@@ -175,8 +175,8 @@ public class PowerShotRings extends LinearOpMode
             }
             bot.setFlywheelMotor(0.56);
             Trajectory powerShoot = drive.trajectoryBuilder(traj.end())
-                    .strafeLeft(14)
-                    .back(6)
+                    .splineToConstantHeading(new Vector2d(-9.5,-20.0),0)
+
                     .build();
             drive.followTrajectory(powerShoot);
 
