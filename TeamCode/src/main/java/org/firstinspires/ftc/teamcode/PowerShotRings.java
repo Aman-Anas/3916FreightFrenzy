@@ -174,7 +174,7 @@ public class PowerShotRings extends LinearOpMode
                 bot.runTransferServo(-1.0);
             }
             bot.setFlywheelMotor(0.56);
-            Trajectory powerShoot = drive.trajectoryBuilder(traj.end())
+            Trajectory powerShoot = drive.trajectoryBuilder(moveShoot.end())
                     .splineToConstantHeading(new Vector2d(-9.5,-20.0),0)
 
                     .build();
