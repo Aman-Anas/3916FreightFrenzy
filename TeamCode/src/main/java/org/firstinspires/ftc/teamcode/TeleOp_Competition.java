@@ -130,17 +130,17 @@ public class TeleOp_Competition extends LinearOpMode {
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
+            bot.mecanumDrivetrain.driveRobotCentric(x, y, (z/1.8));
 
 
             double wobblePos = bot.wobbleArmMotor.encoder.getPosition();
-            double wobbleServoPos = bot.wobbleArmServo.getPosition();
+            //double wobbleServoPos = bot.wobbleArmServo.getVe();
             double flywheelSpeed = bot.flywheelMotor.getVelocity();
 
             //Add a little telemetry
             //telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
             telemetry.addData("Wobble Motor", wobblePos);
-            telemetry.addData("Wobble Servo", wobbleServoPos);
+            //telemetry.addData("Wobble Servo", wobbleServoPos);
             telemetry.addData("Flywheel Speed", flywheelSpeed);
             telemetry.addData("Flywheel Target",(flywheelJoy*FTCLibRobotFunctions.MAX_TICKS_PER_SECOND));
             telemetry.update();
