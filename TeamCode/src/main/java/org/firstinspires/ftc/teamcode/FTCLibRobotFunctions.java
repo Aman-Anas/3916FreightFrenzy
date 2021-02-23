@@ -48,9 +48,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void runWobbleMotor(double speed) {
-        //wobbleArmMotor.setVeloCoefficients(16,0,0);
+        wobbleArmMotor.setVeloCoefficients(16,0,0);
 
-        wobbleArmMotor.set(speed*(TeleOpConfig.WOBBLE_ARM_MULTIPLIER));
+        wobbleArmMotor.setVelocity(speed*(TeleOpConfig.WOBBLE_ARM_MULTIPLIER));
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
@@ -91,7 +91,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
         wobbleArmMotor = new MotorEx(hw, "wobbleMotor");
-        wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
+        //wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
         //Constructor needs degrees for angle
