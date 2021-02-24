@@ -201,7 +201,7 @@ public class PowerShotRings extends LinearOpMode
                 bot.runTransferServo(-1.0);
             }
             Trajectory moveForward = drive.trajectoryBuilder(powerShoot2.end())
-                    .splineToConstantHeading(new Vector2d(7,-40),Math.toRadians(0))
+                    .forward(6)
 
                     .build();
             drive.followTrajectory(moveForward);
