@@ -155,7 +155,7 @@ public class PowerShotRings extends LinearOpMode
             ElapsedTime savedTime = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
             savedTime.reset();
             while (savedTime.time() < 2000){
-                bot.setFlywheelMotor(0.8);
+                bot.setFlywheelMotor(0.9);
             }
             savedTime.reset();
             while (savedTime.time() < 2000){
@@ -165,6 +165,7 @@ public class PowerShotRings extends LinearOpMode
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
+
             bot.setFlywheelMotor(0);
             Trajectory powerShoot = drive.trajectoryBuilder(moveShoot.end())
                     .splineToConstantHeading(new Vector2d(-8.1,-20.0),0)
@@ -184,8 +185,26 @@ public class PowerShotRings extends LinearOpMode
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
+            bot.setFlywheelMotor(0);
+            Trajectory powerShoot2 = drive.trajectoryBuilder(moveShoot.end())
+                    .splineToConstantHeading(new Vector2d(-8.1,-11.0),0)
 
-            Trajectory moveForward = drive.trajectoryBuilder(powerShoot.end())
+                    .build();
+            drive.followTrajectory(powerShoot2);
+            bot.setFlywheelMotor(0.75);
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                telemetry.addData("mode:","waiting");
+            }
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.runTransferServo(1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time()<2000){
+                bot.runTransferServo(-1.0);
+            }
+            Trajectory moveForward = drive.trajectoryBuilder(powerShoot2.end())
                     .splineToConstantHeading(new Vector2d(7,-40),Math.toRadians(0))
 
                     .build();
