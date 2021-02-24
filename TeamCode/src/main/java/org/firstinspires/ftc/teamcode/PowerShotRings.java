@@ -148,7 +148,7 @@ public class PowerShotRings extends LinearOpMode
             }
             bot.setFlywheelMotor(0.8);
             Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
-                    .splineToConstantHeading(new Vector2d(-17.0,-45.5),Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-12.0,-45.5),Math.toRadians(0))
                     .build();
             drive.followTrajectory(moveShoot);
 
@@ -189,7 +189,9 @@ public class PowerShotRings extends LinearOpMode
                     .build();
             drive.followTrajectory(powerShoot2);
             bot.setFlywheelMotor(0.70);
-
+            while (savedTime.time() < 2000){
+                telemetry.addData("mode:","waiting");
+            }
             savedTime.reset();
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
