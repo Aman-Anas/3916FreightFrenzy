@@ -155,7 +155,11 @@ public class PowerShotRings extends LinearOpMode
             ElapsedTime savedTime = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
             savedTime.reset();
             while (savedTime.time() < 2000){
-                bot.setFlywheelMotor(0.9);
+                bot.setFlywheelMotor(1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                telemetry.addData("mode:","waiting");
             }
             savedTime.reset();
             while (savedTime.time() < 2000){
