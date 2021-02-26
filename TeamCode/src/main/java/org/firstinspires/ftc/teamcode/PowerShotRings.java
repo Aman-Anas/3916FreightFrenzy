@@ -198,6 +198,10 @@ public class PowerShotRings extends LinearOpMode
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
+            savedTime.reset();
+            while (savedTime.time()<2000){
+                bot.runTransferServo(1.0);
+            }
             Trajectory moveForward = drive.trajectoryBuilder(powerShoot2.end())
                     .forward(14)
 
