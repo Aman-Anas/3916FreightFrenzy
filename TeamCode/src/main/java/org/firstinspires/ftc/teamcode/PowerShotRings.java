@@ -148,52 +148,61 @@ public class PowerShotRings extends LinearOpMode
             }
             bot.setFlywheelMotor(1.0);
             Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
-                    .splineToConstantHeading(new Vector2d(-16.8,-45.5),Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-14.8,-42.7),Math.toRadians(3.5))
                     .build();
             drive.followTrajectory(moveShoot);
 
             ElapsedTime savedTime = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
             savedTime.reset();
-            while (savedTime.time() < 2000){
+            while (savedTime.time() < 4000){
                 bot.setFlywheelMotor(1.0);
             }
+
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.runTransferServo(1.0);
+            }
+            //savedTime.reset();
+            //while (savedTime.time()<500){
+            //    bot.runTransferServo(-1.0);
+            //}
+
+            //bot.setFlywheelMotor(0);
+            bot.setFlywheelMotor(0.76);
+            Trajectory powerShoot = drive.trajectoryBuilder(moveShoot.end())
+                    .splineToConstantHeading(new Vector2d(-8.1,-20.0),0)
+
+                    .build();
+            drive.followTrajectory(powerShoot);
+            bot.setFlywheelMotor(0.77);
+            savedTime.reset();
+
             savedTime.reset();
             while (savedTime.time() < 2000){
                 telemetry.addData("mode:","waiting");
             }
+            while (savedTime.time()<4000){
+                bot.runTransferServo(-1.0);
+            }
+            //bot.setFlywheelMotor(0);
+            Trajectory powerShoot2 = drive.trajectoryBuilder(powerShoot.end())
+                    .strafeRight(8.7)
+
+                    .build();
+            drive.followTrajectory(powerShoot2);
+            bot.setFlywheelMotor(0.77);
             savedTime.reset();
-            while (savedTime.time() < 2000){
+            while (savedTime.time()<1000){
+                telemetry.addData("mode:","waiting");
+            }
+            savedTime.reset();
+            while (savedTime.time()<2000){
                 bot.runTransferServo(1.0);
             }
             savedTime.reset();
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
             }
-
-            //bot.setFlywheelMotor(0);
-            Trajectory powerShoot = drive.trajectoryBuilder(moveShoot.end())
-                    .splineToConstantHeading(new Vector2d(-8.1,-20.0),0)
-
-                    .build();
-            drive.followTrajectory(powerShoot);
-            bot.setFlywheelMotor(0.70);
-            savedTime.reset();
-            while (savedTime.time() < 2000){
-                telemetry.addData("mode:","waiting");
-            }
-            savedTime.reset();
-            while (savedTime.time() < 2000){
-                bot.runTransferServo(1.0);
-            }
-
-            //bot.setFlywheelMotor(0);
-            Trajectory powerShoot2 = drive.trajectoryBuilder(powerShoot.end())
-                    .strafeRight(10)
-
-                    .build();
-            drive.followTrajectory(powerShoot2);
-            bot.setFlywheelMotor(0.76);
-
             savedTime.reset();
             while (savedTime.time()<2000){
                 bot.runTransferServo(-1.0);
