@@ -3,7 +3,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -45,10 +45,9 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 
-
-
-@Autonomous
-public class Auto_Red_Camera extends LinearOpMode
+@Disabled
+@TeleOp
+public class Auto_Blue_Camera extends LinearOpMode
 {
 
     SkystoneDeterminationPipeline pipeline;
@@ -89,68 +88,61 @@ public class Auto_Red_Camera extends LinearOpMode
         while (opModeIsActive())
         {
             telemetry.addData("Analysis", pipeline.getAnalysis());
-            //elemetry.addData("Position", pipeline.position);
-
-
-
-
-            sleep(3000);
-            SkystoneDeterminationPipeline.RingPosition current = pipeline.position;
-            telemetry.addData("Position", current);
+            telemetry.addData("Position", pipeline.position);
             telemetry.update();
+
             Trajectory traj;
             Pose2d startPose;
-            if (current == SkystoneDeterminationPipeline.RingPosition.FOUR) {
+            switch
+            (
+                    pipeline.position
+            )
+            //cursd
+            {
+                case FOUR:
 
-                if (isStopRequested()) return;
-                startPose = new Pose2d(-62.0, -50, 0);
-                drive.setPoseEstimate(startPose);
-                traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                        .splineToSplineHeading(new Pose2d(-61.99, -50, 0.0), Math.toRadians(-10.0))
-                        .splineToSplineHeading(new Pose2d(53.0, -60.0), 0.0)
-                        .splineToSplineHeading(new Pose2d(10.0, -60.0), 0.0)
-                        .build();
 
-                drive.followTrajectory(traj);
-            }
-
-            else if (current == SkystoneDeterminationPipeline.RingPosition.ONE){
-
-                if (isStopRequested()) return;
-                startPose = new Pose2d(-62.0, -50, 0);
-                drive.setPoseEstimate(startPose);
-
-                traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                        .splineToSplineHeading(new Pose2d(-41.99, -54.5), Math.toRadians(-20))
-                        .splineToSplineHeading(new Pose2d(26, -40), 0)
-                        .splineToLinearHeading(new Pose2d(8, -37), 0)
-                        .build();
-
-                drive.followTrajectory(traj);
-            }
-
-            else if (current == SkystoneDeterminationPipeline.RingPosition.NONE){
                     if (isStopRequested()) return;
-                    startPose = new Pose2d(-62.0, -50, 0);
+                    startPose = new Pose2d(-62.0, 50, 0);
                     drive.setPoseEstimate(startPose);
-                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
-                            .splineToSplineHeading(new Pose2d(-5, -60), 0)
-                            .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
-                            .splineToLinearHeading(new Pose2d(4, -20), Math.toRadians(-20))
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-61.99, 50, 0.0), Math.toRadians(10.0))
+                            .splineToSplineHeading(new Pose2d(50.0, 60.0), 0.0)
+                            .splineToSplineHeading(new Pose2d(10.0, 60.0), 0.0)
                             .build();
+
+                    drive.followTrajectory(traj);
+                case ONE:
+
+                    if (isStopRequested()) return;
+                    startPose = new Pose2d(-62.0, 50, 0);
+                    drive.setPoseEstimate(startPose);
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-61.99, 50), Math.toRadians(20))
+                            .splineToSplineHeading(new Pose2d(30, 37), 0)
+                            .splineToLinearHeading(new Pose2d(8, 37), 0)
+                            .build();
+
+                    drive.followTrajectory(traj);
+                case NONE:
+                    if (isStopRequested()) return;
+                    startPose = new Pose2d(-62.0, 50, 0);
+                    drive.setPoseEstimate(startPose);
+                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, 50, 0), 0)
+                            .splineToSplineHeading(new Pose2d(-61.99, 50), Math.toRadians(10))
+                            .splineToSplineHeading(new Pose2d(-5, 60), 0)
+                            .splineToConstantHeading(new Vector2d(-20, 50), Math.toRadians(10))
+                            .splineToLinearHeading(new Pose2d(10, 20), Math.toRadians(20))
+                            .build();
+
                     drive.followTrajectory(traj);
 
 
             }
-
-
             // Don't burn CPU cycles busy-looping in this sample
-            sleep(20000);
+            sleep(50);
         }
-
     }
-
 
     public static class SkystoneDeterminationPipeline extends OpenCvPipeline
     {
@@ -197,7 +189,7 @@ public class Auto_Red_Camera extends LinearOpMode
         int avg1;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        public volatile RingPosition position = RingPosition.FOUR;
+        private volatile RingPosition position = RingPosition.FOUR;
 
         /*
          * This function takes the RGB frame, converts to YCrCb,

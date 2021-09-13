@@ -21,9 +21,9 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
 
 
-@TeleOp(name="Robotcentric TeleOp", group="Apex Robotics 3916")
+@TeleOp(name="MAIN Competition TeleOp", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_Robotcentric extends LinearOpMode {
+public class TeleOp_Competition extends LinearOpMode {
 
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
@@ -51,18 +51,22 @@ public class TeleOp_Robotcentric extends LinearOpMode {
         while (opModeIsActive()) {
             /*
                 GAMEPAD 1
-             */
+            */
             double leftY = Gamepad1.getLeftY();
-            double leftX = -Gamepad1.getLeftX();
+            double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
-
+            z = rightX;
+            y = -(leftY);
+            x = -(leftX);
+            /*
             if (rightX > TeleOpConfig.STICK_DEAD_ZONE) {
-                //update x with current x position
-                z = ((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                //update z with left trigger, negative since left
+                z = -((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else if (rightX < -TeleOpConfig.STICK_DEAD_ZONE) {
-                z = -((Math.abs(rightX) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                //update z with right trigger
+                z = ((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
             } else {
-                z= 0;
+                z = 0;
             }
 
             if (leftY > TeleOpConfig.STICK_DEAD_ZONE) {
@@ -82,6 +86,8 @@ public class TeleOp_Robotcentric extends LinearOpMode {
             } else {
                 x = 0;
             }
+            */
+
             //Always set flywheel speed to Gamepad 1 RT
             double flywheelJoy = Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
             bot.setFlywheelMotor(flywheelJoy);
@@ -111,9 +117,9 @@ public class TeleOp_Robotcentric extends LinearOpMode {
                 bot.runTransferServo(0);
             }
 
-            if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
                 bot.runIntakeServo(0.5);
-            } else if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) < -TeleOpConfig.STICK_DEAD_ZONE) {
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.runIntakeServo(-0.5);
             } else {
                 bot.runIntakeServo(0);
@@ -124,11 +130,11 @@ public class TeleOp_Robotcentric extends LinearOpMode {
 
 
             //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
+            bot.mecanumDrivetrain.driveRobotCentric(x, y, (z/1.8));
 
 
             double wobblePos = bot.wobbleArmMotor.encoder.getPosition();
-            //double wobbleServoPos = bot.wobbleArmServo.getPosition();
+            //double wobbleServoPos = bot.wobbleArmServo.getVe();
             double flywheelSpeed = bot.flywheelMotor.getVelocity();
 
             //Add a little telemetry

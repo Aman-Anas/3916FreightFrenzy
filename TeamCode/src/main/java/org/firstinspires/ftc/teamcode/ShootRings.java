@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -48,10 +49,11 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class Auto_Red_Camera extends LinearOpMode
+public class ShootRings extends LinearOpMode
 {
 
     SkystoneDeterminationPipeline pipeline;
+    FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
     @Override
     public void runOpMode()
@@ -84,6 +86,7 @@ public class Auto_Red_Camera extends LinearOpMode
         });
         //SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        bot.initBot(hardwareMap);
         waitForStart();
 
         while (opModeIsActive())
@@ -98,7 +101,7 @@ public class Auto_Red_Camera extends LinearOpMode
             SkystoneDeterminationPipeline.RingPosition current = pipeline.position;
             telemetry.addData("Position", current);
             telemetry.update();
-            Trajectory traj;
+            Trajectory traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0)).build();
             Pose2d startPose;
             if (current == SkystoneDeterminationPipeline.RingPosition.FOUR) {
 
@@ -107,8 +110,8 @@ public class Auto_Red_Camera extends LinearOpMode
                 drive.setPoseEstimate(startPose);
                 traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
                         .splineToSplineHeading(new Pose2d(-61.99, -50, 0.0), Math.toRadians(-10.0))
-                        .splineToSplineHeading(new Pose2d(53.0, -60.0), 0.0)
-                        .splineToSplineHeading(new Pose2d(10.0, -60.0), 0.0)
+                        .splineToSplineHeading(new Pose2d(53.0, -64.0), 0.0)
+                        .splineToConstantHeading(new Vector2d(8, -37), 0)
                         .build();
 
                 drive.followTrajectory(traj);
@@ -121,28 +124,75 @@ public class Auto_Red_Camera extends LinearOpMode
                 drive.setPoseEstimate(startPose);
 
                 traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                        .splineToSplineHeading(new Pose2d(-41.99, -54.5), Math.toRadians(-20))
-                        .splineToSplineHeading(new Pose2d(26, -40), 0)
-                        .splineToLinearHeading(new Pose2d(8, -37), 0)
+                        .splineToConstantHeading(new Vector2d(-41.99, -68.5), 0)
+                        .splineToConstantHeading(new Vector2d(33, -49), 0)
+                        .splineToConstantHeading(new Vector2d(8, -37), 0)
                         .build();
+
 
                 drive.followTrajectory(traj);
             }
 
             else if (current == SkystoneDeterminationPipeline.RingPosition.NONE){
-                    if (isStopRequested()) return;
-                    startPose = new Pose2d(-62.0, -50, 0);
-                    drive.setPoseEstimate(startPose);
-                    traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
-                            .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
-                            .splineToSplineHeading(new Pose2d(-5, -60), 0)
-                            .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
-                            .splineToLinearHeading(new Pose2d(4, -20), Math.toRadians(-20))
-                            .build();
-                    drive.followTrajectory(traj);
+                if (isStopRequested()) return;
+                startPose = new Pose2d(-62.0, -50, 0);
+                drive.setPoseEstimate(startPose);
+                traj = drive.trajectoryBuilder(new Pose2d(-62.0, -50, 0), 0)
+                        .splineToSplineHeading(new Pose2d(-61.99, -50), Math.toRadians(-10))
+                        .splineToSplineHeading(new Pose2d(-5, -60), 0)
+                        .splineToConstantHeading(new Vector2d(-20, -50), Math.toRadians(10))
+                        .splineToConstantHeading(new Vector2d(8, -37), 0)
+                        .build();
+                drive.followTrajectory(traj);
 
 
             }
+            bot.setFlywheelMotor(0.8);
+            Trajectory moveShoot = drive.trajectoryBuilder(traj.end())
+                    .splineToConstantHeading(new Vector2d(-9.5,-49.5),Math.toRadians(0))
+                    .build();
+            drive.followTrajectory(moveShoot);
+
+            ElapsedTime savedTime = new ElapsedTime (ElapsedTime.Resolution.MILLISECONDS);
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.setFlywheelMotor(0.8);
+            }
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.runTransferServo(1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time()<2000){
+                bot.runTransferServo(-1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.runTransferServo(1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time()<2000){
+                bot.runTransferServo(-1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time() < 2000){
+                bot.runTransferServo(1.0);
+            }
+            savedTime.reset();
+            while (savedTime.time()<2000){
+                bot.runTransferServo(-1.0);
+            }
+
+            Trajectory moveForward = drive.trajectoryBuilder(moveShoot.end())
+                    .splineToConstantHeading(new Vector2d(7,-40),Math.toRadians(0))
+                    .build();
+            drive.followTrajectory(moveForward);
+            bot.setFlywheelMotor(0.0);
+
+
+
+
+
 
 
             // Don't burn CPU cycles busy-looping in this sample

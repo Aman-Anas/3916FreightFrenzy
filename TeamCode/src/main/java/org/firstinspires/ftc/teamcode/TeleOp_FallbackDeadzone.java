@@ -8,12 +8,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-
+@Disabled
 @TeleOp(name="Fallback Robotcentric TeleOp", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_FallbackDeadzone extends LinearOpMode {

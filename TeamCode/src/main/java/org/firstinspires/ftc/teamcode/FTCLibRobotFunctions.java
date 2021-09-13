@@ -36,9 +36,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //motors and servos
     public MotorEx flywheelMotor;
     public MotorEx wobbleArmMotor;
-    public SimpleServo wobbleArmServo;
-    public CRServo transferServo;
+    public CRServo wobbleArmServo;
+    public SimpleServo transferServo;
     public MotorEx intakeMotor;
+    public CRServo intakeServo;
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
@@ -47,20 +48,24 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void runWobbleMotor(double speed) {
-        //wobbleArmMotor.setVeloCoefficients(16,0,0);
+        wobbleArmMotor.setVeloCoefficients(16,0,0);
 
-        wobbleArmMotor.set(speed*(TeleOpConfig.WOBBLE_ARM_MULTIPLIER));
+        wobbleArmMotor.setVelocity(speed*(TeleOpConfig.WOBBLE_ARM_MULTIPLIER));
         //wobbleArmMotor.setTargetPosition((int)targetPos);
     }
     public void runWobbleServo(double speed) {
-        wobbleArmServo.rotateDegrees(speed*(TeleOpConfig.WOBBLE_SERVO_MULTIPLIER));
+        wobbleArmServo.set(speed*(TeleOpConfig.WOBBLE_SERVO_MULTIPLIER));
     }
     public void runTransferServo(double speed){
-        transferServo.set(speed*(TeleOpConfig.TRANSFER_SERVO_MULTIPLIER));
+        transferServo.rotateDegrees(speed*(TeleOpConfig.TRANSFER_SERVO_MULTIPLIER));
     }
 
     public void runIntakeMotor(double speed){
         intakeMotor.set(speed*(TeleOpConfig.INTAKE_MULTIPLIER));
+    }
+
+    public void runIntakeServo(double speed) {
+        intakeServo.set(speed);
     }
     /*
     public void togglePincers() {
@@ -86,13 +91,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
         wobbleArmMotor = new MotorEx(hw, "wobbleMotor");
-        wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
+        //wobbleArmMotor.setRunMode(Motor.RunMode.RawPower);
         wobbleArmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
         //Constructor needs degrees for angle
-        wobbleArmServo = new SimpleServo(hw, "wobbleServo", 180, 0);
+        wobbleArmServo = new CRServo(hw, "wobbleServo");
 
-        transferServo = new CRServo(hw, "transferServo");
+        transferServo = new SimpleServo(hw, "transferServo");
         //transferServo.setRunMode(Motor.RunMode.RawPower);
         //transferServo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE); NOT APPLICABLE since servo and not motor
 
@@ -101,6 +106,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeMotor = new MotorEx(hw,"intake");
         intakeMotor.setRunMode(Motor.RunMode.RawPower);
         intakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        intakeServo = new CRServo(hw,"intakeServo");
 
 
 
