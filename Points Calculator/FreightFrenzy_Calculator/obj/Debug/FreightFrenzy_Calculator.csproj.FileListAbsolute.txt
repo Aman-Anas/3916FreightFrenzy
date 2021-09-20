@@ -1,0 +1,9 @@
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\bin\Debug\FreightFrenzy_Calculator.exe.config
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\bin\Debug\FreightFrenzy_Calculator.exe
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\bin\Debug\FreightFrenzy_Calculator.pdb
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.Form1.resources
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.Properties.Resources.resources
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.csproj.GenerateResource.cache
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.exe
+C:\Users\Savannah and Nathan\source\repos\FreightFrenzy_Calculator\FreightFrenzy_Calculator\obj\Debug\FreightFrenzy_Calculator.pdb
