@@ -37,14 +37,15 @@ public class TeleOp_Basic extends LinearOpMode {
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         //GamepadEx Gamepad2 = new GamepadEx(gamepad2);
 
-        //double STICK_DEAD_ZONE = TeleOpConfig.STICK_DEAD_ZONE;
+        double STICK_DEAD_ZONE = TeleOpConfig.STICK_DEAD_ZONE;
         double x = 0;
         double y = 0;
         double z = 0;
         double powerMultiplier = 1; //Multiplier for motor power (for precision mode)
+        double turnMultiplier = 1; // Multiplier for turning speed
 
         FtcDashboard dashboard = FtcDashboard.getInstance();
-        Telemetry dashboardTelemetry = dashboard.getTelemetry();
+        //Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -57,53 +58,40 @@ public class TeleOp_Basic extends LinearOpMode {
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
 
-            //Precision mode, multiplier can be adjusted as needed
+            //Precision mode, multipliers can be adjusted as needed
             if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
                 powerMultiplier = 0.5;
+                turnMultiplier = 0.5;
             } else {
                 powerMultiplier = 1;
+                turnMultiplier = 1;
             }
 
-            z = rightX * powerMultiplier;
-            y = -(leftY) * powerMultiplier;
-            x = -(leftX);
-
-            /*
-            if (rightX > TeleOpConfig.STICK_DEAD_ZONE) {
-                //update z with left trigger, negative since left
-                z = -((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (rightX < -TeleOpConfig.STICK_DEAD_ZONE) {
-                //update z with right trigger
-                z = ((rightX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+            if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
+                z = rightX * turnMultiplier;
             } else {
                 z = 0;
             }
 
-            if (leftY > TeleOpConfig.STICK_DEAD_ZONE) {
-                //update y with current y position
-                y = ((leftY - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftY < -TeleOpConfig.STICK_DEAD_ZONE) {
-                y = -((Math.abs(leftY) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
+                y = -(leftY) * powerMultiplier;
             } else {
                 y = 0;
             }
 
-            if (leftX > TeleOpConfig.STICK_DEAD_ZONE) {
+            if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 //update x with current x position
-                x = ((leftX - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
-            } else if (leftX < -TeleOpConfig.STICK_DEAD_ZONE) {
-                x = -((Math.abs(leftX) - OLD_MIN) * NEW_RANGE / OLD_RANGE) + NEW_MIN;
+                x = -(leftX) * powerMultiplier;
             } else {
                 x = 0;
             }
-            */
 
             /*
-                GAMEPAD 1
+                GAMEPAD 2
             */
 
             //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, (z/1.8));
+            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
             //Add a little telemetry
             //telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
