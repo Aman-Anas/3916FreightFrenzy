@@ -5,6 +5,10 @@ import com.acmerobotics.dashboard.config.Config;
 public class TeleOpConfig {
 
     //Variables to be tuned from FTCDashboard
+
+    public static double PRECISION_POWER_MULTIPLIER = 0.5; //Multiplier for motor power (for precision mode)
+    public static double PRECISION_TURN_MULTIPLIER = 0.5; // Multiplier for turning speed
+
     public static double STICK_DEAD_ZONE = 0.1;
     public static double FLYWHEEL_KP = 25;
     public static double FLYWHEEL_KI = 0;
