@@ -15,11 +15,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_MIN;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.NEW_RANGE;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_MIN;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.OLD_RANGE;
-
 
 @TeleOp(name="MAIN Competition TeleOp", group="Apex Robotics 3916")
 //@Disabled

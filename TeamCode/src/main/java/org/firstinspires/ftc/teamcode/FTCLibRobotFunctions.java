@@ -5,7 +5,6 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -43,7 +42,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //methods for extra components
     public void setFlywheelMotor(double speed) {
-        flywheelMotor.setVeloCoefficients(TeleOpConfig.FLYWHEEL_KP,TeleOpConfig.FLYWHEEL_KI, TeleOpConfig.FLYWHEEL_KD);
+        flywheelMotor.setVeloCoefficients(TeleOpConfig.FLYWHEEL_KP, TeleOpConfig.FLYWHEEL_KI, TeleOpConfig.FLYWHEEL_KD);
         flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
     }
 

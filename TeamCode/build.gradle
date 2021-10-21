@@ -13,14 +13,19 @@
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
-
-repositories {
-    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
-}
+apply from: '../build.dependencies.gradle'
 
 dependencies {
+    implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
-    implementation 'com.arcrobotics:ftclib:1.1.6'
-    // the following is optional if you want vision
-    implementation 'com.arcrobotics.ftclib:vision:1.1.0'
+
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+
+    //Roadrunner
+    implementation 'com.acmerobotics.roadrunner:core:0.5.4'
+
+    //FTCLib
+    implementation 'org.ftclib.ftclib:vision:1.2.0' //vision
+    implementation 'org.ftclib.ftclib:core:1.2.1' //core
+
 }
