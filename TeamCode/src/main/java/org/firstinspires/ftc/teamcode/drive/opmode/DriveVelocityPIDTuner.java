@@ -43,16 +43,14 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  * 2. Add kI (or adjust kF) until the steady state/constant velocity plateaus are reached.
  * 3. Back off kP and kD a little until the response is less oscillatory (but without lag).
  *
- * Pressing X (on the Xbox and Logitech F310 gamepads, square on the PS4 Dualshock gamepad) will
- * pause the tuning process and enter driver override, allowing the user to reset the position of
- * the bot in the event that it drifts off the path.
- * Pressing A (on the Xbox and Logitech F310 gamepads, X on the PS4 Dualshock gamepad) will cede
- * control back to the tuning process.
+ * Pressing Y/Δ (Xbox/PS4) will pause the tuning process and enter driver override, allowing the
+ * user to reset the position of the bot in the event that it drifts off the path.
+ * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
 @Config
 @Autonomous(group = "drive")
 public class DriveVelocityPIDTuner extends LinearOpMode {
-    public static double DISTANCE = 24; // in
+    public static double DISTANCE = 72; // in
 
     enum Mode {
         DRIVER_MODE,
@@ -105,7 +103,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
             switch (mode) {
                 case TUNING_MODE:
-                    if (gamepad1.x) {
+                    if (gamepad1.y) {
                         mode = Mode.DRIVER_MODE;
                         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                     }
@@ -126,7 +124,6 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
                     List<Double> velocities = drive.getWheelVelocities();
 
-
                     // update telemetry
                     telemetry.addData("targetVelocity", motionState.getV());
                     for (int i = 0; i < velocities.size(); i++) {
@@ -138,7 +135,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     }
                     break;
                 case DRIVER_MODE:
-                    if (gamepad1.a) {
+                    if (gamepad1.b) {
                         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
                         mode = Mode.TUNING_MODE;

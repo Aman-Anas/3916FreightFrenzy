@@ -60,6 +60,10 @@ public class FTCLibMecanumBot {
     public MotorEx motor_backRight;
     public MecanumDrive mecanumDrivetrain;
 
+    public double correctDeadZone(double input){
+        return (input - (TeleOpConfig.STICK_DEAD_ZONE * input / Math.abs(input))) / (1.0 - TeleOpConfig.STICK_DEAD_ZONE);
+    }
+
     /**
      * initialize drivetrain
      * @param hw - HardwareMap supplied from drive class
