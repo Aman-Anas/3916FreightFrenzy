@@ -29,13 +29,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
      */
 
 
-    //motors and servos
-    public MotorEx flywheelMotor;
-    public MotorEx wobbleArmMotor;
-    public CRServo wobbleArmServo;
-    public SimpleServo transferServo;
-    public MotorEx intakeMotor;
-    public CRServo intakeServo;
+    //Set motors and servos
+
+    //Example:
+    //public MotorEx flywheelMotor;
+
 
 
     //initialize motors and servos
@@ -51,6 +49,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                ////////////////////////// Methods for extra components //////////////////////////
     */
 
+
+
+
     /* Example:
 
     //Flywheel
@@ -61,11 +62,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
        flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
     }
 
+    Refer to FTCLib docs here: https://docs.ftclib.org/ftclib/features/hardware
     */
-
-
-
-
-
 
 }
