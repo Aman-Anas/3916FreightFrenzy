@@ -18,6 +18,7 @@ public class MeepMeepVisualizer {
     public static void main (String args[]){
         Image lightFieldImage = null;
         Image darkFieldImage = null;
+        Image realisticFieldImage = null;
 
         // Declare a MeepMeep instance
         // With a field size of 800 pixels
@@ -48,6 +49,7 @@ public class MeepMeepVisualizer {
         try {
             lightFieldImage = ImageIO.read(new File("ffLight.png"));
             darkFieldImage = ImageIO.read(new File("ffDark.png"));
+            realisticFieldImage = ImageIO.read(new File("ffRealistic.png"));
         } catch (IOException e) {
             //basically do nothing in case of error
             assert true;
@@ -60,8 +62,9 @@ public class MeepMeepVisualizer {
                 //.setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_OFFICIAL) //Default
                 //.setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_ADI_DARK) //Default Dark
 
-                .setBackground(darkFieldImage) //Custom Dark
+                //.setBackground(darkFieldImage) //Custom Dark
                 //.setBackground(lightFieldImage) //Custom Light
+                .setBackground(realisticFieldImage) //Custom Realistic
 
                 // Set theme
                 .setTheme(new ColorSchemeRedDark())
