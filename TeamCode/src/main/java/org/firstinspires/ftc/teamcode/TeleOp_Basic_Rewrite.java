@@ -13,6 +13,16 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+/**
+ * Simple TeleOp base method, build season code on top of this.
+ *
+ * @author Aman Anas
+ * @author Gabrian Chua
+ * @author Nathan Battle
+ *
+ * @version October 2021
+ *
+ */
 
 @TeleOp(name="Basic Controls TeleOp", group="Apex Robotics 3916")
 //@Disabled
@@ -40,8 +50,6 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
         boolean precisionModeEnabled = false;
 
 
-
-
         //Wait for the driver to hit Start
         waitForStart();
 
@@ -63,16 +71,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
                 precisionModeEnabled = false;
             }
 
-            //This next section uses some janky math magic to correct for the dead zone. Feel free to simplify it if you can.
-            /*
-                How it works:
-                    First, it removes the dead zone, either subtracting it (from a positive input) or adding it (to a negative input).
-                    It does this by multiplying the dead zone by the input divided by the abs val of the input, effectively multiplying by 1 for a positive input,
-                        or multiplying by -1 for a negative input.
-                    After removing the dead zone, it rescales the value by dividing by 1 minus the dead zone, which ensures that full inputs produce full power,
-                        zero value inputs (at or below the dead zone) are at zero, and everything in between is scaled proportionally.
-                    Direction inversions and Precision Mode are implemented after this correction for simplicity.
-             */
+
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = bot.correctDeadZone(rightX);
@@ -101,7 +100,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
                 x = 0;
             }
 
-            //Send the X, Y, and rotation (Z) to the mecanum method
+            //Send the X, Y, and rotation (Z) to the mecanum drive method
             bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
 
 
