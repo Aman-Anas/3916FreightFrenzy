@@ -64,44 +64,38 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
 
-            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                precisionModeEnabled = true;
-            }
-            else{
-                precisionModeEnabled = false;
-            }
-
 
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = bot.correctDeadZone(rightX);
-                if (precisionModeEnabled) {
-                    z *= -1 * TeleOpConfig.PRECISION_TURN_MULTIPLIER;
-                }
+
             } else {
                 z = 0;
             }
             // Forward/Back Drive
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
                 y = bot.correctDeadZone(leftY);
-                if (precisionModeEnabled) {
-                    y *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
-                }
+
             } else {
                 y = 0;
             }
             // Left/Right Strafe
             if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 x = bot.correctDeadZone(leftX);
-                if (precisionModeEnabled) {
-                    x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
-                }
+
             } else {
                 x = 0;
             }
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
+
+            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+                bot.driveRobot(x, y, z,true);
+            }
+            else{
+                bot.driveRobot(x, y, z,false);
+            }
+
 
 
             /*

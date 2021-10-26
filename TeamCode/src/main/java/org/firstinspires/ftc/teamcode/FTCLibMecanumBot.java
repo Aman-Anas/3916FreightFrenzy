@@ -75,6 +75,20 @@ public class FTCLibMecanumBot {
         return (input - (TeleOpConfig.STICK_DEAD_ZONE * input / Math.abs(input))) / (1.0 - TeleOpConfig.STICK_DEAD_ZONE);
     }
 
+    public void driveRobot (double x, double y, double z, boolean precisionMode){
+
+        if (precisionMode){
+            x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            y *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            z *= TeleOpConfig.PRECISION_TURN_MULTIPLIER;
+
+        }
+
+        z *= -1;
+        mecanumDrivetrain.driveRobotCentric(x,y,z);
+
+    }
+
     /**
      * initialize drivetrain
      * @param hw - HardwareMap supplied from drive class
