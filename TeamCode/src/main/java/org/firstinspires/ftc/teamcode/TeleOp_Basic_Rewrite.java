@@ -47,8 +47,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
-        boolean precisionModeEnabled = false;
-
+        boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -88,13 +87,8 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             }
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
+            bot.driveRobot(x, y, z, precisionMode);
 
-            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                bot.driveRobot(x, y, z,true);
-            }
-            else{
-                bot.driveRobot(x, y, z,false);
-            }
 
 
 
