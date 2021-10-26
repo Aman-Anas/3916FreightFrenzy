@@ -47,7 +47,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
-        boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
+
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -62,7 +62,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             double leftY = Gamepad1.getLeftY();
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
-
+            boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
 
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
