@@ -76,7 +76,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = bot.correctDeadZone(rightX);
                 if (precisionModeEnabled) {
-                    z = z * TeleOpConfig.PRECISION_TURN_MULTIPLIER;
+                    z *= -1 * TeleOpConfig.PRECISION_TURN_MULTIPLIER;
                 }
             } else {
                 z = 0;
