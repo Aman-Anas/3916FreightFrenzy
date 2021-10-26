@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.vision;
 
-import org.firstinspires.ftc.teamcode.TeleOpConfig;
+import org.firstinspires.ftc.teamcode.vision.VisionConfig;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -29,13 +29,13 @@ public class RingDeterminationPipeline extends OpenCvPipeline {
     /*
      * The core values which define the location and size of the sample regions
      */
-    public static Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(TeleOpConfig.ANCHOR_POINT_X,TeleOpConfig.ANCHOR_POINT_Y);
+    public static Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(VisionConfig.ANCHOR_POINT_X,VisionConfig.ANCHOR_POINT_Y);
 
-    public static int REGION_WIDTH = (int)TeleOpConfig.REGION_WIDTH_X;
-    public static int REGION_HEIGHT = (int)TeleOpConfig.REGION_HEIGHT_Y;
+    public static int REGION_WIDTH = (int)VisionConfig.REGION_WIDTH_X;
+    public static int REGION_HEIGHT = (int)VisionConfig.REGION_HEIGHT_Y;
 
-    public int FOUR_RING_THRESHOLD = (int)TeleOpConfig.FOUR_RING_THRESHOLD_CONFIG;
-    public int ONE_RING_THRESHOLD = (int)TeleOpConfig.ONE_RING_THRESHOLD_CONFIG;
+    public int FOUR_RING_THRESHOLD = (int)VisionConfig.FOUR_RING_THRESHOLD_CONFIG;
+    public int ONE_RING_THRESHOLD = (int)VisionConfig.ONE_RING_THRESHOLD_CONFIG;
 
     Point region1_pointA = new Point(
             REGION1_TOPLEFT_ANCHOR_POINT.x,
