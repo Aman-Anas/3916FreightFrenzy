@@ -1,0 +1,105 @@
+---
+startPose:
+  x: -35.0
+  y: -60.0
+  heading: 1.5707963267948966
+startTangent: 0.0
+waypoints:
+- position:
+    x: -60.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 45.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -37.5
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "LINEAR"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 45.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -37.5
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "LINEAR"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 45.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -37.5
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "LINEAR"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 45.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -37.5
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "LINEAR"
+resolution: 1.0
+version: 1
