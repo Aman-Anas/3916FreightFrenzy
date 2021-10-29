@@ -1,6 +1,7 @@
 package com.example.meepmeepvisualizer;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
@@ -34,15 +35,16 @@ public class MeepMeepVisualizer {
 
                 // Set path for bot to follow
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
+                        drive.trajectorySequenceBuilder(new Pose2d(0, 56, 0))
+                                //.strafeRight(10)
+                                //.forward(30)
+                                .splineToConstantHeading(new Vector2d(4,43),0)
+                                .splineToConstantHeading(new Vector2d(30,43),0)
+                                .splineToSplineHeading(new Pose2d(45,47, Math.toRadians(30)), Math.toRadians(30))
+                                .waitSeconds(0.2)
+                                .splineToSplineHeading(new Pose2d(30,42,0),Math.toRadians(185))
+                                .splineToSplineHeading(new Pose2d(5,42,Math.toRadians(45)),0)
+                                
                                 .build()
                 );
 
