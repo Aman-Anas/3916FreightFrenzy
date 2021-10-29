@@ -1,0 +1,111 @@
+---
+startPose:
+  x: -35.0
+  y: -63.0
+  heading: 1.5707963267948966
+startTangent: 0.0
+waypoints:
+- position:
+    x: -55.0
+    y: -53.0
+  heading: 1.5707963267948966
+  tangent: 0.0
+  interpolationType: "LINEAR"
+- position:
+    x: -30.0
+    y: -58.0
+  heading: -1.5707963267948966
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -11.0
+    y: -47.0
+  heading: -1.5707963267948966
+  tangent: -1.3962634015954636
+  interpolationType: "LINEAR"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 40.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -45.0
+  heading: -1.5707963267948966
+  tangent: -1.3962634015954636
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 40.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -45.0
+  heading: -1.5707963267948966
+  tangent: -1.3962634015954636
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 40.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: -12.5
+    y: -45.0
+  heading: -1.5707963267948966
+  tangent: -1.3962634015954636
+  interpolationType: "SPLINE"
+- position:
+    x: 0.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+- position:
+    x: 40.0
+    y: -60.0
+  heading: 0.0
+  tangent: 0.0
+  interpolationType: "SPLINE"
+resolution: 1.0
+version: 1
