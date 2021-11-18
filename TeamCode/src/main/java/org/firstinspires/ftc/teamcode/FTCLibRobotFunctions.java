@@ -34,6 +34,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
 
+    public MotorEx slideMotor;
+    public MotorEx intakeMotor;
+    public MotorEx duckMotor;
+
 
 
     //initialize motors and servos
@@ -43,13 +47,34 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
 
+        slideMotor = new MotorEx(hw, "slide");
+        slideMotor.setRunMode(Motor.RunMode.RawPower);
+        slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        intakeMotor = new MotorEx(hw, "intake");
+        intakeMotor.setRunMode(Motor.RunMode.RawPower);
+        intakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        duckMotor = new MotorEx(hw, "duck motor");
+        duckMotor.setRunMode(Motor.RunMode.RawPower);
+        duckMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
 
+    public void runIntakeMotor(double speed) {
+        intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
+    }
 
+    public void runSlideMotor(double speed) {
+        slideMotor.set(speed*(TeleOpConfig.LINEAR_SLIDE_MULTIPLIER));
+    }
+
+    public void runDuckMotor(double speed) {
+        duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
+    }
 
 
     /* Example:

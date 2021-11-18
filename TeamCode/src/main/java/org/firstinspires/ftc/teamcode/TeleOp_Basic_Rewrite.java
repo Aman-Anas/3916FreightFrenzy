@@ -19,6 +19,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * @author Aman Anas
  * @author Gabrian Chua
  * @author Nathan Battle
+ * @author Jason Armbruster
+ * @author Jude Naramor
  *
  * @version October 2021
  *
@@ -97,11 +99,26 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             */
 
             //Get stick inputs
-
+            leftY = Gamepad2.getLeftY();
+            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
+                leftY = bot.correctDeadZone(leftY);
+            } else {
+                leftY = 0;
+            }
 
             //Insert gamepad 2 code here
+            if (Gamepad2.getButton(GamepadKeys.Button.Y)) {
+                bot.runIntakeMotor(1);
+            } else {
+                bot.runIntakeMotor(0);
+            }
 
-
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                bot.runDuckMotor(1);
+            } else {
+                bot.runDuckMotor(0);
+            }
+            bot.runSlideMotor(leftY);
 
 
             /*

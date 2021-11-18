@@ -10,5 +10,7 @@ public class TeleOpConfig {
     public static double PRECISION_POWER_MULTIPLIER = 0.5; //Multiplier for motor power (for precision mode)
     public static double PRECISION_TURN_MULTIPLIER = 0.5; // Multiplier for turning speed
     public static double STICK_DEAD_ZONE = 0.03;
-    
+    public static double LINEAR_SLIDE_MULTIPLIER = 0.5; // This is a dummy variable, I have no clue what this should be
+    public static double INTAKE_MOTOR_MULTIPLIER = 0.5; // idk does stuff ig, might work in the future when I'm not here
+    public static double DUCK_MOTOR_MULTIPLIER = 0.5; // I dont know if I have said this before, but idk why this is here
 }
