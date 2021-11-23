@@ -115,6 +115,10 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             //Insert gamepad 2 code here
 
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                //Red Side
+                bot.runDuckMotor(-1);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+                //Blue Side
                 bot.runDuckMotor(1);
             } else {
                 bot.runDuckMotor(0);
