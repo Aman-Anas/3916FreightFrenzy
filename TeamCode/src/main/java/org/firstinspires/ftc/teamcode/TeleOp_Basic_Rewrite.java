@@ -105,13 +105,14 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             } else {
                 leftY = 0;
             }
+            double rightY = Gamepad2.getRightY();
+            if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
+                rightY = bot.correctDeadZone(rightY);
+            } else {
+                rightY = 0;
+            }
 
             //Insert gamepad 2 code here
-            if (Gamepad2.getButton(GamepadKeys.Button.Y)) {
-                bot.runIntakeMotor(1);
-            } else {
-                bot.runIntakeMotor(0);
-            }
 
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.runDuckMotor(1);
@@ -119,6 +120,8 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
                 bot.runDuckMotor(0);
             }
             bot.runSlideMotor(leftY);
+            bot.runIntakeMotor(rightY);
+
 
 
             /*
