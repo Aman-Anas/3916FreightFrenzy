@@ -15,7 +15,9 @@ import org.opencv.engine.OpenCVEngineInterface;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 /**
- *
+ * Autonomous Path
+ * @author Aman Anas
+ * @author Nathan Battle
  */
 
 @Autonomous(name="Blue_2_NoDuck", group="Apex Robotics 3916")
