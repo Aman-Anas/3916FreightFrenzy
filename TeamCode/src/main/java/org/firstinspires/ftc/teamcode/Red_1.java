@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.CameraFunctions;
 import org.firstinspires.ftc.teamcode.vision.RingDeterminationPipeline;
 import org.opencv.engine.OpenCVEngineInterface;
@@ -37,13 +38,15 @@ public class Red_1 extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        Trajectory traj = drive.trajectoryBuilder(new Pose2d(-35.0, -63.0, 1.5707963267948966))
+        TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d(-35.0, -63.0, 1.5707963267948966))
                 .splineToLinearHeading(new Pose2d(-55.0, -53.0, 1.5707963267948966), 0.0)
+                .waitSeconds(0.5)
                 .splineToSplineHeading(new Pose2d(-30.0, -58.0, -1.5707963267948966), 0.0)
                 .splineToLinearHeading(new Pose2d(-11.0, -47.0, -1.5707963267948966), 0.0)
                 .splineToSplineHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(41.0, -52.0, 0.0), 0.0)
+                .waitSeconds(0.2)
                 .splineToLinearHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(-3.0, -46.0, -1.5707963267948966), 0.0)
@@ -52,6 +55,7 @@ public class Red_1 extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(41.0, -52.0, 0.0), 0.0)
+                .waitSeconds(0.2)
                 .splineToLinearHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(-3.0, -46.0, -1.5707963267948966), 0.0)
@@ -60,6 +64,7 @@ public class Red_1 extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(41.0, -52.0, 0.0), 0.0)
+                .waitSeconds(0.2)
                 .splineToLinearHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(-12.5, -46.0, -1.5707963267948966), 0.0)
@@ -68,6 +73,7 @@ public class Red_1 extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(41.0, -52.0, 0.0), 0.0)
+                .waitSeconds(0.2)
                 .splineToLinearHeading(new Pose2d(38.0, -46.0, 0.0), 0.0)
                 .splineToLinearHeading(new Pose2d(8.0, -46.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(-12.5, -46.0, -1.5707963267948966), 0.0)
@@ -92,7 +98,7 @@ public class Red_1 extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()){
 
             //Follow the trajectory we defined earlier
-            drive.followTrajectory(traj);
+            drive.followTrajectorySequence(traj);
 
             //wait this long after move
             sleep(2000);

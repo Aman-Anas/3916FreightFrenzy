@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.CameraFunctions;
 import org.firstinspires.ftc.teamcode.vision.RingDeterminationPipeline;
 import org.opencv.engine.OpenCVEngineInterface;
@@ -37,7 +38,7 @@ public class Blue_2_NoDuck extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        Trajectory traj = drive.trajectoryBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
+        TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
                 .splineToLinearHeading(new Pose2d(10.0, 61.0, -1.5707963267948966), -2.0943951023931953)
                 .splineToSplineHeading(new Pose2d(2.0, 40.0, -2.356194490192345), -1.7453292519943295)
                 .splineToLinearHeading(new Pose2d(8.0, 38.0, -2.356194490192345), 0.0)
@@ -60,7 +61,7 @@ public class Blue_2_NoDuck extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()){
 
             //Follow the trajectory we defined earlier
-            drive.followTrajectory(traj);
+            drive.followTrajectorySequence(traj);
 
             //wait this long after move
             sleep(2000);
