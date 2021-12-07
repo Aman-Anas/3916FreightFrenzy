@@ -89,7 +89,7 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             }
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.driveRobot(x, y, z, precisionMode);
+            bot.driveRobot(-x, -y, z, precisionMode);
 
 
 
@@ -122,6 +122,13 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
                 bot.runDuckMotor(1);
             } else {
                 bot.runDuckMotor(0);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+                bot.runIntakeServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.Y)) {
+                bot.runIntakeServo(-0.5);
+            } else {
+                bot.runIntakeServo(0);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);

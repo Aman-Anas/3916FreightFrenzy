@@ -38,8 +38,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx slideMotor;
     public MotorEx intakeMotor;
     public MotorEx duckMotor;
-    public CRServo intake;
-
+    public SimpleServo intakeBoxServo;
 
 
     //initialize motors and servos
@@ -48,7 +47,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
-        intake = hw.get(CRServo.class, "3916 Servo");
+
+        intakeBoxServo = new SimpleServo(hw, "intake box", 180, 0);
 
         slideMotor = new MotorEx(hw, "slide");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
@@ -78,9 +78,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void runDuckMotor(double speed) {
         duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
     }
-    public void activateIntake(){
-        intake.setPower(0);//change this to something from 0-1, depending on where the servo needs to be, this is just for fine tuning
+    public void runIntakeServo(double speed){
+        intakeBoxServo.rotateByAngle(speed*(TeleOpConfig.INTAKE_BOX_MULTIPLIER));
     }
+
 
 
     /* Example:

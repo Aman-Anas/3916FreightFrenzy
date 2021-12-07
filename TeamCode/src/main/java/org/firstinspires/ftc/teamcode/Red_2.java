@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Nathan Battle
  */
 
-@Autonomous(name="Red_1", group="Apex Robotics 3916")
+@Autonomous(name="Red_2", group="Apex Robotics 3916")
 public class Red_2 extends LinearOpMode {
 
     //CameraFunctions botCamera = new CameraFunctions();
