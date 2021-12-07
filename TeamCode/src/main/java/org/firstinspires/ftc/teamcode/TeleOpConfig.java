@@ -13,5 +13,6 @@ public class TeleOpConfig {
     public static double LINEAR_SLIDE_MULTIPLIER = 0.5; // This is a dummy variable, I have no clue what this should be
     public static double INTAKE_MOTOR_MULTIPLIER = 0.5; // idk does stuff ig, might work in the future when I'm not here
     public static double DUCK_MOTOR_MULTIPLIER = 1;
-    public static double INTAKE_BOX_MULTIPLIER = 0.5;
+    public static double INTAKE_BUCKET_MULTIPLIER = 0.5;
+    public static double INTAKE_ARM_MULTIPLIER = 0.5;
 }

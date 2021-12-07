@@ -123,12 +123,19 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             } else {
                 bot.runDuckMotor(0);
             }
-            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
-                bot.runIntakeServo(0.5);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.Y)) {
-                bot.runIntakeServo(-0.5);
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
+                bot.runIntakeBucketServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+                bot.runIntakeBucketServo(-0.5);
             } else {
-                bot.runIntakeServo(0);
+                bot.runIntakeBucketServo(0);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
+                bot.runIntakeArmServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
+                bot.runIntakeArmServo(-0.5);
+            } else {
+                bot.runIntakeArmServo(0);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
