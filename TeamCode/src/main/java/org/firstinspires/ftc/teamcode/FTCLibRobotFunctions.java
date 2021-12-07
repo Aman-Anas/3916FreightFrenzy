@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * -- TEAM 3916 --
@@ -37,6 +38,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx slideMotor;
     public MotorEx intakeMotor;
     public MotorEx duckMotor;
+    public CRServo intake;
 
 
 
@@ -46,6 +48,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
+        intake = hw.get(CRServo.class, "3916 Servo");
 
         slideMotor = new MotorEx(hw, "slide");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
@@ -74,6 +77,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     public void runDuckMotor(double speed) {
         duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
+    }
+    public void activateIntake(){
+        intake.setPower(0);//change this to something from 0-1, depending on where the servo needs to be, this is just for fine tuning
     }
 
 
