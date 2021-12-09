@@ -133,16 +133,16 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.runIntakeBucketServo(0.5);
+                bot.runIntakeBucketServo(1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
-                bot.runIntakeBucketServo(-0.5);
+                bot.runIntakeBucketServo(-1);
             } else {
                 bot.runIntakeBucketServo(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.runIntakeArmServo(0.5);
+                bot.runIntakeArmServo(1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeArmServo(-0.5);
+                bot.runIntakeArmServo(-1);
             } else {
                 bot.runIntakeArmServo(0);
             }
