@@ -49,9 +49,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
 
-        intakeBucketServo = new SimpleServo(hw, "intake bucket", 180, 0);
+        intakeBucketServo = new SimpleServo(hw, "intake bucket", 0, 180);
 
-        intakeArmServo = new SimpleServo(hw, "intake arm", 180, 0);
+        intakeArmServo = new SimpleServo(hw, "intake arm", 0, 180);
 
         slideMotor = new MotorEx(hw, "slide");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
