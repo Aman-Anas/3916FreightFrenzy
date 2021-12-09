@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -38,8 +39,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx slideMotor;
     public MotorEx intakeMotor;
     public MotorEx duckMotor;
-    public SimpleServo intakeBucketServo;
-    public SimpleServo intakeArmServo;
+    public ServoEx intakeBucketServo;
+    public ServoEx intakeArmServo;
 
 
     //initialize motors and servos
