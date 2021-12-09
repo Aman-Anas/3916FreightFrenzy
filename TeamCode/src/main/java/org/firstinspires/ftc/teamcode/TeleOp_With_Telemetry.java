@@ -132,9 +132,9 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             } else {
                 bot.runDuckMotor(0);
             }
-            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
+            if (Gamepad2.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
                 bot.runIntakeBucketServo(1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+            } else if (Gamepad2.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
                 bot.runIntakeBucketServo(-1);
             } else {
                 bot.runIntakeBucketServo(0);
@@ -159,6 +159,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Bucket Servo", "pos: "+bot.intakeBucketServo.getPosition());
             telemetry.update();
 
         }

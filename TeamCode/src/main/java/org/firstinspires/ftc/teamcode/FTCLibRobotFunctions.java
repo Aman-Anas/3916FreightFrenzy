@@ -82,10 +82,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
     }
     public void runIntakeBucketServo(double speed){
-        intakeBucketServo.rotateBy(speed*(TeleOpConfig.INTAKE_BUCKET_MULTIPLIER));
+        intakeBucketServo.setPosition(speed*(TeleOpConfig.INTAKE_BUCKET_MULTIPLIER));
     }
     public void runIntakeArmServo(double speed){
-        intakeArmServo.rotateBy(speed*(TeleOpConfig.INTAKE_ARM_MULTIPLIER));
+        intakeArmServo.setPosition(speed*(TeleOpConfig.INTAKE_ARM_MULTIPLIER));
+
     }
 
 
