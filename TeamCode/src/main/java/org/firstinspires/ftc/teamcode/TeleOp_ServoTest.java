@@ -132,15 +132,15 @@ public class TeleOp_ServoTest extends LinearOpMode {
             } else {
                 bot.runDuckMotor(0);
             }
-            if (Gamepad2.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                bot.runIntakeBucketServo(1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-                bot.runIntakeBucketServo(0);
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
+                bot.intakeBucketServo.rotateBy(.05);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
+                bot.intakeBucketServo.rotateBy(-.05);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.runIntakeArmServo(1);
+                bot.intakeArmServo.rotateBy(.05);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeArmServo(0);
+                bot.intakeArmServo.rotateBy(-.05);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
@@ -156,6 +156,7 @@ public class TeleOp_ServoTest extends LinearOpMode {
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Bucket Servo", "pos: "+bot.intakeBucketServo.getPosition());
+            telemetry.addData("Arm Servo", "pos: "+bot.intakeArmServo.getPosition());
             telemetry.update();
 
         }
