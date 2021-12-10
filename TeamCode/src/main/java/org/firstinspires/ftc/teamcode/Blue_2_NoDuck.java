@@ -34,18 +34,22 @@ public class Blue_2_NoDuck extends LinearOpMode {
         FtcDashboard dashboard = FtcDashboard.getInstance();
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
                 .splineToLinearHeading(new Pose2d(10.0, 61.0, -1.5707963267948966), -2.0943951023931953)
                 .splineToSplineHeading(new Pose2d(2.0, 40.0, -2.356194490192345), -1.7453292519943295)
+                .build();
+
+        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(2.0, 40.0, -2.356194490192345))
                 .splineToLinearHeading(new Pose2d(8.0, 38.0, -2.356194490192345), 0.0)
                 .splineToSplineHeading(new Pose2d(10.0, 38.0, 3.141592653589793), 0.0)
-                .splineToLinearHeading(new Pose2d(62.0, 38.0, 3.141592653589793), 0.0)
+                .lineToLinearHeading(new Pose2d(62.0, 38.0, 3.141592653589793))
                 .build();
 
 
@@ -63,7 +67,9 @@ public class Blue_2_NoDuck extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()){
 
             //Follow the trajectory we defined earlier
-            drive.followTrajectorySequence(traj);
+            drive.followTrajectorySequence(traj1);
+            // deliver freight
+            drive.followTrajectorySequence(traj2);
 
             //wait this long after move
             sleep(2000);
