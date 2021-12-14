@@ -27,9 +27,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 // This is just a copy of TeleOp_Basic_Rewrite with telemetry added
-@TeleOp(name="Basic Controls TeleOp With Telemetry", group="Apex Robotics 3916")
+@TeleOp(name="Testing servos", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_With_Telemetry extends LinearOpMode {
+public class TeleOp_ServoTest extends LinearOpMode {
 
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
@@ -123,24 +123,24 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
 
             //Insert gamepad 2 code here
 
-            if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 //Red Side
                 bot.runDuckMotor(-1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 //Blue Side
                 bot.runDuckMotor(1);
             } else {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.runIntakeBucketServo(.35);
+                bot.intakeBucketServo.rotateBy(.001);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeBucketServo(0.55);
+                bot.intakeBucketServo.rotateBy(-.001);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.runIntakeArmServo(0.276);
+                bot.intakeArmServo.rotateBy(.001);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
-                bot.runIntakeArmServo(0.6);
+                bot.intakeArmServo.rotateBy(-.001);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
@@ -151,10 +151,12 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                ////////////////////////// TELEMETRY //////////////////////////
             */
             telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
-            telemetry.addData("Front Left Motor", "pos: "+bot.motor_frontLeft.encoder.getPosition());
+            /*telemetry.addData("Front Left Motor", "pos: "+bot.motor_frontLeft.encoder.getPosition());
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
-            telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());*/
+            telemetry.addData("Bucket Servo", "pos: "+bot.intakeBucketServo.getPosition());
+            telemetry.addData("Arm Servo", "pos: "+bot.intakeArmServo.getPosition());
             telemetry.update();
 
         }
