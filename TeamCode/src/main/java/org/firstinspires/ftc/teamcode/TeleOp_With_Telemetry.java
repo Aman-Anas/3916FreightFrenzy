@@ -123,24 +123,24 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
 
             //Insert gamepad 2 code here
 
-            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+            if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 //Red Side
                 bot.runDuckMotor(-1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+            } else if (Gamepad2.getButton(GamepadKeys.Button.X)) {
                 //Blue Side
                 bot.runDuckMotor(1);
             } else {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.runIntakeBucketServo(1);
+                bot.runIntakeBucketServo(.35);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeBucketServo(0);
+                bot.runIntakeBucketServo(0.55);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.runIntakeArmServo(1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeArmServo(0);
+                bot.runIntakeArmServo(0.276);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+                bot.runIntakeArmServo(0.6);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);

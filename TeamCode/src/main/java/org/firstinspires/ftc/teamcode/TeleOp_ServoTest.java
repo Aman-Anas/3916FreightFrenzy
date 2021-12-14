@@ -133,14 +133,14 @@ public class TeleOp_ServoTest extends LinearOpMode {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.intakeBucketServo.rotateBy(.05);
+                bot.intakeBucketServo.rotateBy(.001);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.intakeBucketServo.rotateBy(-.05);
+                bot.intakeBucketServo.rotateBy(-.001);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.intakeArmServo.rotateBy(.05);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.intakeArmServo.rotateBy(-.05);
+                bot.intakeArmServo.rotateBy(.001);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+                bot.intakeArmServo.rotateBy(-.001);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
@@ -151,10 +151,10 @@ public class TeleOp_ServoTest extends LinearOpMode {
                ////////////////////////// TELEMETRY //////////////////////////
             */
             telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
-            telemetry.addData("Front Left Motor", "pos: "+bot.motor_frontLeft.encoder.getPosition());
+            /*telemetry.addData("Front Left Motor", "pos: "+bot.motor_frontLeft.encoder.getPosition());
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
-            telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());*/
             telemetry.addData("Bucket Servo", "pos: "+bot.intakeBucketServo.getPosition());
             telemetry.addData("Arm Servo", "pos: "+bot.intakeArmServo.getPosition());
             telemetry.update();

@@ -52,7 +52,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
         intakeBucketServo = new SimpleServo(hw, "intake bucket", 0, 180);
 
-        intakeArmServo = new SimpleServo(hw, "intake arm", 0, 180);
+        intakeArmServo = new SimpleServo(hw, "intake arm", 0, 270);
 
         slideMotor = new MotorEx(hw, "slide");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
