@@ -41,6 +41,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx duckMotor;
     public ServoEx intakeBucketServo;
     public ServoEx intakeArmServo;
+    public ServoEx forearmServo;
+    public ServoEx clawServo;
 
 
     //initialize motors and servos
@@ -53,6 +55,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeBucketServo = new SimpleServo(hw, "intake bucket", 0, 180);
 
         intakeArmServo = new SimpleServo(hw, "intake arm", 0, 270);
+
+        forearmServo = new SimpleServo(hw, "forearm servo", 0, 180);
+
+        clawServo = new SimpleServo(hw, "claw servo", 0, 180);
 
         slideMotor = new MotorEx(hw, "slide");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
@@ -87,7 +93,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
     public void runIntakeArmServo(double speed){
         intakeArmServo.setPosition(speed*(TeleOpConfig.INTAKE_ARM_MULTIPLIER));
+    }
 
+    public void runForearmServo(double speed) {
+        forearmServo.setPosition(speed*(TeleOpConfig.FOREARM_SERVO_MULTIPLIER));
+    }
+
+    public void runClawServo(double speed) {
+        clawServo.setPosition(speed*(TeleOpConfig.CLAW_SERVO_MULTIPLIER));
     }
 
 

@@ -15,4 +15,6 @@ public class TeleOpConfig {
     public static double DUCK_MOTOR_MULTIPLIER = 1;
     public static double INTAKE_BUCKET_MULTIPLIER = 1;
     public static double INTAKE_ARM_MULTIPLIER = 1;
+    public static double FOREARM_SERVO_MULTIPLIER = 1;
+    public static double CLAW_SERVO_MULTIPLIER = 1;
 }

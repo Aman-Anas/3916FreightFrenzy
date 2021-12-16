@@ -21,7 +21,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * @author Nathan Battle
  * @author Jason Armbruster
  * @author Jude Naramor
- *
+ * @author Andrew Lynch
+ * @author Alek Sun
  * @version October 2021
  *
  */
@@ -133,14 +134,18 @@ public class TeleOp_ServoTest extends LinearOpMode {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.intakeBucketServo.rotateBy(.001);
+                //bot.intakeBucketServo.rotateBy(.001);
+                bot.forearmServo.rotateBy(.001);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.intakeBucketServo.rotateBy(-.001);
+                //bot.intakeBucketServo.rotateBy(-.001);
+                bot.forearmServo.rotateBy(-.001);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.intakeArmServo.rotateBy(.001);
+                //bot.intakeArmServo.rotateBy(.001);
+                bot.clawServo.rotateBy(-.001);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
-                bot.intakeArmServo.rotateBy(-.001);
+                //bot.intakeArmServo.rotateBy(-.001);
+                bot.clawServo.rotateBy(-.001);
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
@@ -157,6 +162,8 @@ public class TeleOp_ServoTest extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());*/
             telemetry.addData("Bucket Servo", "pos: "+bot.intakeBucketServo.getPosition());
             telemetry.addData("Arm Servo", "pos: "+bot.intakeArmServo.getPosition());
+            telemetry.addData("Forearm Servo", "pos: " + bot.forearmServo.getPosition());
+            telemetry.addData("Claw Servo", "pos: "+bot.clawServo.getPosition());
             telemetry.update();
 
         }
