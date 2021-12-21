@@ -46,6 +46,8 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
 
+        bot.slideMotor.encoder.reset();
+
         //Initialize working variables
         double x = 0;
         double y = 0;
