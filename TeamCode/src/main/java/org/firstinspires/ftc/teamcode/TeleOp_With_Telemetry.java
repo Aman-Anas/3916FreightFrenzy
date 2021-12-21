@@ -26,8 +26,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *
  */
 
-// This is just a copy of TeleOp_Basic_Rewrite with telemetry added
-@TeleOp(name="Basic Controls TeleOp With Telemetry", group="Apex Robotics 3916")
+// This is the main TeleOp, with full bot functionality as well as telemetry
+@TeleOp(name="TeleOp With Telemetry", group="Apex Robotics 3916")
 //@Disabled
 public class TeleOp_With_Telemetry extends LinearOpMode {
 
@@ -50,7 +50,9 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
-
+        boolean bucketLift = false;
+        double slidePos = 0;
+        double prevSlidePos = 0;
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -70,21 +72,18 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = bot.correctDeadZone(rightX);
-
             } else {
                 z = 0;
             }
             // Forward/Back Drive
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
                 y = bot.correctDeadZone(leftY);
-
             } else {
                 y = 0;
             }
             // Left/Right Strafe
             if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 x = bot.correctDeadZone(leftX);
-
             } else {
                 x = 0;
             }
@@ -110,19 +109,32 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             //Get stick inputs
             leftY = Gamepad2.getLeftY();
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                leftY = bot.correctDeadZone(leftY);
+                leftY = bot.correctDeadZone(leftY) * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
             } else {
                 leftY = 0;
             }
+
+            if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && leftY > 0) {
+                leftY = 0;
+            }
+            if (slidePos == 0 && leftY > 0) {
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_LIFT_ANGLE);
+            }
+            /*if (bot.slideStopper.isPressed()) {
+                bot.slideMotor.encoder.reset();
+                if (leftY < 0) {
+                    leftY = 0;
+                }
+            }*/
+
             double rightY = Gamepad2.getRightY();
             if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                rightY = bot.correctDeadZone(rightY);
+                rightY = bot.correctDeadZone(rightY) * TeleOpConfig.INTAKE_MOTOR_MULTIPLIER;
             } else {
                 rightY = 0;
             }
 
-            //Insert gamepad 2 code here
-
+            //Button inputs
             if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 //Red Side
                 bot.runDuckMotor(-1);
@@ -133,18 +145,29 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                 bot.runDuckMotor(0);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.runIntakeBucketServo(.35);
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.runIntakeBucketServo(0.55);
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-                bot.runIntakeArmServo(0.276);
+                bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
-                bot.runIntakeArmServo(0.6);
+                bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                bot.slideMotor.encoder.reset();
             }
             bot.runSlideMotor(leftY);
             bot.runIntakeMotor(rightY);
+            prevSlidePos = slidePos;
+            slidePos = bot.slideMotor.encoder.getPosition();
 
+            if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            }
+            else if (prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
+            }
 
 
             /*
@@ -155,8 +178,8 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Slide Motor", "pos: "+slidePos);
             telemetry.update();
-
         }
     }
 }

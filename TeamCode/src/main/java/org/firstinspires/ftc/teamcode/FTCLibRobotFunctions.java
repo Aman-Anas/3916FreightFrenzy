@@ -6,8 +6,10 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
  * -- TEAM 3916 --
@@ -36,13 +38,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
 
-    public MotorEx slideMotor;
-    public MotorEx intakeMotor;
-    public MotorEx duckMotor;
-    public ServoEx intakeBucketServo;
-    public ServoEx intakeArmServo;
-    public ServoEx forearmServo;
-    public ServoEx clawServo;
+    public MotorEx slideMotor, intakeMotor, duckMotor;
+    public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
+    public TouchSensor slideStopper;
 
 
     //initialize motors and servos
@@ -71,6 +69,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         duckMotor = new MotorEx(hw, "duck motor");
         duckMotor.setRunMode(Motor.RunMode.RawPower);
         duckMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        //slideStopper = hw.get(TouchSensor.class, "slide button");
     }
 
     /*
@@ -88,17 +88,16 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void runDuckMotor(double speed) {
         duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
     }
-    public void runIntakeBucketServo(double speed){
-        intakeBucketServo.setPosition(speed*(TeleOpConfig.INTAKE_BUCKET_MULTIPLIER));
+    public void runIntakeBucketServo(double pos){
+        intakeBucketServo.setPosition(pos);
     }
-    public void runIntakeArmServo(double speed){
-        intakeArmServo.setPosition(speed*(TeleOpConfig.INTAKE_ARM_MULTIPLIER));
+    public void runIntakeArmServo(double pos){
+        intakeArmServo.setPosition(pos);
     }
 
     public void runForearmServo(double speed) {
         forearmServo.setPosition(speed*(TeleOpConfig.FOREARM_SERVO_MULTIPLIER));
     }
-
     public void runClawServo(double speed) {
         clawServo.setPosition(speed*(TeleOpConfig.CLAW_SERVO_MULTIPLIER));
     }
