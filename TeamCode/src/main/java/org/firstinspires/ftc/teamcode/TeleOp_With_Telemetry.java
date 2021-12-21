@@ -116,7 +116,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                 leftY = 0;
             }
 
-            if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && leftY > 0) {
+            if ((slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && leftY > 0) || (slidePos <= 0 && leftY < 0)) {
                 leftY = 0;
             }
             if (slidePos == 0 && leftY > 0) {
