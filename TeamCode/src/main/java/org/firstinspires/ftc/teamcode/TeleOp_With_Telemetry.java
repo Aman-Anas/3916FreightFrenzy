@@ -54,7 +54,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         double z = 0;
         boolean bucketLift = false;
         double slidePos = 0;
-        double prevSlidePos = 0;
+        double prevSlidePos;
         boolean slideLimit;
 
         //Wait for the driver to hit Start
@@ -63,7 +63,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         while (opModeIsActive()) {
 
             //Sensor Inputs
-            slideLimit = bot.slideLimit.isPressed();
+            //slideLimit = bot.slideLimit.isPressed();
 
             /*
                ////////////////////////// GAMEPAD 1 //////////////////////////
@@ -126,12 +126,12 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             if (slidePos == 0 && leftY > 0) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_LIFT_ANGLE);
             }
-            if (slideLimit) {
+            /*if (slideLimit) {
                 bot.slideMotor.encoder.reset();
                 if (leftY < 0) {
                     leftY = 0;
                 }
-            }
+            }*/
 
             double rightY = Gamepad2.getRightY();
             if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
@@ -174,7 +174,6 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             else if (prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
             }
-
 
             /*
                ////////////////////////// TELEMETRY //////////////////////////
