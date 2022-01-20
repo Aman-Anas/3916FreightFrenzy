@@ -23,6 +23,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 @Autonomous(name="Red_2_NoDuck", group="Apex Robotics 3916")
 public class Red_2_NoDuck extends LinearOpMode {
 
+    double slidePos;
+    double prevSlidePos;
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
 
@@ -35,6 +37,9 @@ public class Red_2_NoDuck extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+
+        //bot.slideMotor.encoder.reset();
+        //slidePos = bot.slideMotor.encoder.getPosition();
 
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
@@ -69,6 +74,15 @@ public class Red_2_NoDuck extends LinearOpMode {
             //Follow the trajectory we defined earlier
             drive.followTrajectorySequence(traj1);
             // deliver freight
+            /*while (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
+                bot.runSlideMotor(1);
+                prevSlidePos = slidePos;
+                slidePos = bot.slideMotor.encoder.getPosition();
+                if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
+                    bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+                }
+            }
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);*/
             drive.followTrajectorySequence(traj2);
 
             //wait this long after move
