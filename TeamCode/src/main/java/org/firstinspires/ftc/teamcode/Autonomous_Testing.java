@@ -8,6 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.vision.CameraFunctions;
+import org.firstinspires.ftc.teamcode.vision.RingDeterminationPipeline;
+import org.opencv.engine.OpenCVEngineInterface;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 /**
  * Autonomous example/test class.
@@ -17,7 +21,8 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Autonomous(name="Autonomous Test", group="Apex Robotics 3916")
 public class Autonomous_Testing extends LinearOpMode {
 
-    VisionFunctions botCamera = new VisionFunctions();
+    CameraFunctions botCamera = new CameraFunctions();
+    RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,9 +31,10 @@ public class Autonomous_Testing extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         FtcDashboard dashboard = FtcDashboard.getInstance();
 
-
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        botCamera.initVision(hardwareMap);
+
+        //Initialize the camera and vision
+        botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
@@ -44,8 +50,8 @@ public class Autonomous_Testing extends LinearOpMode {
         waitForStart();
 
         //Cache the camera analysis and print it in telemetry
-        double objAnalysis = botCamera.getAnalysis();
-        String objPosition = botCamera.getPosition();
+        double objAnalysis = ringPipeline.getAnalysis();
+        String objPosition = ringPipeline.position.toString();
         telemetry.addData("Analysis: ", objAnalysis);
         telemetry.addData("Position: ", objPosition);
         telemetry.update();

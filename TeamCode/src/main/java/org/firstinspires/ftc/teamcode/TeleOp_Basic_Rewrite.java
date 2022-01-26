@@ -13,6 +13,18 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+/**
+ * Simple TeleOp base method, build season code on top of this.
+ *
+ * @author Aman Anas
+ * @author Gabrian Chua
+ * @author Nathan Battle
+ * @author Jason Armbruster
+ * @author Jude Naramor
+ *
+ * @version October 2021
+ *
+ */
 
 @TeleOp(name="Basic Controls TeleOp", group="Apex Robotics 3916")
 //@Disabled
@@ -37,9 +49,6 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
-        boolean precisionModeEnabled = false;
-
-
 
 
         //Wait for the driver to hit Start
@@ -55,54 +64,34 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             double leftY = Gamepad1.getLeftY();
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
+            boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
 
-            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                precisionModeEnabled = true;
-            }
-            else{
-                precisionModeEnabled = false;
-            }
-
-            //This next section uses some janky math magic to correct for the dead zone. Feel free to simplify it if you can.
-            /*
-                How it works:
-                    First, it removes the dead zone, either subtracting it (from a positive input) or adding it (to a negative input).
-                    It does this by multiplying the dead zone by the input divided by the abs val of the input, effectively multiplying by 1 for a positive input,
-                        or multiplying by -1 for a negative input.
-                    After removing the dead zone, it rescales the value by dividing by 1 minus the dead zone, which ensures that full inputs produce full power,
-                        zero value inputs (at or below the dead zone) are at zero, and everything in between is scaled proportionally.
-                    Direction inversions and Precision Mode are implemented after this correction for simplicity.
-             */
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = bot.correctDeadZone(rightX);
-                if (precisionModeEnabled) {
-                    z = z * TeleOpConfig.PRECISION_TURN_MULTIPLIER;
-                }
+
             } else {
                 z = 0;
             }
             // Forward/Back Drive
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
                 y = bot.correctDeadZone(leftY);
-                if (precisionModeEnabled) {
-                    y *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
-                }
+
             } else {
                 y = 0;
             }
             // Left/Right Strafe
             if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 x = bot.correctDeadZone(leftX);
-                if (precisionModeEnabled) {
-                    x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
-                }
+
             } else {
                 x = 0;
             }
 
-            //Send the X, Y, and rotation (Z) to the mecanum method
-            bot.mecanumDrivetrain.driveRobotCentric(x, y, z);
+            //Send the X, Y, and rotation (Z) to the mecanum drive method
+            bot.driveRobot(-x, -y, z, precisionMode);
+
+
 
 
             /*
@@ -110,10 +99,46 @@ public class TeleOp_Basic_Rewrite extends LinearOpMode {
             */
 
             //Get stick inputs
-
+            leftY = Gamepad2.getLeftY();
+            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
+                leftY = bot.correctDeadZone(leftY);
+            } else {
+                leftY = 0;
+            }
+            double rightY = Gamepad2.getRightY();
+            if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
+                rightY = bot.correctDeadZone(rightY);
+            } else {
+                rightY = 0;
+            }
 
             //Insert gamepad 2 code here
 
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                //Red Side
+                bot.runDuckMotor(-1);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+                //Blue Side
+                bot.runDuckMotor(1);
+            } else {
+                bot.runDuckMotor(0);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
+                bot.runIntakeBucketServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+                bot.runIntakeBucketServo(-0.5);
+            } else {
+                bot.runIntakeBucketServo(0);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
+                bot.runIntakeArmServo(0.5);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
+                bot.runIntakeArmServo(-0.5);
+            } else {
+                bot.runIntakeArmServo(0);
+            }
+            bot.runSlideMotor(leftY);
+            bot.runIntakeMotor(rightY);
 
 
 

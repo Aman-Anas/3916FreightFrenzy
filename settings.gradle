@@ -1,2 +1,4 @@
+include ':MeepMeepVisualizer'
+include ':MeepMeepVisualizer'
 include ':FtcRobotController'
 include ':TeamCode'

@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
  * -- TEAM 3916 --
@@ -34,6 +38,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
 
+    public MotorEx slideMotor, intakeMotor, duckMotor;
+    public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
+    //public TouchSensor slideLimit;
 
 
     //initialize motors and servos
@@ -43,12 +50,57 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);
 
+        intakeBucketServo = new SimpleServo(hw, "intake bucket", 0, 180);
+
+        intakeArmServo = new SimpleServo(hw, "intake arm", 0, 270);
+
+        forearmServo = new SimpleServo(hw, "forearm servo", 0, 180);
+
+        clawServo = new SimpleServo(hw, "claw servo", 0, 180);
+
+        slideMotor = new MotorEx(hw, "slide");
+        slideMotor.setRunMode(Motor.RunMode.RawPower);
+        slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        intakeMotor = new MotorEx(hw, "intake");
+        intakeMotor.setRunMode(Motor.RunMode.RawPower);
+        intakeMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        duckMotor = new MotorEx(hw, "duck motor");
+        duckMotor.setRunMode(Motor.RunMode.RawPower);
+        duckMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        //slideLimit = hw.get(TouchSensor.class, "limit switch");
     }
 
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
 
+    public void runIntakeMotor(double speed) {
+        intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
+    }
+
+    public void runSlideMotor(double speed) {
+        slideMotor.set(speed*(TeleOpConfig.LINEAR_SLIDE_MULTIPLIER));
+    }
+
+    public void runDuckMotor(double speed) {
+        duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
+    }
+    public void runIntakeBucketServo(double pos){
+        intakeBucketServo.setPosition(pos);
+    }
+    public void runIntakeArmServo(double pos){
+        intakeArmServo.setPosition(pos);
+    }
+
+    public void runForearmServo(double speed) {
+        forearmServo.setPosition(speed*(TeleOpConfig.FOREARM_SERVO_MULTIPLIER));
+    }
+    public void runClawServo(double speed) {
+        clawServo.setPosition(speed*(TeleOpConfig.CLAW_SERVO_MULTIPLIER));
+    }
 
 
 

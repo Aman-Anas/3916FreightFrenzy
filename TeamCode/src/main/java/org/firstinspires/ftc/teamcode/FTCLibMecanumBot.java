@@ -60,8 +60,33 @@ public class FTCLibMecanumBot {
     public MotorEx motor_backRight;
     public MecanumDrive mecanumDrivetrain;
 
+
+    //This next section uses some janky math magic to correct for the dead zone. Feel free to simplify it if you can.
+    /*
+                How it works:
+                    First, it removes the dead zone, either subtracting it (from a positive input) or adding it (to a negative input).
+                    It does this by multiplying the dead zone by the input divided by the abs val of the input, effectively multiplying by 1 for a positive input,
+                        or multiplying by -1 for a negative input.
+                    After removing the dead zone, it rescales the value by dividing by 1 minus the dead zone, which ensures that full inputs produce full power,
+                        zero value inputs (at or below the dead zone) are at zero, and everything in between is scaled proportionally.
+                    Direction inversions and Precision Mode are implemented after this correction for simplicity.
+             */
     public double correctDeadZone(double input){
         return (input - (TeleOpConfig.STICK_DEAD_ZONE * input / Math.abs(input))) / (1.0 - TeleOpConfig.STICK_DEAD_ZONE);
+    }
+
+    public void driveRobot (double x, double y, double z, boolean precisionMode){
+
+        if (precisionMode){
+            x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            y *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            z *= TeleOpConfig.PRECISION_TURN_MULTIPLIER;
+
+        }
+
+        z *= -1;
+        mecanumDrivetrain.driveRobotCentric(x,y,z);
+
     }
 
     /**

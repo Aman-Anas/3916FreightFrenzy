@@ -6,25 +6,21 @@ public class TeleOpConfig {
 
     //Variables to be tuned from FTCDashboard
 
+    //Drivetrain control tuning
     public static double PRECISION_POWER_MULTIPLIER = 0.5; //Multiplier for motor power (for precision mode)
-    public static double PRECISION_TURN_MULTIPLIER = 0.5; // Multiplier for turning speed
-
-    public static double STICK_DEAD_ZONE = 0.1;
-    public static double FLYWHEEL_KP = 25;
-    public static double FLYWHEEL_KI = 0;
-    public static double FLYWHEEL_KD = 10;
-    public static double WOBBLE_ARM_MULTIPLIER = 800.0;
-    public static double WOBBLE_SERVO_MULTIPLIER = 3.0;
-    public static double TRANSFER_SERVO_MULTIPLIER = 0.9;
-    public static double INTAKE_MULTIPLIER = 0.3;
-
-    public static double ANCHOR_POINT_X = 110;
-    public static double ANCHOR_POINT_Y = 245;
-    public static double REGION_WIDTH_X = 60;
-    public static double REGION_HEIGHT_Y = 24;
-
-    public static double FOUR_RING_THRESHOLD_CONFIG = 145;
-    public static double ONE_RING_THRESHOLD_CONFIG = 129;
-
-
+    public static double PRECISION_TURN_MULTIPLIER = 0.5; // Multiplier for turning speed (for precision mode)
+    public static double STICK_DEAD_ZONE = 0.03;
+    public static double LINEAR_SLIDE_MULTIPLIER = 1;
+    public static double INTAKE_MOTOR_MULTIPLIER = 0.5;
+    public static double DUCK_MOTOR_MULTIPLIER = 1;
+    public static double FOREARM_SERVO_MULTIPLIER = 1;
+    public static double CLAW_SERVO_MULTIPLIER = 1;
+    public static double BUCKET_SERVO_MAX = 0.515;
+    public static double BUCKET_SERVO_MIN = 0.273;
+    public static double GATE_SERVO_MAX = 0.6;
+    public static double GATE_SERVO_MIN = 0.276;
+    public static double SLIDE_MOTOR_MAX = 3450;
+    public static double BUCKET_LIFT_POINT = 650; // Point where the bucket lifts a little bit to prevent freight falling out
+    public static double BUCKET_DROP_POINT = 1500; // Point where the bucket drops down to intake again
+    public static double BUCKET_LIFT_ANGLE = 0.416; // Intermediate angle the bucket goes to while moving past the intake bar (only going up)
 }
