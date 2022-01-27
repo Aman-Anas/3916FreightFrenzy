@@ -23,8 +23,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 @Autonomous(name="Blue_1", group="Apex Robotics 3916")
 public class Blue_1 extends LinearOpMode {
 
-    //CameraFunctions botCamera = new CameraFunctions();
-    //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
+    CameraFunctions botCamera = new CameraFunctions();
+    RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -37,7 +37,7 @@ public class Blue_1 extends LinearOpMode {
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
         //Initialize the camera and vision
-        //botCamera.initVision(hardwareMap, ringPipeline);
+        botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html

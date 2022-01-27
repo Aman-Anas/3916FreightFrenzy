@@ -40,6 +40,11 @@ public class CameraFunctions {
                 extCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
                 FtcDashboard.getInstance().startCameraStream(extCam,30);
             }
+
+            @Override
+            public void onError(int errorCode) {
+                
+            }
         });
     }
 
