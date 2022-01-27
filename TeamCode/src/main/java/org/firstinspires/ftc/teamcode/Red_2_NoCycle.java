@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -14,8 +15,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Nathan Battle
  */
 
-@Autonomous(name="Red_2", group="Apex Robotics 3916")
-public class Red_2 extends LinearOpMode {
+@Autonomous(name="Red_2_NoCycle", group="Apex Robotics 3916")
+public class Red_2_NoCycle extends LinearOpMode {
 
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
@@ -50,15 +51,8 @@ public class Red_2 extends LinearOpMode {
                 .build();
 
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(new Pose2d(41.0, -49.0, Math.toRadians(-30)))
-                .splineToLinearHeading(new Pose2d(38.0, -45.0, 0.0), 0.0)
-                .lineToLinearHeading(new Pose2d(8.0, -45.0, 0.0))
-                .lineToLinearHeading(new Pose2d(3, -37.0, Math.toRadians(-45)))
-                .build();
-
-        TrajectorySequence traj5 = drive.trajectorySequenceBuilder(new Pose2d(3, -37.0, Math.toRadians(-45)))
-                .lineToLinearHeading(new Pose2d(8.0, -45.0, 0.0))
-                .lineToSplineHeading(new Pose2d(38.0, -45.0, 0.0))
-                .lineToLinearHeading(new Pose2d(41.0, -49.0, Math.toRadians(-30)))
+                .splineToLinearHeading(new Pose2d(39.0, -38.0, 0.0), 0.0)
+                .lineToConstantHeading(new Vector2d(60.0, -38.0))
                 .build();
 
 
@@ -83,19 +77,8 @@ public class Red_2 extends LinearOpMode {
             drive.followTrajectorySequence(traj2);
             // drop off freight
             drive.followTrajectorySequence(traj3);
-            // pick up freight
+            // pick up freight and park
             drive.followTrajectorySequence(traj4);
-            // drop off freight
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
-            drive.followTrajectorySequence(traj4);
-            // drop off freight
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
-            drive.followTrajectorySequence(traj4);
-            // drop off freight
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
 
             //wait this long after move
             sleep(2000);

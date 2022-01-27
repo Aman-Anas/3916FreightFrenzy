@@ -42,7 +42,7 @@ public class Red_1 extends LinearOpMode {
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(-35.0, -63.0, 1.5707963267948966))
-                .splineToLinearHeading(new Pose2d(-55.0, -53.0, 1.5707963267948966), 0.0)
+                .lineToLinearHeading(new Pose2d(-55.0, -53.0, 1.5707963267948966))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(-55.0, -53.0, 1.5707963267948966))
