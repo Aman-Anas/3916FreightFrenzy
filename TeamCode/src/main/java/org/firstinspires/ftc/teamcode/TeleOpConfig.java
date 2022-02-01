@@ -12,6 +12,7 @@ public class TeleOpConfig {
     public static double STICK_DEAD_ZONE = 0.03;
     public static double LINEAR_SLIDE_MULTIPLIER = 1;
     public static double INTAKE_MOTOR_MULTIPLIER = 0.5;
+    public static double FOREARM_MOTOR_MULTIPLIER = 1;
     public static double DUCK_MOTOR_MULTIPLIER = 1;
     public static double FOREARM_SERVO_MULTIPLIER = 1;
     public static double CLAW_SERVO_MULTIPLIER = 1;

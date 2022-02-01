@@ -159,6 +159,8 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+            } else if (Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > .3) {
+                bot.runForearmMotor(TeleOpConfig.FOREARM_MOTOR_MULTIPLIER);
             }
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.encoder.reset();
@@ -179,11 +181,13 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                ////////////////////////// TELEMETRY //////////////////////////
             */
             telemetry.addData("Status", "power: x:" + x + " y:" + y + " z:" + z);
-            telemetry.addData("Front Left Motor", "pos: "+bot.motor_frontLeft.encoder.getPosition());
-            telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
-            telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
-            telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
-            telemetry.addData("Slide Motor", "pos: "+slidePos);
+            telemetry.addData("Front Left Motor", "pos: " + bot.motor_frontLeft.encoder.getPosition());
+            telemetry.addData("Front Right Motor", "pos: " + bot.motor_frontRight.encoder.getPosition());
+            telemetry.addData("Back Left Motor", "pos: " + bot.motor_backLeft.encoder.getPosition());
+            telemetry.addData("Back Right Motor", "pos: " + bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Duck Motor", "pos: " + bot.duckMotor.encoder.getPosition());
+            telemetry.addData("Forearm Motor", "pos: " + bot.forearmMotor.encoder.getPosition());
+            telemetry.addData("Slide Motor", "pos: " + slidePos);
             telemetry.update();
         }
     }
