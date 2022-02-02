@@ -38,7 +38,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
 
-    public MotorEx slideMotor, intakeMotor, duckMotor;
+    public MotorEx slideMotor, intakeMotor, duckMotor, forearmMotor;
     public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
     //public TouchSensor slideLimit;
 
@@ -70,12 +70,19 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         duckMotor.setRunMode(Motor.RunMode.RawPower);
         duckMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
+        forearmMotor = new MotorEx(hw, "forearm motor");
+        forearmMotor.setRunMode(Motor.RunMode.RawPower);
+        forearmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
         //slideLimit = hw.get(TouchSensor.class, "limit switch");
     }
 
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
+    public void runForearmMotor(double speed) {
+        forearmMotor.set(speed * TeleOpConfig.FOREARM_MOTOR_MULTIPLIER);
+    }
 
     public void runIntakeMotor(double speed) {
         intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));

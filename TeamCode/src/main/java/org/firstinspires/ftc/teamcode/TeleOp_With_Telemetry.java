@@ -160,11 +160,18 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
+            //if (Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > .3) {
+              //  bot.runForearmMotor(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+            //}
+            if(Gamepad2.getTrigger((GamepadKeys.Trigger.LEFT_TRIGGER)) > 0.1){
+                bot.runForearmServo(10);
+            }
+
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.encoder.reset();
             }
             bot.runSlideMotor(leftY);
-            bot.runIntakeMotor(rightY);
+            bot.runForearmMotor(rightY);
             prevSlidePos = slidePos;
             slidePos = bot.slideMotor.encoder.getPosition();
 

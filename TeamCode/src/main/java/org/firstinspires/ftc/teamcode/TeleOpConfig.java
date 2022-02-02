@@ -15,6 +15,7 @@ public class TeleOpConfig {
     public static double DUCK_MOTOR_MULTIPLIER = 1;
     public static double FOREARM_SERVO_MULTIPLIER = 1;
     public static double CLAW_SERVO_MULTIPLIER = 1;
+    public static double FOREARM_MOTOR_MULTIPLIER = 1;
     public static double BUCKET_SERVO_MAX = 0.515;
     public static double BUCKET_SERVO_MIN = 0.273;
     public static double GATE_SERVO_MAX = 0.6;
