@@ -31,6 +31,8 @@ public class Blue_2_NoCycle extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
+        bot.slideMotor.encoder.reset();
+
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
 
@@ -74,10 +76,17 @@ public class Blue_2_NoCycle extends LinearOpMode {
             bot.runDuckMotor(1);
             sleep(2000);
             bot.runDuckMotor(0);
+            // drive
             drive.followTrajectorySequence(traj2);
             // drop off freight
+            bot.deliverFreight();
+            // drive
             drive.followTrajectorySequence(traj3);
             // pick up freight and park
+            bot.resetSlide();
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
             drive.followTrajectorySequence(traj4);
 
             //wait this long after move
