@@ -35,6 +35,7 @@ public class Blue_1 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
 
         bot.slideMotor.encoder.reset();
 

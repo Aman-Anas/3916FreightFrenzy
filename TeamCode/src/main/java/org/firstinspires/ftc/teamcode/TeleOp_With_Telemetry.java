@@ -52,6 +52,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         double x = 0;
         double y = 0;
         double z = 0;
+        double g2triggers;
         boolean bucketLift = false;
         double slidePos = 0;
         double prevSlidePos;
@@ -160,18 +161,29 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT)) {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
-            //if (Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > .3) {
-              //  bot.runForearmMotor(Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
-            //}
-            if(Gamepad2.getTrigger((GamepadKeys.Trigger.LEFT_TRIGGER)) > 0.1){
-                bot.runForearmServo(10);
+
+            //Trigger Inputs
+            g2triggers = 0;
+            if (Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+                g2triggers += Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            }
+            if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+                g2triggers -= Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            }
+
+            if(Gamepad2.getButton(GamepadKeys.Button.LEFT_BUMPER)){
+                bot.runForearmServo(1);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+                bot.runForearmServo(0);
             }
 
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.encoder.reset();
             }
             bot.runSlideMotor(leftY);
-            bot.runForearmMotor(rightY);
+            bot.runIntakeMotor(rightY);
+            bot.runForearmMotor(g2triggers);
             prevSlidePos = slidePos;
             slidePos = bot.slideMotor.encoder.getPosition();
 
