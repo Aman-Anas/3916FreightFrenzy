@@ -44,8 +44,8 @@ public class Red_1 extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(-35.0, -63.0, 1.5707963267948966))
-                .lineToLinearHeading(new Pose2d(-55.0, -53.0, 1.5707963267948966))
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(-35.0, -63.0, -1.5707963267948966))
+                .lineToLinearHeading(new Pose2d(-55.0, -53.0, -1.5707963267948966))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(-55.0, -53.0, 1.5707963267948966))
@@ -91,10 +91,10 @@ public class Red_1 extends LinearOpMode {
             drive.followTrajectorySequence(traj2);
             // drop off freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj3);
             // pick up freight
-            bot.resetSlide();
             bot.runIntakeMotor(1);
             sleep(1000);
             bot.runIntakeMotor(0);
@@ -102,10 +102,10 @@ public class Red_1 extends LinearOpMode {
             drive.followTrajectorySequence(traj4);
             // drop off freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
-            bot.resetSlide();
             bot.runIntakeMotor(1);
             sleep(1000);
             bot.runIntakeMotor(0);
@@ -113,10 +113,10 @@ public class Red_1 extends LinearOpMode {
             drive.followTrajectorySequence(traj4);
             // drop off freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
-            bot.resetSlide();
             bot.runIntakeMotor(1);
             sleep(1000);
             bot.runIntakeMotor(0);
@@ -124,10 +124,10 @@ public class Red_1 extends LinearOpMode {
             drive.followTrajectorySequence(traj4);
             // drop off freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
-            bot.resetSlide();
             bot.runIntakeMotor(1);
             sleep(1000);
             bot.runIntakeMotor(0);
