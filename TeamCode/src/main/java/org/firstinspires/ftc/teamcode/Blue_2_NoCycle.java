@@ -81,10 +81,10 @@ public class Blue_2_NoCycle extends LinearOpMode {
             drive.followTrajectorySequence(traj2);
             // drop off freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj3);
             // pick up freight and park
-            bot.resetSlide();
             bot.runIntakeMotor(1);
             sleep(1000);
             bot.runIntakeMotor(0);

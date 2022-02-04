@@ -44,8 +44,8 @@ public class Blue_2_NoDuck extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
-                .splineToLinearHeading(new Pose2d(10.0, 61.0, -1.5707963267948966), -2.0943951023931953)
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, 1.5707963267948966))
+                .splineToLinearHeading(new Pose2d(10.0, 61.0, 1.5707963267948966), -2.0943951023931953)
                 .splineToSplineHeading(new Pose2d(2.0, 40.0, -2.356194490192345), -1.7453292519943295)
                 .build();
 
@@ -73,6 +73,7 @@ public class Blue_2_NoDuck extends LinearOpMode {
             drive.followTrajectorySequence(traj1);
             // deliver freight
             bot.deliverFreight();
+            bot.resetSlide();
             // drive
             drive.followTrajectorySequence(traj2);
 
