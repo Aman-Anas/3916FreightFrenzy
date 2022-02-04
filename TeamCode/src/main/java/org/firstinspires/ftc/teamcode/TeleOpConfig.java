@@ -22,7 +22,7 @@ public class TeleOpConfig {
     public static double GATE_SERVO_MIN = 0.276;
     public static double SLIDE_MOTOR_MAX = 3450;
     public static double BUCKET_LIFT_POINT = 650; // Point where the bucket lifts a little bit to prevent freight falling out
-    public static double BUCKET_DROP_POINT = 1500; // Point where the bucket drops down to intake again
+    public static double BUCKET_DROP_POINT = 1450; // Point where the bucket drops down to intake again
     public static double BUCKET_LIFT_ANGLE = 0.416; // Intermediate angle the bucket goes to while moving past the intake bar (only going up)
     public static double FOREARM_HOLD_POINT; // Encoder value to hold forearm at until capping
 }

@@ -42,7 +42,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     public MotorEx slideMotor, intakeMotor, duckMotor, forearmMotor;
     public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
-    //public TouchSensor slideLimit;
+    public TouchSensor slideLimit;
 
 
     //initialize motors and servos
@@ -76,7 +76,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         forearmMotor.setRunMode(Motor.RunMode.RawPower);
         forearmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        //slideLimit = hw.get(TouchSensor.class, "limit switch");
+        slideLimit = hw.get(TouchSensor.class, "limit switch");
     }
 
     /*

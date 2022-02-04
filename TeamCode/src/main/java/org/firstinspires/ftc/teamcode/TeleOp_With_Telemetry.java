@@ -62,6 +62,9 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         //Wait for the driver to hit Start
         waitForStart();
 
+        bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+        bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+
         while (opModeIsActive()) {
 
             //Sensor Inputs
@@ -205,6 +208,8 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor", "pos: "+slidePos);
             telemetry.addData("Forearm Motor", "pos: "+bot.forearmMotor.encoder.getPosition());
+            telemetry.addData("Limit Switch", "val: "+bot.slideLimit.getValue());
+            telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
             telemetry.update();
         }
     }
