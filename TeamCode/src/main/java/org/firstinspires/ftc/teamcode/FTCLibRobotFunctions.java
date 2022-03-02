@@ -121,10 +121,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
             slidePos = slideMotor.encoder.getPosition();
             if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
                 runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+
             }
         }
         runSlideMotor(0);
-        runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+
     }
     public void resetSlide() {
         runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
