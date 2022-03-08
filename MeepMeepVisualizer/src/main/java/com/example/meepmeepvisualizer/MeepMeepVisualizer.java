@@ -35,16 +35,12 @@ public class MeepMeepVisualizer {
 
                 // Set path for bot to follow
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-9, 61, 0))
+                        drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, 1.5707963267948966))
                                 //.strafeRight(10)
                                 //.forward(30)
-                                .splineToConstantHeading(new Vector2d(4,43),0)
-                                .splineToConstantHeading(new Vector2d(30,43),0)
-                                .splineToSplineHeading(new Pose2d(46.5,48, Math.toRadians(30)), Math.toRadians(30))
-                                .waitSeconds(0.2)
-                                .splineToSplineHeading(new Pose2d(33,42,0),Math.toRadians(188))
-                                .splineToSplineHeading(new Pose2d(5,42,Math.toRadians(45)),0)
+                                .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
 
+                                .lineToLinearHeading(new Pose2d(-53.0, 69.0, 1.5707963267948966 + Math.toRadians(-40)))
                                 .build()
                 );
 
