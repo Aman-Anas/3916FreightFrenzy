@@ -69,7 +69,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    public DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
 
     private BNO055IMU imu;
@@ -99,10 +99,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        rightRear = hardwareMap.get(DcMotorEx.class, "left front");
-        rightFront = hardwareMap.get(DcMotorEx.class, "left back");
-        leftFront = hardwareMap.get(DcMotorEx.class, "right back");
-        leftRear = hardwareMap.get(DcMotorEx.class, "right front");
+        leftFront = hardwareMap.get(DcMotorEx.class, "left front");
+        leftRear = hardwareMap.get(DcMotorEx.class, "left back");
+        rightRear = hardwareMap.get(DcMotorEx.class, "right back");
+        rightFront = hardwareMap.get(DcMotorEx.class, "right front");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

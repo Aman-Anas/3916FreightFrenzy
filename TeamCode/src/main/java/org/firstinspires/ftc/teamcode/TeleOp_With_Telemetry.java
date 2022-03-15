@@ -64,7 +64,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         waitForStart();
 
         bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
-        bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+        bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
 
         while (opModeIsActive()) {
 
@@ -127,7 +127,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             }*/
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.driveRobot(-x, -y, -z, precisionMode);
+            bot.driveRobot(x, y, z, precisionMode);
 
             // Other Motors
             //bot.runSlideMotor(g1triggers);

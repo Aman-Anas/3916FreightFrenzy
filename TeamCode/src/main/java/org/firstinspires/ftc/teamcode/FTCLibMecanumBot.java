@@ -84,7 +84,6 @@ public class FTCLibMecanumBot {
 
         }
 
-        z *= -1;
         mecanumDrivetrain.driveRobotCentric(x,y,z);
 
     }
