@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -38,6 +40,10 @@ public class LocalizationTest extends LinearOpMode {
             Pose2d poseEstimate = drive.getPoseEstimate();
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
+            telemetry.addData("left front",encoderTicksToInches(drive.leftFront.getCurrentPosition()));
+            telemetry.addData("right front",encoderTicksToInches(drive.rightFront.getCurrentPosition()));
+            telemetry.addData("left back",encoderTicksToInches(drive.leftRear.getCurrentPosition()));
+            telemetry.addData("right back",encoderTicksToInches(drive.rightRear.getCurrentPosition()));
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.update();
         }

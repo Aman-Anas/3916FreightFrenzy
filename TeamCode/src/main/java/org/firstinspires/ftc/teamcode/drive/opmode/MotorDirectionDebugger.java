@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -86,6 +88,11 @@ public class MotorDirectionDebugger extends LinearOpMode {
                 drive.setMotorPowers(0, 0, 0, 0);
                 telemetry.addLine("Running Motor: None");
             }
+
+            telemetry.addData("left front", drive.leftFront.getCurrentPosition());
+            telemetry.addData("right front", drive.rightFront.getCurrentPosition());
+            telemetry.addData("left back", drive.leftRear.getCurrentPosition());
+            telemetry.addData("right back", drive.rightRear.getCurrentPosition());
 
             telemetry.update();
         }
