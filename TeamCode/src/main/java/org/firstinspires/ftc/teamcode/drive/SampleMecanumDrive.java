@@ -126,7 +126,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        //rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
@@ -257,10 +258,19 @@ public class SampleMecanumDrive extends MecanumDrive {
     @Override
     public List<Double> getWheelPositions() {
         List<Double> wheelPositions = new ArrayList<>();
+        /**Did you ever hear the tragedy of Darth Jank the Stupid? I thought not. It's not a story
+         *  the FTC Game Design Committee would tell you. It's a roadrunner legend. Darth Jank was
+         *  a dark robot of the Sith so unbearably stupid and cursed, he could use the force to influence
+         *  the encoders to create...memes.
+         */
 
+        /**
+         * This is cursed but two of our encoders are returning wacky values so we had to manually
+         * reverse their directions here.
+         */
         wheelPositions.add(encoderTicksToInches(leftFront.getCurrentPosition()));
-        wheelPositions.add(encoderTicksToInches(-leftRear.getCurrentPosition()));
-        wheelPositions.add(encoderTicksToInches(-rightRear.getCurrentPosition()));
+        wheelPositions.add(encoderTicksToInches(leftRear.getCurrentPosition()));
+        wheelPositions.add(encoderTicksToInches(rightRear.getCurrentPosition()));
         wheelPositions.add(encoderTicksToInches(rightFront.getCurrentPosition()));
 
         return wheelPositions;
@@ -270,8 +280,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         wheelVelocities.add(encoderTicksToInches(leftFront.getVelocity()));
-        wheelVelocities.add(encoderTicksToInches(-leftRear.getVelocity()));
-        wheelVelocities.add(encoderTicksToInches(-rightRear.getVelocity()));
+        wheelVelocities.add(encoderTicksToInches(leftRear.getVelocity()));
+        wheelVelocities.add(encoderTicksToInches(rightRear.getVelocity()));
         wheelVelocities.add(encoderTicksToInches(rightFront.getVelocity()));
 
         return wheelVelocities;
