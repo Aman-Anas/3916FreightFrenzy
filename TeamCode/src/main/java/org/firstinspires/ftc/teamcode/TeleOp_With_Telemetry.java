@@ -83,19 +83,19 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
 
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
-                z = bot.correctDeadZone(rightX);
+                z = (rightX);
             } else {
                 z = 0;
             }
             // Forward/Back Drive
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                y = bot.correctDeadZone(leftY);
+                y = (leftY);
             } else {
                 y = 0;
             }
             // Left/Right Strafe
             if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
-                x = bot.correctDeadZone(leftX);
+                x = (leftX);
             } else {
                 x = 0;
             }

@@ -9,6 +9,7 @@ FTCLib Bot configured with Mecanum Drive.
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -102,6 +103,16 @@ public class FTCLibMecanumBot {
         motor_frontRight = new MotorEx(hw, "right front", TICKS_PER_REV, MAX_RPM);
         motor_backLeft = new MotorEx(hw, "left back", TICKS_PER_REV, MAX_RPM);
         motor_backRight = new MotorEx(hw, "right back", TICKS_PER_REV, MAX_RPM);
+
+        motor_backLeft.setInverted(true);
+        motor_backRight.setInverted(true);
+
+        motor_frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        motor_frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        motor_backLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        motor_backRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+
 
         //Initialize the FTCLib drivebase
         mecanumDrivetrain = new MecanumDrive(motor_frontLeft, motor_frontRight,
