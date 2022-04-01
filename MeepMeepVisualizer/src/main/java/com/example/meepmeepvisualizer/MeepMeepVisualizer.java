@@ -40,7 +40,7 @@ public class MeepMeepVisualizer {
                                 //.forward(30)
                                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
 
-                                .lineToLinearHeading(new Pose2d(-53.0, 69.0, 1.5707963267948966 + Math.toRadians(-40)))
+                                .lineToLinearHeading(new Pose2d(-34.0, 29.0, 1.5707963267948966 + Math.toRadians(-40)))
                                 .build()
                 );
 
