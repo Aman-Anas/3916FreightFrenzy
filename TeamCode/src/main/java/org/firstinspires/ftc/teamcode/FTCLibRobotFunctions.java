@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import static java.lang.Thread.sleep;
+
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
@@ -38,9 +40,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
 
-    public MotorEx slideMotor, intakeMotor, duckMotor;
+    public MotorEx slideMotor, intakeMotor, duckMotor, forearmMotor;
     public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
-    //public TouchSensor slideLimit;
+    public TouchSensor slideLimit;
 
 
     //initialize motors and servos
@@ -70,12 +72,19 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         duckMotor.setRunMode(Motor.RunMode.RawPower);
         duckMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        //slideLimit = hw.get(TouchSensor.class, "limit switch");
+        forearmMotor = new MotorEx(hw, "forearm motor");
+        forearmMotor.setRunMode(Motor.RunMode.RawPower);
+        forearmMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        slideLimit = hw.get(TouchSensor.class, "limit switch");
     }
 
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
+    public void runForearmMotor(double speed) {
+        forearmMotor.set(speed * TeleOpConfig.FOREARM_MOTOR_MULTIPLIER);
+    }
 
     public void runIntakeMotor(double speed) {
         intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
@@ -100,6 +109,31 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
     public void runClawServo(double speed) {
         clawServo.setPosition(speed*(TeleOpConfig.CLAW_SERVO_MULTIPLIER));
+    }
+
+    public void deliverFreight() {
+        double slidePos = slideMotor.encoder.getPosition();
+        double prevSlidePos;
+
+        while (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
+            runSlideMotor(1);
+            prevSlidePos = slidePos;
+            slidePos = slideMotor.encoder.getPosition();
+            if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
+                runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+
+            }
+        }
+        runSlideMotor(0);
+
+    }
+    public void resetSlide() {
+        runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
+        runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+        while (slideMotor.encoder.getPosition() > 0) {
+            runSlideMotor(-1);
+        }
+        runSlideMotor(0);
     }
 
 

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -37,6 +39,10 @@ public class StrafeTest extends LinearOpMode {
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());
+        telemetry.addData("left front",encoderTicksToInches(drive.leftFront.getCurrentPosition()));
+        telemetry.addData("right front",encoderTicksToInches(drive.rightFront.getCurrentPosition()));
+        telemetry.addData("left back",encoderTicksToInches(drive.leftRear.getCurrentPosition()));
+        telemetry.addData("right back",encoderTicksToInches(drive.rightRear.getCurrentPosition()));
         telemetry.addData("finalHeading", poseEstimate.getHeading());
         telemetry.update();
 

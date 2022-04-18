@@ -23,8 +23,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 @Autonomous(name="Blue_1", group="Apex Robotics 3916")
 public class Blue_1 extends LinearOpMode {
 
-    //CameraFunctions botCamera = new CameraFunctions();
-    //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
+    CameraFunctions botCamera = new CameraFunctions();
+    RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,14 +35,17 @@ public class Blue_1 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
+
+        bot.slideMotor.encoder.reset();
 
         //Initialize the camera and vision
-        //botCamera.initVision(hardwareMap, ringPipeline);
+        botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(-35.0, 63.0, -1.5707963267948966))
-                .splineToLinearHeading(new Pose2d(-55.0, 53.0, -1.5707963267948966), 0.0)
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(-35.0, 63.0, 1.5707963267948966))
+                .lineToLinearHeading(new Pose2d(-55.0, 53.0, 1.5707963267948966))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder((new Pose2d(-55.0, 53.0, -1.5707963267948966)))
@@ -62,7 +65,7 @@ public class Blue_1 extends LinearOpMode {
                 .build();
 
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(new Pose2d(3, 37.0, Math.toRadians(45)))
-                .splineToSplineHeading(new Pose2d(8.0, 45.0, 0.0), 0.0)
+                .splineToLinearHeading(new Pose2d(8.0, 45.0, 0.0), 0.0)
                 .splineToSplineHeading(new Pose2d(38.0, 45.0, 0.0), 0.0)
                 .lineToLinearHeading(new Pose2d(41.0, 49.0, Math.toRadians(30)))
                 .build();
@@ -86,21 +89,48 @@ public class Blue_1 extends LinearOpMode {
             sleep(2000);
             bot.runDuckMotor(0);
             drive.followTrajectorySequence(traj2);
-            // drop off freight
+            // deliver freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj3);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
-            // drop off freight
+            // deliver freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
-            // drop off freight
+            // deliver freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
-            // drop off freight
+            // deliver freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
 
             //wait this long after move
             sleep(2000);

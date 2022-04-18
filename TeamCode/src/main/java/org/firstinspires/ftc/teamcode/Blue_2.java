@@ -29,14 +29,17 @@ public class Blue_2 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
+
+        bot.slideMotor.encoder.reset();
 
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, -1.5707963267948966))
-                .lineToLinearHeading(new Pose2d(-55.0, 53.0, -1.5707963267948966))
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, 1.5707963267948966))
+                .lineToLinearHeading(new Pose2d(-55.0, 53.0, 1.5707963267948966))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(-55.0, 53.0, -1.5707963267948966))
@@ -82,20 +85,47 @@ public class Blue_2 extends LinearOpMode {
             bot.runDuckMotor(0);
             drive.followTrajectorySequence(traj2);
             // drop off freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj3);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
             // drop off freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
             // drop off freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
+            // drive
             drive.followTrajectorySequence(traj4);
             // drop off freight
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj5);
             // pick up freight
+            bot.runIntakeMotor(1);
+            sleep(1000);
+            bot.runIntakeMotor(0);
 
             //wait this long after move
             sleep(2000);

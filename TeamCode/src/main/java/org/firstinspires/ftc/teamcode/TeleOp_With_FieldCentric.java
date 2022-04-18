@@ -10,11 +10,12 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
- * Simple TeleOp base method, build season code on top of this.
+ * FieldCentric TeleOp method, build season code on top of this.
  *
  * @author Aman Anas
  * @author Gabrian Chua
@@ -27,9 +28,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 // This is the main TeleOp, with full bot functionality as well as telemetry
-@TeleOp(name="TeleOp with Telemetry", group="Apex Robotics 3916")
+@TeleOp(name="TeleOp with FieldCentric", group="Apex Robotics 3916")
 //@Disabled
-public class TeleOp_With_Telemetry extends LinearOpMode {
+public class TeleOp_With_FieldCentric extends LinearOpMode {
 
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
@@ -43,8 +44,10 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
 
         //Initialize bot
         bot.initBot(hardwareMap);
+        RevIMU imu = new RevIMU(hardwareMap);
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
+        imu.init();
 
         bot.slideMotor.encoder.reset();
         bot.forearmMotor.encoder.reset();
@@ -59,7 +62,6 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         double slidePos = 0;
         double prevSlidePos;
         boolean slideLimit;
-        double slideMult = 1;
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -128,7 +130,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             }*/
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.driveRobotCentric(x, y, z, precisionMode);
+            bot.driveFieldCentric(x, y, z, precisionMode,imu);
 
             // Other Motors
             //bot.runSlideMotor(g1triggers);
@@ -167,10 +169,9 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                     leftY = 0;
                 }
             }
-            //Defunct
-            /*if (slidePos == 0 && leftY > 0) {
+            if (slidePos == 0 && leftY > 0) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_LIFT_ANGLE);
-            }*/
+            }
 
             double rightY = Gamepad2.getRightY();
             if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
@@ -219,16 +220,10 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             }*/
 
 
-            /*if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.encoder.reset();
-            }*/
-            if (leftY < 0 && slidePos < 500) {
-                slideMult = .5;
             }
-            else {
-                slideMult = 1;
-            }
-            bot.runSlideMotor(leftY * slideMult);
+            bot.runSlideMotor(leftY);
             if (rightY != 0) {
                 bot.runIntakeMotor(rightY);
             }
@@ -243,7 +238,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             /*if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             }
-            else */if ((prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT || leftY < 0) && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
+            else */if (prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
             }
 

@@ -23,8 +23,6 @@ import org.openftc.easyopencv.OpenCvPipeline;
 @Autonomous(name="Red_2_NoDuck", group="Apex Robotics 3916")
 public class Red_2_NoDuck extends LinearOpMode {
 
-    double slidePos;
-    double prevSlidePos;
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
 
@@ -37,17 +35,17 @@ public class Red_2_NoDuck extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
 
-        //bot.slideMotor.encoder.reset();
-        //slidePos = bot.slideMotor.encoder.getPosition();
+        bot.slideMotor.encoder.reset();
 
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, -63.0, 1.5707963267948966))
-                .splineToLinearHeading(new Pose2d(10.0, -61.0, 1.5707963267948966), 2.0943951023931953)
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, -63.0, -1.5707963267948966))
+                .splineToLinearHeading(new Pose2d(10.0, -61.0, -1.5707963267948966), 2.0943951023931953)
                 .splineToSplineHeading(new Pose2d(2.0, -40.0, 2.356194490192345), 1.7453292519943295)
                 .build();
 
@@ -74,15 +72,9 @@ public class Red_2_NoDuck extends LinearOpMode {
             //Follow the trajectory we defined earlier
             drive.followTrajectorySequence(traj1);
             // deliver freight
-            /*while (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
-                bot.runSlideMotor(1);
-                prevSlidePos = slidePos;
-                slidePos = bot.slideMotor.encoder.getPosition();
-                if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
-                    bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-                }
-            }
-            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);*/
+            bot.deliverFreight();
+            bot.resetSlide();
+            // drive
             drive.followTrajectorySequence(traj2);
 
             //wait this long after move
