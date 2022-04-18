@@ -9,6 +9,7 @@ FTCLib Bot configured with Mecanum Drive.
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -76,7 +77,7 @@ public class FTCLibMecanumBot {
         return (input - (TeleOpConfig.STICK_DEAD_ZONE * input / Math.abs(input))) / (1.0 - TeleOpConfig.STICK_DEAD_ZONE);
     }
 
-    public void driveRobot (double x, double y, double z, boolean precisionMode){
+    public void driveRobotCentric (double x, double y, double z, boolean precisionMode){
 
         if (precisionMode){
             x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
@@ -89,6 +90,18 @@ public class FTCLibMecanumBot {
 
     }
 
+    public void driveFieldCentric (double x, double y, double z, boolean precisionMode, RevIMU imu){
+
+        if (precisionMode){
+            x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            y *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
+            z *= TeleOpConfig.PRECISION_TURN_MULTIPLIER;
+
+        }
+
+        mecanumDrivetrain.driveFieldCentric(x,y,z,imu.getRotation2d().getDegrees());
+
+    }
     /**
      * initialize drivetrain
      * @param hw - HardwareMap supplied from drive class
@@ -97,6 +110,8 @@ public class FTCLibMecanumBot {
     public void init(HardwareMap hw) {
         //cache the HardwareMap
         this.hw = hw;
+
+
 
         //Assign motors using their hardware map names, each drivetype can have different names if needed
         motor_frontLeft = new MotorEx(hw, "left front", TICKS_PER_REV, MAX_RPM);
