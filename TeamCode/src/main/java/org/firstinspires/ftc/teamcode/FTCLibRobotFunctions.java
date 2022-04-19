@@ -90,8 +90,31 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
     }
 
+    public void runSlideMotor(double speed, boolean limit) {
+        double slidePos = slideMotor.encoder.getPosition();
+        if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && speed > 0) {
+            speed = 0;
+        }
+        if (limit) {
+            slideMotor.encoder.reset();
+            if (speed < 0) {
+                speed = 0;
+            }
+        }
+        slideMotor.set(speed * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER * (speed < 0 && slidePos < TeleOpConfig.SLIDE_SLOW_POINT ? .5 : 1));
+    }
     public void runSlideMotor(double speed) {
-        slideMotor.set(speed*(TeleOpConfig.LINEAR_SLIDE_MULTIPLIER));
+        double slidePos = slideMotor.encoder.getPosition();
+        if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && speed > 0) {
+            speed = 0;
+        }
+        if (slideLimit.isPressed()) {
+            slideMotor.encoder.reset();
+            if (speed < 0) {
+                speed = 0;
+            }
+        }
+        slideMotor.set(speed * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER * (speed < 0 && slidePos < TeleOpConfig.SLIDE_SLOW_POINT ? .5 : 1));
     }
 
     public void runDuckMotor(double speed) {
@@ -104,11 +127,17 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeArmServo.setPosition(pos);
     }
 
-    public void runForearmServo(double speed) {
-        forearmServo.setPosition(speed*(TeleOpConfig.FOREARM_SERVO_MULTIPLIER));
-    }
-    public void runClawServo(double speed) {
-        clawServo.setPosition(speed*(TeleOpConfig.CLAW_SERVO_MULTIPLIER));
+    public void updateBucketServo(double leftY, double slidePos, double prevSlidePos) {
+        if (leftY > 0) {
+            runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+        }
+            /*if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
+                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            }
+            else */if ((prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT || leftY < 0) && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
+            runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
+        }
     }
 
     public void deliverFreight() {
