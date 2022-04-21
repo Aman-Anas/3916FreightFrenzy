@@ -36,6 +36,19 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
+    public enum DuckState {
+        RED,
+        BLUE,
+        STOPPED
+    };
+
+    public enum SlideState {
+        GOING_UP,
+        UP,
+        GOING_DOWN,
+        DOWN
+    };
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -58,12 +71,14 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         double y = 0;
         double z = 0;
         double g1triggers;
-        double g2triggers;
-        boolean bucketLift = false;
         double slidePos = 0;
-        double prevSlidePos;
         boolean slideLimit;
-        double slideMult = 1;
+        boolean XPressed = false;
+        boolean YPressed = false;
+        double slideStateVal = 0;
+
+        TeleOp_With_Telemetry.DuckState duckState = TeleOp_With_Telemetry.DuckState.STOPPED;
+        TeleOp_With_Telemetry.SlideState slideState = TeleOp_With_Telemetry.SlideState.DOWN;
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -134,9 +149,6 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             //Send the X, Y, and rotation (Z) to the mecanum drive method
             bot.driveFieldCentric(x, y, z, precisionMode,imu);
 
-            // Other Motors
-            //bot.runSlideMotor(g1triggers);
-
             // Gamepad 2 Redundancies
             if (Gamepad1.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
@@ -162,20 +174,6 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 leftY = g1triggers;
             }
 
-            if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && leftY > 0) {
-                leftY = 0;
-            }
-            if (slideLimit) {
-                bot.slideMotor.encoder.reset();
-                if (leftY < 0) {
-                    leftY = 0;
-                }
-            }
-            //Defunct
-            /*if (slidePos == 0 && leftY > 0) {
-                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_LIFT_ANGLE);
-            }*/
-
             double rightY = Gamepad2.getRightY();
             if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
                 rightY = bot.correctDeadZone(rightY) * TeleOpConfig.INTAKE_MOTOR_MULTIPLIER;
@@ -184,14 +182,42 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             }
 
             //Button inputs
-            if (Gamepad2.getButton(GamepadKeys.Button.B) || Gamepad1.getButton(GamepadKeys.Button.Y)) {
-                //Red Side
-                bot.runDuckMotor(-1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.X) || Gamepad1.getButton((GamepadKeys.Button.X))) {
-                //Blue Side
-                bot.runDuckMotor(1);
-            } else {
-                bot.runDuckMotor(0);
+            if (Gamepad2.getButton(GamepadKeys.Button.Y) || Gamepad1.getButton(GamepadKeys.Button.Y)) {
+                if (!YPressed) {
+                    YPressed = true;
+                    switch (duckState) {
+                        case STOPPED:
+                            duckState = TeleOp_With_Telemetry.DuckState.BLUE;
+                            break;
+                        case BLUE:
+                            duckState = TeleOp_With_Telemetry.DuckState.RED;
+                            break;
+                        case RED:
+                            duckState = TeleOp_With_Telemetry.DuckState.STOPPED;
+                            break;
+                    }
+                }
+            }
+            else {
+                YPressed = false;
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.X) || Gamepad1.getButton(GamepadKeys.Button.X)) {
+                if (!XPressed) {
+                    XPressed = true;
+                    switch (slideState) {
+                        case DOWN:
+                        case GOING_DOWN:
+                            slideState = TeleOp_With_Telemetry.SlideState.GOING_UP;
+                            break;
+                        case UP:
+                        case GOING_UP:
+                            slideState = TeleOp_With_Telemetry.SlideState.GOING_DOWN;
+                            break;
+                    }
+                }
+            }
+            else {
+                XPressed = false;
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
@@ -204,51 +230,65 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
 
-            /* Forearm code
-            //Trigger Inputs (Forearm Motor)
-            g2triggers = 0;
-            if (Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
-                g2triggers += Gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-            }
-            if (Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
-                g2triggers -= Gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-            }
-
-            // Bumper Inputs (Forearm Servo)
-            if(Gamepad2.getButton(GamepadKeys.Button.LEFT_BUMPER)){
-                bot.runForearmServo(1);
-            }
-            if (Gamepad2.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-                bot.runForearmServo(0);
-            }*/
-
-
             /*if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.encoder.reset();
             }*/
-            if (leftY < 0 && slidePos < 500) {
-                slideMult = .5;
+
+            if (leftY > 0) {
+                slideState = TeleOp_With_Telemetry.SlideState.UP;
             }
-            else {
-                slideMult = 1;
+            if (leftY < 0) {
+                slideState = TeleOp_With_Telemetry.SlideState.DOWN;
             }
-            bot.runSlideMotor(leftY * slideMult, slideLimit);
+
+            slidePos = bot.slideMotor.encoder.getPosition();
+
+            //Run Slide
+            switch (slideState) {
+                case GOING_UP:
+                    if (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
+                        slideStateVal = 1;
+                    }
+                    else {
+                        slideStateVal = 0;
+                        slideState = TeleOp_With_Telemetry.SlideState.UP;
+                    }
+                    break;
+                case GOING_DOWN:
+                    if (!slideLimit) {
+                        slideStateVal = -1;
+                    }
+                    else {
+                        slideStateVal = 0;
+                        slideState = TeleOp_With_Telemetry.SlideState.DOWN;
+                    }
+                    break;
+                default:
+                    slideStateVal = 0;
+                    break;
+            }
+            if (leftY == 0) {
+                leftY = slideStateVal;
+            }
+            bot.runSlideMotor(leftY, slideLimit);
             if (rightY != 0) {
                 bot.runIntakeMotor(rightY);
             }
-            //bot.runForearmMotor(g2triggers);
-            prevSlidePos = slidePos;
-            slidePos = bot.slideMotor.encoder.getPosition();
 
-            if (leftY > 0 || g1triggers > 0) {
-                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-                bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
-            }
-            /*if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
-                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-            }
-            else */if ((prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT || leftY < 0) && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
-                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
+            //Update Bucket
+            bot.updateBucketServo(leftY, slidePos);
+
+            //Run Duck Motor
+            switch (duckState) {
+                case STOPPED:
+                    bot.runDuckMotor(0);
+                    break;
+                case BLUE:
+                    bot.runDuckMotor(1);
+                    break;
+                case RED:
+                    bot.runDuckMotor(-1);
+                    break;
             }
 
             /*

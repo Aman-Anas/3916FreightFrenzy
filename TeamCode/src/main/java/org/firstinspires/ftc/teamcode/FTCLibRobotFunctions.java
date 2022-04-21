@@ -101,20 +101,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                 speed = 0;
             }
         }
-        slideMotor.set(speed * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER * (speed < 0 && slidePos < TeleOpConfig.SLIDE_SLOW_POINT ? .5 : 1));
+        slideMotor.set(speed * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER * (speed < 0 && slidePos < TeleOpConfig.SLIDE_SLOW_POINT ? TeleOpConfig.SLIDE_SLOW_SPEED : 1));
     }
     public void runSlideMotor(double speed) {
-        double slidePos = slideMotor.encoder.getPosition();
-        if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && speed > 0) {
-            speed = 0;
-        }
-        if (slideLimit.isPressed()) {
-            slideMotor.encoder.reset();
-            if (speed < 0) {
-                speed = 0;
-            }
-        }
-        slideMotor.set(speed * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER * (speed < 0 && slidePos < TeleOpConfig.SLIDE_SLOW_POINT ? .5 : 1));
+        runSlideMotor(speed, slideLimit.isPressed());
     }
 
     public void runDuckMotor(double speed) {
@@ -127,15 +117,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeArmServo.setPosition(pos);
     }
 
-    public void updateBucketServo(double leftY, double slidePos, double prevSlidePos) {
+    public void updateBucketServo(double leftY, double slidePos) {
         if (leftY > 0) {
             runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
         }
-            /*if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
-                bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-            }
-            else */if ((prevSlidePos > TeleOpConfig.BUCKET_DROP_POINT || leftY < 0) && TeleOpConfig.BUCKET_DROP_POINT > slidePos) {
+        if (leftY < 0) {
             runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
         }
     }
