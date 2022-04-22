@@ -39,8 +39,10 @@ public class MeepMeepVisualizer {
                                 //.strafeRight(10)
                                 //.forward(30)
                                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
-
-                                .lineToLinearHeading(new Pose2d(-34.0, 29.0, 1.5707963267948966 + Math.toRadians(-40)))
+                                .lineToLinearHeading(new Pose2d(-57.0, 59.1, 1.5707963267948966 + Math.toRadians(-40)))
+                                .lineToLinearHeading(new Pose2d(-28.7, 39.1, 1.5707963267948966+Math.toRadians(46)))
+                                .lineToLinearHeading(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
+                                .lineToLinearHeading(new Pose2d(-54.0, 45.0, 1.5707963267948966+Math.toRadians(0)))
                                 .build()
                 );
 

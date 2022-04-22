@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Aman Anas
  * @author Nathan Battle
  */
-
+@Disabled
 @Autonomous(name="Blue_1_NoCycle", group="Apex Robotics 3916")
 public class Blue_1_NoCycle extends LinearOpMode {
 
@@ -41,7 +42,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, 1.5707963267948966))
                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
 
-                .lineToLinearHeading(new Pose2d(-57.0, 79.1, 1.5707963267948966 + Math.toRadians(-40)))
+                .lineToLinearHeading(new Pose2d(-57.0, 59.1, 1.5707963267948966 + Math.toRadians(-40)))
 
                 .build();
 
@@ -52,7 +53,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
                 .build();
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
-                .lineToLinearHeading(new Pose2d(-74.0, 55.0, 1.5707963267948966+Math.toRadians(-20)))
+                .lineToLinearHeading(new Pose2d(-54.0, 55.0, 1.5707963267948966+Math.toRadians(0)))
                 .build();
 /*/*
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(new Pose2d(41.0, 49.0, Math.toRadians(30)))
@@ -83,7 +84,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
             bot.runDuckMotor(0);
             // drive
 
-        drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj2);
             // drop off freight
             //bot.deliverFreight();
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);

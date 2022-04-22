@@ -3,14 +3,13 @@ package org.firstinspires.ftc.teamcode;
 
 import static java.lang.Thread.sleep;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
@@ -44,6 +43,19 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
     public TouchSensor slideLimit;
 
+    //Initialize enums
+    public enum DuckState {
+        RED,
+        BLUE,
+        STOPPED
+    };
+
+    public enum SlideState {
+        GOING_UP,
+        UP,
+        GOING_DOWN,
+        DOWN
+    };
 
     //initialize motors and servos
     public void initBot(HardwareMap hw) {
@@ -79,6 +91,30 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         slideLimit = hw.get(TouchSensor.class, "limit switch");
     }
 
+
+    public double getTriggers (GamepadEx gamepad){
+        double g1triggers = 0;
+        if (gamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+            g1triggers += gamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+        }
+        if (gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
+            g1triggers -= gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+        }
+        return g1triggers;
+    }
+
+    public double returnDeadZoneClip(double input){
+        double corrected;
+        if (Math.abs(input) > TeleOpConfig.STICK_DEAD_ZONE) {
+             corrected = input;
+        } else {
+            corrected = 0;
+        }
+        return corrected;
+    }
+
+
+
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
@@ -86,12 +122,29 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         forearmMotor.set(speed * TeleOpConfig.FOREARM_MOTOR_MULTIPLIER);
     }
 
-    public void runIntakeMotor(double speed) {
-        intakeMotor.set(speed*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
+    double power;
+    public void runIntakeMotor(GamepadEx Gamepad1) {
+
+        if (Gamepad1.getButton(GamepadKeys.Button.A)) {
+            power = 1;
+        }
+        else if (Gamepad1.getButton(GamepadKeys.Button.B)) {
+            power = -1;
+        }
+        else {
+            power = 0;
+        }
+        intakeMotor.set(power*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
+
+    }
+    public void runIntakeMotor(double stickInput) {
+        stickInput = correctDeadZoneRemap(stickInput);
+        intakeMotor.set(stickInput*(TeleOpConfig.INTAKE_MOTOR_MULTIPLIER));
     }
 
+    double slidePos;
     public void runSlideMotor(double speed, boolean limit) {
-        double slidePos = slideMotor.encoder.getPosition();
+        slidePos = slideMotor.encoder.getPosition();
         if (slidePos >= TeleOpConfig.SLIDE_MOTOR_MAX && speed > 0) {
             speed = 0;
         }
@@ -107,9 +160,127 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         runSlideMotor(speed, slideLimit.isPressed());
     }
 
-    public void runDuckMotor(double speed) {
-        duckMotor.set(speed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
+    SlideState slideState = SlideState.DOWN;;
+    double slideStateVal;
+    public void slideMotorController (double input,Boolean hasDeadZone){
+        slidePos = slideMotor.encoder.getPosition();
+        if (!hasDeadZone){
+            input = correctDeadZoneRemap(input);
+        }
+        input *= TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
+
+
+        if (input > 0) {
+            slideState = SlideState.UP;
+        }
+        if (input < 0) {
+            slideState = SlideState.DOWN;
+        }
+
+
+        switch (slideState) {
+            case GOING_UP:
+                if (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
+                    slideStateVal = 1;
+                }
+                else {
+                    slideStateVal = 0;
+                    slideState = SlideState.UP;
+                }
+                break;
+            case GOING_DOWN:
+                if (!slideLimit.isPressed()) {
+                    slideStateVal = -1;
+                }
+                else {
+                    slideStateVal = 0;
+                    slideState = SlideState.DOWN;
+                }
+                break;
+            default:
+                slideStateVal = 0;
+                break;
+        }
+
+        input = slideStateVal;
+
+
+        runSlideMotor(input, slideLimit.isPressed());
     }
+
+    boolean XKey;
+    boolean XPressed;
+    public void runSlideStates (GamepadEx Gamepad1){
+        XKey = Gamepad1.getButton(GamepadKeys.Button.X);
+        XPressed = false;
+        if  (XKey){
+            if (!XPressed) {
+                XPressed = true;
+                switch (slideState) {
+                    case DOWN:
+                    case GOING_DOWN:
+                        slideState = SlideState.GOING_UP;
+                        break;
+                    case UP:
+                    case GOING_UP:
+                        slideState = SlideState.GOING_DOWN;
+                        break;
+                }
+            }
+        }
+        else {
+            XPressed = false;
+        }
+    }
+
+
+
+
+
+
+
+
+    double duckSpeed;
+    public void runDuckMotor(DuckState state) {
+        switch (state) {
+            case STOPPED:
+                duckSpeed = (0);
+                break;
+            case BLUE:
+                duckSpeed = (1);
+                break;
+            case RED:
+                duckSpeed = (-1);
+                break;
+        }
+        duckMotor.set(duckSpeed*(TeleOpConfig.DUCK_MOTOR_MULTIPLIER));
+    }
+
+    Boolean YPressed = false;
+    DuckState duckState = DuckState.STOPPED;
+    public DuckState getDuckState (Boolean pressed){
+        if (pressed) {
+            if (!YPressed) {
+                YPressed = true;
+                switch (duckState) {
+                    case STOPPED:
+                        duckState = DuckState.BLUE;
+                        break;
+                    case BLUE:
+                        duckState = DuckState.RED;
+                        break;
+                    case RED:
+                        duckState = DuckState.STOPPED;
+                        break;
+                }
+            }
+        }
+        else {
+            YPressed = false;
+        }
+        return duckState;
+    }
+
     public void runIntakeBucketServo(double pos){
         intakeBucketServo.setPosition(pos);
     }

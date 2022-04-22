@@ -169,14 +169,14 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             //Get stick inputs
             leftY = Gamepad2.getLeftY();
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                leftY = bot.correctDeadZone(leftY) * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
+                leftY = bot.correctDeadZoneRemap(leftY) * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
             } else {
                 leftY = g1triggers;
             }
 
             double rightY = Gamepad2.getRightY();
             if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                rightY = bot.correctDeadZone(rightY) * TeleOpConfig.INTAKE_MOTOR_MULTIPLIER;
+                rightY = bot.correctDeadZoneRemap(rightY) * TeleOpConfig.INTAKE_MOTOR_MULTIPLIER;
             } else {
                 rightY = 0;
             }

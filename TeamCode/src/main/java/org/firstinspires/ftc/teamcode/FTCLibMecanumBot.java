@@ -73,8 +73,8 @@ public class FTCLibMecanumBot {
                         zero value inputs (at or below the dead zone) are at zero, and everything in between is scaled proportionally.
                     Direction inversions and Precision Mode are implemented after this correction for simplicity.
              */
-    public double correctDeadZone(double input){
-        return (input - (TeleOpConfig.STICK_DEAD_ZONE * input / Math.abs(input))) / (1.0 - TeleOpConfig.STICK_DEAD_ZONE);
+    public double correctDeadZoneRemap(double input){
+        return (input - ( (input / Math.abs(input)) * (TeleOpConfig.STICK_DEAD_ZONE) )/ (1.0 - TeleOpConfig.STICK_DEAD_ZONE));
     }
 
     public void driveRobotCentric (double x, double y, double z, boolean precisionMode){

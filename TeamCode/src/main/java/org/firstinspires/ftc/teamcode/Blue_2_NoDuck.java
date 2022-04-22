@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -19,7 +20,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
  * @author Aman Anas
  * @author Nathan Battle
  */
-
+@Disabled
 @Autonomous(name="Blue_2_NoDuck", group="Apex Robotics 3916")
 public class Blue_2_NoDuck extends LinearOpMode {
 

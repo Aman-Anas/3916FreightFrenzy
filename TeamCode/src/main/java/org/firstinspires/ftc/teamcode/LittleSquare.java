@@ -23,22 +23,22 @@ public class LittleSquare extends LinearOpMode {
         bot.slideMotor.encoder.reset();
 
         TrajectorySequence forwardSeg = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(0)))
                 .waitSeconds(1.0)
                 .build();
 
-        TrajectorySequence leftSeg = drive.trajectorySequenceBuilder(new Pose2d(50, 0, Math.toRadians(90)))
-                .lineToLinearHeading(new Pose2d(50, 50, Math.toRadians(180)))
+        TrajectorySequence leftSeg = drive.trajectorySequenceBuilder(new Pose2d(50, 0, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(50, 50, Math.toRadians(0)))
                 .waitSeconds(1.0)
                 .build();
 
-        TrajectorySequence backSeg = drive.trajectorySequenceBuilder(new Pose2d(50, 50, Math.toRadians(180)))
-                .lineToLinearHeading(new Pose2d(0, 50, Math.toRadians(270)))
+        TrajectorySequence backSeg = drive.trajectorySequenceBuilder(new Pose2d(50, 50, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(0, 50, Math.toRadians(0)))
                 .waitSeconds(1.0)
                 .build();
 
-        TrajectorySequence rightSeg = drive.trajectorySequenceBuilder(new Pose2d(0, 50, Math.toRadians(270)))
-                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(360)))
+        TrajectorySequence rightSeg = drive.trajectorySequenceBuilder(new Pose2d(0, 50, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(0, 0, Math.toRadians(0)))
                 .waitSeconds(1.0)
                 .build();
 

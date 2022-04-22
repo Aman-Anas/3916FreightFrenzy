@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Aman Anas
  * @author Nathan Battle
  */
-
+@Disabled
 @Autonomous(name="Blue_2_NoCycle", group="Apex Robotics 3916")
 public class Blue_2_NoCycle extends LinearOpMode {
 
@@ -84,7 +85,7 @@ public class Blue_2_NoCycle extends LinearOpMode {
             bot.runDuckMotor(0);
             // drive
 
-        drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj2);
             // drop off freight
             //bot.deliverFreight();
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
