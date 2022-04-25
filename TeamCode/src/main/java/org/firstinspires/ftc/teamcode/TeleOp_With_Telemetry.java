@@ -112,14 +112,14 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             /*
                ////////////////////////// GAMEPAD 2 //////////////////////////
             */
-
+            //double var = 0;
             //Get stick inputs
-            leftY = Gamepad2.getLeftY();
-            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                bot.slideMotorController(leftY,false);
-            } else {
-                bot.slideMotorController(g1triggers,true);
-            }
+            //leftY = Gamepad2.getLeftY();
+            //if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
+              //  bot.slideMotorController(leftY,false);
+           //} else {
+            bot.slideMotorController(g1triggers,true);
+            //}
 
 
             //Button inputs
@@ -157,6 +157,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
+            telemetry.addData("speed sent to slide", g1triggers+" "+bot.sentToSlide+" "+bot.sentToSlide2);
             telemetry.update();
         }
     }

@@ -160,21 +160,24 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         runSlideMotor(speed, slideLimit.isPressed());
     }
 
-    SlideState slideState = SlideState.DOWN;;
+    SlideState slideState = SlideState.DOWN;
+    public double sentToSlide = 0;
+    public double sentToSlide2 = 0;
+    public double sentToSlide3 = 0;
     double slideStateVal;
-    public void slideMotorController (double input,Boolean hasDeadZone){
+    public double slideMotorController (double input,Boolean hasDeadZone){
         slidePos = slideMotor.encoder.getPosition();
         if (!hasDeadZone){
             input = correctDeadZoneRemap(input);
         }
         input *= TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
-
+        sentToSlide = input;
 
         if (input > 0) {
-            slideState = SlideState.UP;
+            slideState = SlideState.GOING_UP;
         }
         if (input < 0) {
-            slideState = SlideState.DOWN;
+            slideState = SlideState.GOING_DOWN;
         }
 
 
@@ -201,11 +204,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                 slideStateVal = 0;
                 break;
         }
-
+        sentToSlide2 = slideStateVal;
         input = slideStateVal;
 
 
         runSlideMotor(input, slideLimit.isPressed());
+        return input;
     }
 
     boolean XKey;
