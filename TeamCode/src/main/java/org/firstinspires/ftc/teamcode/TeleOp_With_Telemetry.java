@@ -142,7 +142,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             bot.runIntakeMotor(Gamepad2.getRightY());
 
             //Update Bucket
-            bot.updateBucketServo(leftY, slidePos);
+            bot.updateBucketServo(leftY, bot.slideMotor.encoder.getPosition());
 
             //Run Duck Motor
 
@@ -155,7 +155,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
-            telemetry.addData("Slide Motor", "pos: "+slidePos);
+            telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
             telemetry.update();
         }

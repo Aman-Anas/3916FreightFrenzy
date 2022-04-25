@@ -81,9 +81,9 @@ public class Red_2_NoCycle extends LinearOpMode {
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             //Follow the trajectory we defined earlier
             drive.followTrajectorySequence(traj1);
-            bot.runDuckMotor(-1);
+            //bot.runDuckMotor(-1);
             sleep(3000);
-            bot.runDuckMotor(0);
+           // bot.runDuckMotor(0);
             drive.followTrajectorySequence(traj2);
             // drop off freight
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);

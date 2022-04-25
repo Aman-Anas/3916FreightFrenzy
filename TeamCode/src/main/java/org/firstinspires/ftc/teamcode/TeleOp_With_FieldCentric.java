@@ -36,18 +36,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
 
-    public enum DuckState {
-        RED,
-        BLUE,
-        STOPPED
-    };
 
-    public enum SlideState {
-        GOING_UP,
-        UP,
-        GOING_DOWN,
-        DOWN
-    };
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -59,9 +48,9 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         //Initialize bot
         bot.initBot(hardwareMap);
         RevIMU imu = new RevIMU(hardwareMap);
+        imu.init();
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
-        imu.init();
 
         bot.slideMotor.encoder.reset();
         bot.forearmMotor.encoder.reset();
@@ -71,14 +60,8 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         double y = 0;
         double z = 0;
         double g1triggers;
-        double slidePos = 0;
-        boolean slideLimit;
-        boolean XPressed = false;
-        boolean YPressed = false;
-        double slideStateVal = 0;
 
-        TeleOp_With_Telemetry.DuckState duckState = TeleOp_With_Telemetry.DuckState.STOPPED;
-        TeleOp_With_Telemetry.SlideState slideState = TeleOp_With_Telemetry.SlideState.DOWN;
+
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -87,9 +70,6 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
 
         while (opModeIsActive()) {
-
-            //Sensor Inputs
-            slideLimit = bot.slideLimit.isPressed();
 
             /*
                ////////////////////////// GAMEPAD 1 //////////////////////////
@@ -102,52 +82,22 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
 
             // Rotation Axis
-            if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
-                z = (rightX);
-            } else {
-                z = 0;
-            }
+            z = bot.correctDeadZoneRemap(rightX);
             // Forward/Back Drive
-            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                y = (leftY);
-            } else {
-                y = 0;
-            }
+            y = bot.correctDeadZoneRemap(leftY);
             // Left/Right Strafe
-            if (Math.abs(leftX) > TeleOpConfig.STICK_DEAD_ZONE) {
-                x = (leftX);
-            } else {
-                x = 0;
-            }
-
-            //Trigger Inputs
-            g1triggers = 0;
-            if (Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
-                g1triggers += Gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-            }
-            if (Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TeleOpConfig.STICK_DEAD_ZONE) {
-                g1triggers -= Gamepad1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-            }
-            if (Gamepad1.getButton(GamepadKeys.Button.A)) {
-                bot.runIntakeMotor(1);
-            }
-            else if (Gamepad1.getButton(GamepadKeys.Button.B)) {
-                bot.runIntakeMotor(-1);
-            }
-            else {
-                bot.runIntakeMotor(0);
-            }
-
-            // Reset Encoders
-            /*if (Gamepad1.getButton(GamepadKeys.Button.X)) {
-                bot.motor_backRight.encoder.reset();
-                bot.motor_backLeft.encoder.reset();
-                bot.motor_frontRight.encoder.reset();
-                bot.motor_frontLeft.encoder.reset();
-            }*/
+            x = bot.correctDeadZoneRemap(leftX);
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
             bot.driveFieldCentric(x, y, z, precisionMode,imu);
+
+
+            //Trigger Inputs
+            g1triggers = bot.getTriggers(Gamepad1);
+
+            //Run Intake
+            bot.runIntakeMotor(Gamepad1);
+
 
             // Gamepad 2 Redundancies
             if (Gamepad1.getButton(GamepadKeys.Button.DPAD_UP)) {
@@ -169,56 +119,15 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             //Get stick inputs
             leftY = Gamepad2.getLeftY();
             if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                leftY = bot.correctDeadZoneRemap(leftY) * TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
+                bot.slideMotorController(leftY,false);
             } else {
-                leftY = g1triggers;
+                bot.slideMotorController(g1triggers,true);
             }
 
-            double rightY = Gamepad2.getRightY();
-            if (Math.abs(rightY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                rightY = bot.correctDeadZoneRemap(rightY) * TeleOpConfig.INTAKE_MOTOR_MULTIPLIER;
-            } else {
-                rightY = 0;
-            }
 
             //Button inputs
-            if (Gamepad2.getButton(GamepadKeys.Button.Y) || Gamepad1.getButton(GamepadKeys.Button.Y)) {
-                if (!YPressed) {
-                    YPressed = true;
-                    switch (duckState) {
-                        case STOPPED:
-                            duckState = TeleOp_With_Telemetry.DuckState.BLUE;
-                            break;
-                        case BLUE:
-                            duckState = TeleOp_With_Telemetry.DuckState.RED;
-                            break;
-                        case RED:
-                            duckState = TeleOp_With_Telemetry.DuckState.STOPPED;
-                            break;
-                    }
-                }
-            }
-            else {
-                YPressed = false;
-            }
-            if (Gamepad2.getButton(GamepadKeys.Button.X) || Gamepad1.getButton(GamepadKeys.Button.X)) {
-                if (!XPressed) {
-                    XPressed = true;
-                    switch (slideState) {
-                        case DOWN:
-                        case GOING_DOWN:
-                            slideState = TeleOp_With_Telemetry.SlideState.GOING_UP;
-                            break;
-                        case UP:
-                        case GOING_UP:
-                            slideState = TeleOp_With_Telemetry.SlideState.GOING_DOWN;
-                            break;
-                    }
-                }
-            }
-            else {
-                XPressed = false;
-            }
+            bot.runDuckMotor(bot.getDuckState(Gamepad1.getButton(GamepadKeys.Button.Y) || Gamepad2.getButton(GamepadKeys.Button.Y)));
+
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
@@ -230,66 +139,16 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
 
-            /*if (Gamepad2.getButton(GamepadKeys.Button.A)) {
-                bot.slideMotor.encoder.reset();
-            }*/
 
-            if (leftY > 0) {
-                slideState = TeleOp_With_Telemetry.SlideState.UP;
-            }
-            if (leftY < 0) {
-                slideState = TeleOp_With_Telemetry.SlideState.DOWN;
-            }
 
-            slidePos = bot.slideMotor.encoder.getPosition();
 
-            //Run Slide
-            switch (slideState) {
-                case GOING_UP:
-                    if (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
-                        slideStateVal = 1;
-                    }
-                    else {
-                        slideStateVal = 0;
-                        slideState = TeleOp_With_Telemetry.SlideState.UP;
-                    }
-                    break;
-                case GOING_DOWN:
-                    if (!slideLimit) {
-                        slideStateVal = -1;
-                    }
-                    else {
-                        slideStateVal = 0;
-                        slideState = TeleOp_With_Telemetry.SlideState.DOWN;
-                    }
-                    break;
-                default:
-                    slideStateVal = 0;
-                    break;
-            }
-            if (leftY == 0) {
-                leftY = slideStateVal;
-            }
-            bot.runSlideMotor(leftY, slideLimit);
-            if (rightY != 0) {
-                bot.runIntakeMotor(rightY);
-            }
+            bot.runIntakeMotor(Gamepad2.getRightY());
 
             //Update Bucket
-            bot.updateBucketServo(leftY, slidePos);
+            bot.updateBucketServo(leftY, bot.slideMotor.encoder.getPosition());
 
             //Run Duck Motor
-            switch (duckState) {
-                case STOPPED:
-                    bot.runDuckMotor(0);
-                    break;
-                case BLUE:
-                    bot.runDuckMotor(1);
-                    break;
-                case RED:
-                    bot.runDuckMotor(-1);
-                    break;
-            }
+
 
             /*
                ////////////////////////// TELEMETRY //////////////////////////
@@ -299,9 +158,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
-            telemetry.addData("Slide Motor", "pos: "+slidePos);
-            telemetry.addData("Forearm Motor", "pos: "+bot.forearmMotor.encoder.getPosition());
-            telemetry.addData("Limit Switch", "val: "+bot.slideLimit.getValue());
+            telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
             telemetry.update();
         }

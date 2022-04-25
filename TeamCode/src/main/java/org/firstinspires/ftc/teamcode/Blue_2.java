@@ -81,9 +81,9 @@ public class Blue_2 extends LinearOpMode {
 
             //Follow the trajectory we defined earlier
             drive.followTrajectorySequence(traj1);
-            bot.runDuckMotor(1);
+           // bot.runDuckMotor(1);
             sleep(2000);
-            bot.runDuckMotor(0);
+            //bot.runDuckMotor(0);
             drive.followTrajectorySequence(traj2);
             // drop off freight
             bot.deliverFreight();

@@ -80,9 +80,9 @@ public class Blue_2_NoCycle extends LinearOpMode {
             //Follow the trajectory we defined earlier
             drive.followTrajectorySequence(traj1);
 
-            bot.runDuckMotor(1);
+            //bot.runDuckMotor(1);
             sleep(3000);
-            bot.runDuckMotor(0);
+            //bot.runDuckMotor(0);
             // drive
 
             drive.followTrajectorySequence(traj2);
