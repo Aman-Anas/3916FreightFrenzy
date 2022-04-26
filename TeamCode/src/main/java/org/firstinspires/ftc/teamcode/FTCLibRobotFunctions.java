@@ -165,7 +165,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public double sentToSlide2 = 0;
     public double sentToSlide3 = 0;
     double slideStateVal;
-    public double slideMotorController (double input,Boolean hasDeadZone){
+    public double slideMotorController (double input,Boolean hasDeadZone, Boolean stop){
         slidePos = slideMotor.encoder.getPosition();
         if (!hasDeadZone){
             input = correctDeadZoneRemap(input);
@@ -183,7 +183,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
         switch (slideState) {
             case GOING_UP:
-                if (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
+                if (stop){
+                    slideStateVal = 0;
+                    slideState = SlideState.UP;
+                }
+                else if (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
                     slideStateVal = 1;
                 }
                 else {
@@ -212,28 +216,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         return input;
     }
 
-    boolean XKey;
-    boolean XPressed;
-    public void runSlideStates (GamepadEx Gamepad1){
-        XKey = Gamepad1.getButton(GamepadKeys.Button.X);
-        XPressed = false;
-        if  (XKey){
-            if (!XPressed) {
-                XPressed = true;
-                switch (slideState) {
-                    case DOWN:
-                    case GOING_DOWN:
-                        slideState = SlideState.GOING_UP;
-                        break;
-                    case UP:
-                    case GOING_UP:
-                        slideState = SlideState.GOING_DOWN;
-                        break;
-                }
-            }
+
+
+    public void autoTipBucket(){
+        if ((slideState == SlideState.GOING_UP) && (slideMotor.encoder.getPosition() > TeleOpConfig.BUCKET_LIFT_POINT)){
+            runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
         }
-        else {
-            XPressed = false;
+        if ((slideState == SlideState.GOING_DOWN) && (slideMotor.encoder.getPosition() < TeleOpConfig.BUCKET_DROP_POINT)){
+            runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
         }
     }
 

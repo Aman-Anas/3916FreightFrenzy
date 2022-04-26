@@ -60,8 +60,8 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         double y = 0;
         double z = 0;
         double g1triggers;
-
-
+        double slidePos = 0;
+        Boolean stopButton;
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -70,6 +70,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
 
         while (opModeIsActive()) {
+
 
             /*
                ////////////////////////// GAMEPAD 1 //////////////////////////
@@ -88,6 +89,9 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             // Left/Right Strafe
             x = bot.correctDeadZoneRemap(leftX);
 
+            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) && Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)){
+                imu.reset();
+            }
             //Send the X, Y, and rotation (Z) to the mecanum drive method
             bot.driveFieldCentric(x, y, z, precisionMode,imu);
 
@@ -115,14 +119,13 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             /*
                ////////////////////////// GAMEPAD 2 //////////////////////////
             */
-
+            //double var = 0;
             //Get stick inputs
             leftY = Gamepad2.getLeftY();
-            if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-                bot.slideMotorController(leftY,false);
-            } else {
-                bot.slideMotorController(g1triggers,true);
-            }
+            stopButton = Gamepad1.getButton(GamepadKeys.Button.X) || Gamepad2.getButton(GamepadKeys.Button.X);
+
+            bot.slideMotorController(g1triggers+leftY,true,stopButton);
+
 
 
             //Button inputs
@@ -139,7 +142,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
 
-
+            bot.autoTipBucket();
 
 
             bot.runIntakeMotor(Gamepad2.getRightY());
@@ -160,6 +163,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
+            telemetry.addData("speed sent to slide", g1triggers+" "+bot.sentToSlide+" "+bot.sentToSlide2);
             telemetry.update();
         }
     }

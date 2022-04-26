@@ -57,7 +57,7 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
         double z = 0;
         double g1triggers;
         double slidePos = 0;
-
+        Boolean stopButton;
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -93,7 +93,12 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             g1triggers = bot.getTriggers(Gamepad1);
 
             //Run Intake
-            bot.runIntakeMotor(Gamepad1);
+            if (Gamepad2.getRightY() > TeleOpConfig.STICK_DEAD_ZONE){
+                bot.runIntakeMotor(Gamepad2.getRightY());
+            }
+            else {
+                bot.runIntakeMotor(Gamepad1);
+            }
 
 
             // Gamepad 2 Redundancies
@@ -114,12 +119,11 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
             */
             //double var = 0;
             //Get stick inputs
-            //leftY = Gamepad2.getLeftY();
-            //if (Math.abs(leftY) > TeleOpConfig.STICK_DEAD_ZONE) {
-              //  bot.slideMotorController(leftY,false);
-           //} else {
-            bot.slideMotorController(g1triggers,true);
-            //}
+            leftY = Gamepad2.getLeftY();
+            stopButton = Gamepad1.getButton(GamepadKeys.Button.X) || Gamepad2.getButton(GamepadKeys.Button.X);
+
+            bot.slideMotorController(g1triggers+leftY,true,stopButton);
+
 
 
             //Button inputs
@@ -136,10 +140,11 @@ public class TeleOp_With_Telemetry extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
 
+            bot.autoTipBucket();
 
 
 
-            bot.runIntakeMotor(Gamepad2.getRightY());
+
 
             //Update Bucket
             bot.updateBucketServo(leftY, bot.slideMotor.encoder.getPosition());
