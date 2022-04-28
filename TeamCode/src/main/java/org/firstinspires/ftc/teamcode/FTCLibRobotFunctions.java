@@ -196,7 +196,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                 }
                 break;
             case GOING_DOWN:
-                if (!slideLimit.isPressed()) {
+                if (!slideLimit.isPressed() && slidePos > TeleOpConfig.SLIDE_FLOOR) {
                     slideStateVal = -1;
                 }
                 else {

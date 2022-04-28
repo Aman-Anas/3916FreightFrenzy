@@ -17,20 +17,15 @@ public class SplineTest4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        RevIMU imu = new RevIMU(hardwareMap);
-        imu.init();
+
         waitForStart();
 
         if (isStopRequested()) return;
 
-        Trajectory traj = drive.trajectoryBuilder(new Pose2d(0, 63.0, 1.5707963267948966))
+        Trajectory traj = drive.trajectoryBuilder(new Pose2d(0, 63.0, 1.5707963267948966),true)
                 //.strafeRight(10)
                 //.forward(30)
-                .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
-                .lineToLinearHeading(new Pose2d(-57.0, 59.1, 1.5707963267948966 + Math.toRadians(-40)))
-                .lineToLinearHeading(new Pose2d(-28.7, 39.1, 1.5707963267948966+Math.toRadians(46)))
-                .lineToLinearHeading(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
-                .lineToLinearHeading(new Pose2d(-54.0, 45.0, 1.5707963267948966+Math.toRadians(0)))
+                .splineTo(new Vector2d(40,40),0)
                 .build();
 
 

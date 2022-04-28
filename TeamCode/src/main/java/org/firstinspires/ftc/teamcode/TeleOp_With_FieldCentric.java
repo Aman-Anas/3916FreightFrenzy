@@ -100,7 +100,13 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             g1triggers = bot.getTriggers(Gamepad1);
 
             //Run Intake
-            bot.runIntakeMotor(Gamepad1);
+            if (Gamepad2.getRightY() > TeleOpConfig.STICK_DEAD_ZONE){
+                bot.runIntakeMotor(Gamepad2.getRightY());
+            }
+            else {
+                bot.runIntakeMotor(Gamepad1);
+            }
+
 
 
             // Gamepad 2 Redundancies
@@ -145,7 +151,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             bot.autoTipBucket();
 
 
-            bot.runIntakeMotor(Gamepad2.getRightY());
+            //bot.runIntakeMotor(Gamepad2.getRightY());
 
             //Update Bucket
             bot.updateBucketServo(leftY, bot.slideMotor.encoder.getPosition());
