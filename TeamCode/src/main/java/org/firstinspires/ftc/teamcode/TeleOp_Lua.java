@@ -13,22 +13,20 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.squiddev.cobalt.Constants;
-import org.squiddev.cobalt.Lua;
-import org.squiddev.cobalt.LuaError;
-import org.squiddev.cobalt.LuaState;
-import org.squiddev.cobalt.LuaTable;
-import org.squiddev.cobalt.LuaThread;
-import org.squiddev.cobalt.LuaUserdata;
-import org.squiddev.cobalt.UnwindThrowable;
-import org.squiddev.cobalt.Varargs;
-import org.squiddev.cobalt.compiler.CompileException;
-import org.squiddev.cobalt.compiler.LoadState;
-import org.squiddev.cobalt.function.LuaFunction;
-import org.squiddev.cobalt.lib.jse.JsePlatform;
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaFunction;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Simple TeleOp base method, build season code on top of this.
@@ -50,17 +48,45 @@ public class TeleOp_Lua extends LinearOpMode {
 
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-    private static final String tempCode = "return function()\n"+
-                                           "    telemetry:addData('ITS', 'ALIVE')" +
+    //This is temp and usually is changed
+    private String luaCode = "return function()\n"+
+                                           "    telemetry:addData('UhOh', 'The code did not download :(')" +
                                            "end";
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+
         //Initialize telemetry and dashboard
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         FtcDashboard dashboard = FtcDashboard.getInstance();
+
+        //Get External Code
+        //Whoever made java http requests this terrible has the sincerest hate I can muster
+        //ripped from https://www.javaguides.net/2019/07/java-http-getpost-request-example.html
+        try {
+            URL url = new URL("http://"+TeleOpConfig.EXTERNAL_COMPUTER_IP+":8484/");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            int resCode = connection.getResponseCode();
+            if (resCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inpLine;
+                StringBuffer res = new StringBuffer();
+
+                while ((inpLine = in.readLine()) != null) {
+                    res.append(inpLine);
+                } in.close();
+                luaCode = res.toString();
+            } else {
+                System.out.println("EVERYTHING IS ON FIRE!!");
+                System.exit(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //Initialize bot
         bot.initBot(hardwareMap);
@@ -84,31 +110,15 @@ public class TeleOp_Lua extends LinearOpMode {
         bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
         bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
 
-        LuaState state = new LuaState();
-        LuaTable _G = JsePlatform.standardGlobals(state);
-        _G.rawset("bot", new LuaUserdata(bot));
-        _G.rawset("gamepad1", new LuaUserdata(Gamepad1));
-        _G.rawset("gamepad2", new LuaUserdata(Gamepad2));
-        _G.rawset("telemetry", new LuaUserdata(telemetry));
-
-        LuaFunction func = null;
-        try {
-            LuaFunction code = LoadState.load(state, new ByteArrayInputStream(tempCode.getBytes()), "Script", _G);
-            Varargs results = LuaThread.runMain(state, code);
-            if (results.first().isFunction()) {
-                func = (LuaFunction) results.first();
-            }
-        } catch (CompileException | IOException | LuaError e) {
-            e.printStackTrace();
-        }
+        Globals _G = JsePlatform.standardGlobals();
+        _G.rawset("bot", CoerceJavaToLua.coerce(bot));
+        _G.rawset("gamepad1", CoerceJavaToLua.coerce(gamepad1));
+        _G.rawset("gamepad2", CoerceJavaToLua.coerce(gamepad2));
+        _G.rawset("telemetry", CoerceJavaToLua.coerce(telemetry));
+        LuaFunction func = _G.load(luaCode).call().checkfunction();
 
         while (opModeIsActive()) {
-            try {
-                func.call(state);
-            } catch (LuaError | UnwindThrowable luaError) {
-                luaError.printStackTrace();
-            }
-
+            func.call();
             /*
                ////////////////////////// GAMEPAD 1 //////////////////////////
             */
