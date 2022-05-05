@@ -23,7 +23,7 @@ public class TeleOpConfig {
     public static double BUCKET_DROP_POINT = 1300; // Point where the bucket drops down to intake again
     public static double SLIDE_SLOW_POINT = 450;
     public static double SLIDE_SLOW_SPEED = .5;
-    public static double SLIDE_FLOOR = -100;
+    public static double SLIDE_FLOOR = -110;
     public static double BUCKET_LIFT_ANGLE = 0.416; // Intermediate angle the bucket goes to while moving past the intake bar (only going up)
     public static double FOREARM_HOLD_POINT; // Encoder value to hold forearm at until capping
 }
