@@ -28,6 +28,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Simple TeleOp base method, build season code on top of this.
  *
@@ -50,8 +54,8 @@ public class TeleOp_Lua extends LinearOpMode {
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
     //This is temp and usually is changed
     private String luaCode = "return function()\n"+
-                                           "    telemetry:addData('UhOh', 'The code did not download :(')" +
-                                           "end";
+                                           "    telemetry:addLine('mayhaps this works?')\n" +
+                                           "end\n";
 
 
     @Override
@@ -61,6 +65,16 @@ public class TeleOp_Lua extends LinearOpMode {
         //Initialize telemetry and dashboard
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         FtcDashboard dashboard = FtcDashboard.getInstance();
+
+        {
+            OkHttpClient client = new OkHttpClient();
+            Request req = new Request.Builder().url("http://"+TeleOpConfig.EXTERNAL_COMPUTER_IP+":8484/").build();
+            try (Response res = client.newCall(req).execute()) {
+                luaCode = res.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         //Get External Code
         //Whoever made java http requests this terrible has the sincerest hate I can muster

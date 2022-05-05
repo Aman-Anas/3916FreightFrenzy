@@ -1,3 +1,4 @@
 return function()
-	telemetry:addData("Working?", "yes")
+	telemetry:addLine("Working?")
 end
+
