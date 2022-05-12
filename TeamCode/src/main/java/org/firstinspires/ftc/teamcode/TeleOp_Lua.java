@@ -18,20 +18,6 @@ import org.luaj.vm2.LuaFunction;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 /**
  * Simple TeleOp base method, build season code on top of this.
  *
@@ -53,9 +39,6 @@ public class TeleOp_Lua extends LinearOpMode {
     //Define our robot class
     private FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
     //This is temp and usually is changed
-    private String luaCode = "return function()\n"+
-                                           "    telemetry:addLine('mayhaps this works?')\n" +
-                                           "end\n";
 
 
     @Override
@@ -65,42 +48,6 @@ public class TeleOp_Lua extends LinearOpMode {
         //Initialize telemetry and dashboard
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         FtcDashboard dashboard = FtcDashboard.getInstance();
-
-        {
-            OkHttpClient client = new OkHttpClient();
-            Request req = new Request.Builder().url("http://"+TeleOpConfig.EXTERNAL_COMPUTER_IP+":8484/").build();
-            try (Response res = client.newCall(req).execute()) {
-                luaCode = res.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //Get External Code
-        //Whoever made java http requests this terrible has the sincerest hate I can muster
-        //ripped from https://www.javaguides.net/2019/07/java-http-getpost-request-example.html
-        try {
-            URL url = new URL("http://"+TeleOpConfig.EXTERNAL_COMPUTER_IP+":8484/");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-            int resCode = connection.getResponseCode();
-            if (resCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inpLine;
-                StringBuffer res = new StringBuffer();
-
-                while ((inpLine = in.readLine()) != null) {
-                    res.append(inpLine);
-                } in.close();
-                luaCode = res.toString();
-            } else {
-                System.out.println("EVERYTHING IS ON FIRE!!");
-                System.exit(0);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //Initialize bot
         bot.initBot(hardwareMap);
@@ -129,7 +76,7 @@ public class TeleOp_Lua extends LinearOpMode {
         _G.rawset("gamepad1", CoerceJavaToLua.coerce(gamepad1));
         _G.rawset("gamepad2", CoerceJavaToLua.coerce(gamepad2));
         _G.rawset("telemetry", CoerceJavaToLua.coerce(telemetry));
-        LuaFunction func = _G.load(luaCode).call().checkfunction();
+        LuaFunction func = _G.load(TeleOpConfig.LUA_CODE).call().checkfunction();
 
         while (opModeIsActive()) {
             func.call();

@@ -7,7 +7,7 @@ public class TeleOpConfig {
     //Variables to be tuned from FTCDashboard
 
     //External Lua code loading
-    public static String EXTERNAL_COMPUTER_IP = "127.0.0.1";
+    public static String LUA_CODE = "return function()\n    telemetry:addLine('mayhaps this works?')\nend\n";
 
     //Drivetrain control tuning
     public static double PRECISION_POWER_MULTIPLIER = 0.5; //Multiplier for motor power (for precision mode)
