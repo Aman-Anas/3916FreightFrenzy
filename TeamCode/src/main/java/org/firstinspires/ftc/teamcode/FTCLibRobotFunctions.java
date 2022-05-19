@@ -59,7 +59,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //initialize motors and servos
     public void initBot(HardwareMap hw) {
-        super.init(hw);
+        initBot(hw,false);
+    }
+    public void initBot(HardwareMap hw, boolean auto) {
+        if (!auto) {
+            super.init(hw);
+        }
 
         //Example:
         //flywheelMotor = new MotorEx(hw, "flywheel", CPR, RPM);

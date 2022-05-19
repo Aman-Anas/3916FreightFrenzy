@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -29,33 +31,23 @@ public class NewRRTestAuto extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-        bot.initBot(hardwareMap);
+        bot.initBot(hardwareMap, true);
 
-        bot.slideMotor.encoder.reset();
+        //bot.slideMotor.encoder.reset();
 
         //Initialize the camera and vision
         //botCamera.initVision(hardwareMap, ringPipeline);
-
+        waitForStart();
+        drive.setPoseEstimate(new Pose2d());
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, 1.5707963267948966))
-                //.strafeRight(10)
-                //.forward(30)
-                .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
-
-                .lineToLinearHeading(new Pose2d(-34.0, 29.0, 1.5707963267948966 + Math.toRadians(-40)))
+        TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d())
+                .splineTo(new Vector2d(30, 30), 0)
                 .build();
 
-/*
-        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(new Pose2d(41.0, 49.0, Math.toRadians(30)))
-                .splineToLinearHeading(new Pose2d(39.0, 38.0, 0.0), 0.0)
-                .lineToConstantHeading(new Vector2d(60.0, 38.0))
-                .build();
 
-*/
 
         //Wait until the driver presses start
-        waitForStart();
 
         //Cache the camera analysis and print it in telemetry
         //double objAnalysis = ringPipeline.getAnalysis();
@@ -66,7 +58,8 @@ public class NewRRTestAuto extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()){
 
-            drive.followTrajectorySequence(traj1);
+
+            drive.followTrajectorySequence(traj);
 
 
             // drive

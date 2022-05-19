@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Aman Anas
  * @author Nathan Battle
  */
-@Disabled
+//@Disabled
 @Autonomous(name="Blue_1_NoCycle", group="Apex Robotics 3916")
 public class Blue_1_NoCycle extends LinearOpMode {
 
@@ -30,7 +30,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-        bot.initBot(hardwareMap);
+        bot.initBot(hardwareMap, true);
 
         bot.slideMotor.encoder.reset();
 
@@ -39,24 +39,26 @@ public class Blue_1_NoCycle extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, 1.5707963267948966))
-                .lineToLinearHeading(new Pose2d(-52.0, 53.0, 1.5707963267948966))
+        Pose2d startPose = new Pose2d(0, 63, Math.toRadians(90));
 
-                .lineToLinearHeading(new Pose2d(-57.0, 59.1, 1.5707963267948966 + Math.toRadians(-40)))
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)))
+
+                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(90) + Math.toRadians(-40)))
 
                 .build();
 
-        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(-57.0, 79.1, 1.5707963267948966+Math.toRadians(-40)))
-                .lineToLinearHeading(new Pose2d(-28.7, 39.1, 1.5707963267948966+Math.toRadians(46)))
+        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                .lineToLinearHeading(new Pose2d(-28.7, 39.1, Math.toRadians(90)+Math.toRadians(46)))
                 .build();
-        TrajectorySequence traj22 = drive.trajectorySequenceBuilder(new Pose2d(-28.7, 39.1, 1.5707963267948966+Math.toRadians(46)))
-                .lineToLinearHeading(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
+        TrajectorySequence traj22 = drive.trajectorySequenceBuilder(traj2.end())
+                .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(90)+Math.toRadians(46)))
                 .build();
-        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(new Pose2d(-30.0, 42.0, 1.5707963267948966+Math.toRadians(46)))
-                .lineToLinearHeading(new Pose2d(-54.0, 55.0, 1.5707963267948966+Math.toRadians(0)))
+        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj22.end())
+                .lineToLinearHeading(new Pose2d(-54.0, 55.0, Math.toRadians(90)+Math.toRadians(0)))
                 .build();
 /*/*
-        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(new Pose2d(41.0, 49.0, Math.toRadians(30)))
+        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
                 .splineToLinearHeading(new Pose2d(39.0, 38.0, 0.0), 0.0)
                 .lineToConstantHeading(new Vector2d(60.0, 38.0))
                 .build();
@@ -74,9 +76,11 @@ public class Blue_1_NoCycle extends LinearOpMode {
         //telemetry.update();
 
         while (opModeIsActive() && !isStopRequested()){
-            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
-            bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            //bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+            //bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+
             //Follow the trajectory we defined earlier
+            drive.setPoseEstimate(startPose);
             drive.followTrajectorySequence(traj1);
 
          //  bot.runDuckMotor(1);
@@ -87,7 +91,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
             drive.followTrajectorySequence(traj2);
             // drop off freight
             //bot.deliverFreight();
-            bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            /*bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             bot.runIntakeMotor(1);
             bot.runSlideMotor(1);
             sleep(1350);
@@ -96,13 +100,13 @@ public class Blue_1_NoCycle extends LinearOpMode {
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             sleep(500);
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
-            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);*/
             drive.followTrajectorySequence(traj22);
-            bot.runSlideMotor(-1);
+            /*bot.runSlideMotor(-1);
             bot.runIntakeMotor(0);
             sleep(1150);
 
-            bot.runSlideMotor(0);
+            bot.runSlideMotor(0);*/
 
             // drive
             drive.followTrajectorySequence(traj3);
