@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -30,7 +31,7 @@ public class Blue_2 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-        bot.initBot(hardwareMap);
+        bot.initBot(hardwareMap, true);
 
         bot.slideMotor.encoder.reset();
 
@@ -39,33 +40,31 @@ public class Blue_2 extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(new Pose2d(12.5, 63.0, 1.5707963267948966))
-                .lineToLinearHeading(new Pose2d(-55.0, 53.0, 1.5707963267948966))
+        Pose2d startPose = new Pose2d(-35, 63, Math.toRadians(90));
+
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(40)),
+                        SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL,DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(15))
                 .build();
 
-        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(new Pose2d(-55.0, 53.0, -1.5707963267948966))
-                .splineToSplineHeading(new Pose2d(-11.0, 43.0, 1.5707963267948966), 0.0)
+        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                .lineToLinearHeading(new Pose2d(-23.7, 33.1, Math.toRadians(90)+Math.toRadians(46)))
+                .build();
+        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
+                .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(136)))
+                .build();
+        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
+                .lineToLinearHeading(new Pose2d(-60.0, 27.0, Math.toRadians(90)+Math.toRadians(0)))
+                .build();
+/*/*
+        TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
+                .splineToLinearHeading(new Pose2d(39.0, 38.0, 0.0), 0.0)
+                .lineToConstantHeading(new Vector2d(60.0, 38.0))
                 .build();
 
-        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(new Pose2d(-11.0, 43.0, 1.5707963267948966))
-                .splineToSplineHeading(new Pose2d(8.0, 45.0, 0.0), 0.0)
-                .splineToSplineHeading(new Pose2d(38.0, 45.0, 0.0), 0.0)
-                .lineToLinearHeading(new Pose2d(41.0, 49.0, Math.toRadians(30)))
-                .build();
-
-        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(new Pose2d(41.0, 49.0, Math.toRadians(30)))
-                .splineToLinearHeading(new Pose2d(38.0, 45.0, 0.0), 0.0)
-                .lineToLinearHeading(new Pose2d(8.0, 45.0, 0.0))
-                .lineToLinearHeading(new Pose2d(3, 37.0, Math.toRadians(45)))
-                .build();
-
-        TrajectorySequence traj5 = drive.trajectorySequenceBuilder(new Pose2d(3, 37.0, Math.toRadians(45)))
-                .lineToLinearHeading(new Pose2d(8.0, 45.0, 0.0))
-                .lineToSplineHeading(new Pose2d(38.0, 45.0, 0.0))
-                .lineToLinearHeading(new Pose2d(41.0, 49.0, Math.toRadians(30)))
-                .build();
-
-
+*/
 
         //Wait until the driver presses start
         waitForStart();
@@ -78,55 +77,67 @@ public class Blue_2 extends LinearOpMode {
         //telemetry.update();
 
         while (opModeIsActive() && !isStopRequested()){
+            //bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+            //bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
 
             //Follow the trajectory we defined earlier
+            drive.setPoseEstimate(startPose);
             drive.followTrajectorySequence(traj1);
-           // bot.runDuckMotor(1);
-            sleep(2000);
-            //bot.runDuckMotor(0);
+
+            bot.duckMotor.set(TeleOpConfig.DUCK_MOTOR_MULTIPLIER);
+            //bot.slideMotorController(1.0, true, false);
+            //bot.autoTipBucket();
+            //bot.slideMotorController(-1.0, true, false);
+            //bot.autoTipBucket();
+            sleep(2500);
+            bot.duckMotor.set(0);
+            // drive
+
             drive.followTrajectorySequence(traj2);
+            bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+            while (bot.slideMotor.encoder.getPosition() < TeleOpConfig.SLIDE_MOTOR_MAX) {
+                bot.slideState = FTCLibRobotFunctions.SlideState.GOING_UP;
+                bot.slideMotorController(1.0, true, false);
+                bot.autoTipBucket();
+            }
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+            sleep(1500);
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+            sleep(1500);
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+            while (bot.slideMotor.encoder.getPosition() > 0) {
+                bot.slideMotorController(-0.5, true, false);
+                bot.autoTipBucket();
+            }
+
             // drop off freight
-            bot.deliverFreight();
-            bot.resetSlide();
-            // drive
-            drive.followTrajectorySequence(traj3);
-            // pick up freight
+            //bot.deliverFreight();
+            /*bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             bot.runIntakeMotor(1);
-            sleep(1000);
+            bot.runSlideMotor(1);
+            sleep(1350);
+            bot.runSlideMotor(0);
+            sleep(500);
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+            sleep(500);
+            bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
+            bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);*/
+            //sleep(1150);
+            //drive.followTrajectorySequence(traj3);
+            sleep(2000);
+            /*bot.runSlideMotor(-1);
             bot.runIntakeMotor(0);
+
+
+            bot.runSlideMotor(0);*/
+
             // drive
             drive.followTrajectorySequence(traj4);
-            // drop off freight
-            bot.deliverFreight();
-            bot.resetSlide();
-            // drive
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
-            bot.runIntakeMotor(1);
-            sleep(1000);
-            bot.runIntakeMotor(0);
-            // drive
-            drive.followTrajectorySequence(traj4);
-            // drop off freight
-            bot.deliverFreight();
-            bot.resetSlide();
-            // drive
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
-            bot.runIntakeMotor(1);
-            sleep(1000);
-            bot.runIntakeMotor(0);
-            // drive
-            drive.followTrajectorySequence(traj4);
-            // drop off freight
-            bot.deliverFreight();
-            bot.resetSlide();
-            // drive
-            drive.followTrajectorySequence(traj5);
-            // pick up freight
-            bot.runIntakeMotor(1);
-            sleep(1000);
-            bot.runIntakeMotor(0);
+            // pick up freight and park
+            //bot.runIntakeMotor(1);
+            //sleep(1000);
+            //bot.runIntakeMotor(0);
+            //drive.followTrajectorySequence(traj5);
 
             //wait this long after move
             sleep(2000);

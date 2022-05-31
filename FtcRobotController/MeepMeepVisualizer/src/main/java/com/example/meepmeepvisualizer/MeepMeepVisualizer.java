@@ -31,19 +31,13 @@ public class MeepMeepVisualizer {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
 
                 // Set bot color
-                .setColorScheme(new ColorSchemeRedDark())
+                //.setColorScheme(new ColorSchemeRedDark())
 
                 // Set path for bot to follow
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, Math.toRadians(90)))
-                                //.strafeRight(10)
-                                //.forward(30)
                                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(90) + Math.toRadians(-40)))
-                                .waitSeconds(1)
-                                .lineToLinearHeading(new Pose2d(-28.7, 39.1, Math.toRadians(90)+Math.toRadians(46)))
-                                .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(90)+Math.toRadians(46)))
-                                .lineToLinearHeading(new Pose2d(-54.0, 55.0, Math.toRadians(90)+Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(40)))
                                 .build()
                 );
 
@@ -68,7 +62,7 @@ public class MeepMeepVisualizer {
                 .setBackground(realisticFieldImage) //Custom Realistic
 
                 // Set theme
-                .setTheme(new ColorSchemeRedDark())
+                //.setTheme(new ColorSchemeRedDark())
 
                 // Background opacity from 0-1
                 .setBackgroundAlpha(1f)

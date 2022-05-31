@@ -62,7 +62,11 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
         double g1triggers;
         double slidePos = 0;
         Boolean stopButton;
-
+        double leftY;
+        double leftX;
+        double rightX;
+        boolean precisionMode;
+        double imuOffset = 0;
         //Wait for the driver to hit Start
         waitForStart();
 
@@ -77,10 +81,10 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             */
 
             //Get stick inputs
-            double leftY = Gamepad1.getLeftY();
-            double leftX = Gamepad1.getLeftX();
-            double rightX = Gamepad1.getRightX();
-            boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
+            leftY = Gamepad1.getLeftY();
+            leftX = Gamepad1.getLeftX();
+            rightX = Gamepad1.getRightX();
+            precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
 
             // Rotation Axis
             z = bot.correctDeadZoneRemap(rightX);
@@ -90,10 +94,10 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             x = bot.correctDeadZoneRemap(leftX);
 
             if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) && Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)){
-                imu.reset();
+                imuOffset = imu.getRotation2d().getDegrees();
             }
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.driveFieldCentric(x, y, z, precisionMode,imu);
+            bot.driveFieldCentric(x, y, z, precisionMode,imu,imuOffset);
 
 
             //Trigger Inputs

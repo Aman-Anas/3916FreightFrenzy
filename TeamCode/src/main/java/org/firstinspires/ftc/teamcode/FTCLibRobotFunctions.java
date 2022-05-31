@@ -170,7 +170,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public double sentToSlide2 = 0;
     public double sentToSlide3 = 0;
     double slideStateVal;
-    public double slideMotorController (double input,Boolean hasDeadZone, Boolean stop){
+    public double slideMotorController (double input, Boolean hasDeadZone, Boolean stop){
         slidePos = slideMotor.encoder.getPosition();
         if (!hasDeadZone){
             input = correctDeadZoneRemap(input);

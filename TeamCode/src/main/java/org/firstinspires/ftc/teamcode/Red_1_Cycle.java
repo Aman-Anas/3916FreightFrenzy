@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Nathan Battle
  */
 @Disabled
-@Autonomous(name="Red_2", group="Apex Robotics 3916")
-public class Red_2 extends LinearOpMode {
+@Autonomous(name="Red_1_Cycle", group="Apex Robotics 3916")
+public class Red_1_Cycle extends LinearOpMode {
 
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
@@ -39,14 +39,14 @@ public class Red_2 extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        Pose2d startPose = new Pose2d(-35, -63, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(12, -63, Math.toRadians(-90));
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(-55.0, -53.0, -1.5707963267948966))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .lineToSplineHeading(new Pose2d(-11.0, -43.0, -1.5707963267948966))
+                .splineToSplineHeading(new Pose2d(-11.0, -43.0, -1.5707963267948966), 0.0)
                 .build();
 
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
@@ -62,11 +62,10 @@ public class Red_2 extends LinearOpMode {
                 .build();
 
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
-                .lineToLinearHeading(new Pose2d(8.0, -45.0, 0.0))
-                .lineToSplineHeading(new Pose2d(38.0, -45.0, 0.0))
+                .splineToSplineHeading(new Pose2d(8.0, -45.0, 0.0), 0.0)
+                .splineToSplineHeading(new Pose2d(38.0, -45.0, 0.0), 0.0)
                 .lineToLinearHeading(new Pose2d(41.0, -49.0, Math.toRadians(-30)))
                 .build();
-
 
 
         //Wait until the driver presses start

@@ -95,7 +95,7 @@ public class FTCLibMecanumBot {
 
     }
 
-    public void driveFieldCentric (double x, double y, double z, boolean precisionMode, RevIMU imu){
+    public void driveFieldCentric (double x, double y, double z, boolean precisionMode, RevIMU imu, double offset){
 
         if (precisionMode){
             x *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
@@ -104,9 +104,10 @@ public class FTCLibMecanumBot {
 
         }
 
-        mecanumDrivetrain.driveFieldCentric(x,y,z,imu.getRotation2d().getDegrees());
+        mecanumDrivetrain.driveFieldCentric(x,y,z,imu.getRotation2d().getDegrees()-offset);
 
     }
+
     /**
      * initialize drivetrain
      * @param hw - HardwareMap supplied from drive class
