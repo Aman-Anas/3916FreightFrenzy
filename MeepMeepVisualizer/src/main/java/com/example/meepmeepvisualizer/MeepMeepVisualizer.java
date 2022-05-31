@@ -1,22 +1,18 @@
 package com.example.meepmeepvisualizer;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
-import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import java.awt.Graphics;
+
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MeepMeepVisualizer {
+import javax.imageio.ImageIO;
 
-    public static void main (String args[]){
+public class MeepMeepVisualizer {
+    public static void main(String args[]) {
         Image lightFieldImage = null;
         Image darkFieldImage = null;
         Image realisticFieldImage = null;
@@ -73,7 +69,5 @@ public class MeepMeepVisualizer {
 
                 // Start the visualization
                 .start();
-
-
     }
 }
