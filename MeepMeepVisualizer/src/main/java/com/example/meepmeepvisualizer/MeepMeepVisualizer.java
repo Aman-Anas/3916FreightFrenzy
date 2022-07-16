@@ -31,9 +31,12 @@ public class MeepMeepVisualizer {
 
                 // Set path for bot to follow
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(0, 63.0, Math.toRadians(90)))
+                        drive.trajectorySequenceBuilder(new Pose2d(12, 63.0, Math.toRadians(90)))
                                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)))
                                 .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(40)))
+                                .lineToLinearHeading(new Pose2d(-23.7, 33.1, Math.toRadians(90)+Math.toRadians(46)))
+                                .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(136)))
+                                .lineToLinearHeading(new Pose2d(-60.0, 35.0, Math.toRadians(90)+Math.toRadians(0)))
                                 .build()
                 );
 

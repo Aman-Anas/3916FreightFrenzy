@@ -37,7 +37,7 @@ public class Blue_1_Cycle extends LinearOpMode {
         bot.slideMotor.encoder.reset();
 
         //Initialize the camera and vision
-        botCamera.initVision(hardwareMap, ringPipeline);
+        //botCamera.initVision(hardwareMap, ringPipeline);
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html

@@ -166,17 +166,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     SlideState slideState = SlideState.DOWN;
-    public double sentToSlide = 0;
-    public double sentToSlide2 = 0;
-    public double sentToSlide3 = 0;
     double slideStateVal;
-    public double slideMotorController (double input, Boolean hasDeadZone, Boolean stop){
+    public double slideMotorController (double input, Boolean hasDeadZone, Boolean stop) {
         slidePos = slideMotor.encoder.getPosition();
-        if (!hasDeadZone){
+        if (hasDeadZone){
             input = correctDeadZoneRemap(input);
         }
         input *= TeleOpConfig.LINEAR_SLIDE_MULTIPLIER;
-        sentToSlide = input;
 
         if (input > 0) {
             slideState = SlideState.GOING_UP;
@@ -184,11 +180,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         if (input < 0) {
             slideState = SlideState.GOING_DOWN;
         }
-
-
         switch (slideState) {
             case GOING_UP:
-                if (stop){
+                if (stop) {
                     slideStateVal = 0;
                     slideState = SlideState.UP;
                 }
@@ -213,15 +207,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                 slideStateVal = 0;
                 break;
         }
-        sentToSlide2 = slideStateVal;
         input = slideStateVal;
-
-
-        runSlideMotor(input, slideLimit.isPressed());
+        runSlideMotor(input);
         return input;
     }
-
-
 
     public void autoTipBucket(){
         if ((slideState == SlideState.GOING_UP) && (slideMotor.encoder.getPosition() > TeleOpConfig.BUCKET_LIFT_POINT)){
@@ -231,13 +220,6 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
             runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);
         }
     }
-
-
-
-
-
-
-
 
     double duckSpeed;
     public void runDuckMotor(DuckState state) {
@@ -298,20 +280,22 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void deliverFreight() {
-        double slidePos = slideMotor.encoder.getPosition();
-        double prevSlidePos;
-
-        while (slidePos < TeleOpConfig.SLIDE_MOTOR_MAX) {
-            runSlideMotor(1);
-            prevSlidePos = slidePos;
-            slidePos = slideMotor.encoder.getPosition();
-            if (prevSlidePos < TeleOpConfig.BUCKET_LIFT_POINT && TeleOpConfig.BUCKET_LIFT_POINT < slidePos) {
-                runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-
-            }
+        runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
+        slideState = FTCLibRobotFunctions.SlideState.GOING_UP;
+        while (slideState == FTCLibRobotFunctions.SlideState.GOING_UP) {
+            slideMotorController(1.0, false, false);
+            autoTipBucket();
         }
-        runSlideMotor(0);
-
+        runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+        //sleep(1500);
+        runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+        //sleep(1500);
+        runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
+        slideState = FTCLibRobotFunctions.SlideState.GOING_DOWN;
+        while (slideState == FTCLibRobotFunctions.SlideState.GOING_DOWN) {
+            slideMotorController(-0.5, false, false);
+            autoTipBucket();
+        }
     }
     public void resetSlide() {
         runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MAX);

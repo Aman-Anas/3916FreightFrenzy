@@ -59,7 +59,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(136)))
                 .build();
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
-                .lineToLinearHeading(new Pose2d(-60.0, 27.0, Math.toRadians(90)+Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-60.0, 35.0, Math.toRadians(90)+Math.toRadians(0)))
                 .build();
 /*/*
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
@@ -98,9 +98,9 @@ public class Blue_1_NoCycle extends LinearOpMode {
 
             drive.followTrajectorySequence(traj2);
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
-            while (bot.slideMotor.encoder.getPosition() < TeleOpConfig.SLIDE_MOTOR_MAX) {
-                bot.slideState = FTCLibRobotFunctions.SlideState.GOING_UP;
-                bot.slideMotorController(1.0, true, false);
+            bot.slideState = FTCLibRobotFunctions.SlideState.GOING_UP;
+            while (bot.slideState == FTCLibRobotFunctions.SlideState.GOING_UP) {
+                bot.slideMotorController(1.0, false, false);
                 bot.autoTipBucket();
             }
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
@@ -108,8 +108,9 @@ public class Blue_1_NoCycle extends LinearOpMode {
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             sleep(1500);
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
-            while (bot.slideMotor.encoder.getPosition() > 0) {
-                bot.slideMotorController(-0.5, true, false);
+            bot.slideState = FTCLibRobotFunctions.SlideState.GOING_DOWN;
+            while (bot.slideState == FTCLibRobotFunctions.SlideState.GOING_DOWN) {
+                bot.slideMotorController(-0.5, false, false);
                 bot.autoTipBucket();
             }
 

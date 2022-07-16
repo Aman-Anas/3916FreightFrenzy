@@ -97,7 +97,7 @@ public class Blue_2 extends LinearOpMode {
             bot.runIntakeBucketServo(TeleOpConfig.BUCKET_SERVO_MIN);
             while (bot.slideMotor.encoder.getPosition() < TeleOpConfig.SLIDE_MOTOR_MAX) {
                 bot.slideState = FTCLibRobotFunctions.SlideState.GOING_UP;
-                bot.slideMotorController(1.0, true, false);
+                bot.slideMotorController(1.0, false, false);
                 bot.autoTipBucket();
             }
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
@@ -106,7 +106,7 @@ public class Blue_2 extends LinearOpMode {
             sleep(1500);
             bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
             while (bot.slideMotor.encoder.getPosition() > 0) {
-                bot.slideMotorController(-0.5, true, false);
+                bot.slideMotorController(-0.5, false, false);
                 bot.autoTipBucket();
             }
 
