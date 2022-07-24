@@ -174,7 +174,7 @@ public class TeleOp_Lua extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
-            telemetry.addData("speed sent to slide", g1triggers+" "+bot.sentToSlide+" "+bot.sentToSlide2);
+            telemetry.addData("speed sent to slide", g1triggers+" ");
             telemetry.update();
         }
     }

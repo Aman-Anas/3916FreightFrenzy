@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
@@ -19,8 +15,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Nathan Battle
  */
 //@Disabled
-@Autonomous(name="Blue_1_NoCycle", group="Apex Robotics 3916")
-public class Blue_1_NoCycle extends LinearOpMode {
+@Autonomous(name="Red_2_NoCycle", group="Apex Robotics 3916")
+public class Red_2_NoCycle extends LinearOpMode {
 
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
@@ -43,27 +39,27 @@ public class Blue_1_NoCycle extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        Pose2d startPose = new Pose2d(0, 63, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-24, -63, Math.toRadians(-90));
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)),
+                .lineToLinearHeading(new Pose2d(-52.0, -53.0, Math.toRadians(90)),
                         SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL,DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30))
-                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(40)),
+                .lineToLinearHeading(new Pose2d(-57.0, -59.1, Math.toRadians(130)),
                         SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL,DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(15))
                 .build();
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .lineToLinearHeading(new Pose2d(-24.7, 32.1, Math.toRadians(90)+Math.toRadians(46)),
+                .lineToLinearHeading(new Pose2d(-24.7, -32.1, Math.toRadians(-90)+Math.toRadians(-46)),
                         SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL,DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(20))
                 .build();
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .lineToLinearHeading(new Pose2d(-38.0, 35.0, Math.toRadians(136)))
+                .lineToLinearHeading(new Pose2d(-38.0, -35.0, Math.toRadians(-136)))
                 .build();
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
-                .lineToLinearHeading(new Pose2d(-60.0, 35.0, Math.toRadians(90)+Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-60.0, -35.0, Math.toRadians(-90)+Math.toRadians(-0)))
                 .build();
 /*/*
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())

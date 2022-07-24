@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
@@ -19,8 +15,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
  * @author Nathan Battle
  */
 //@Disabled
-@Autonomous(name="Blue_1_NoCycle", group="Apex Robotics 3916")
-public class Blue_1_NoCycle extends LinearOpMode {
+@Autonomous(name="Blue_2_NoCycle", group="Apex Robotics 3916")
+public class Blue_2_NoCycle extends LinearOpMode {
 
     //CameraFunctions botCamera = new CameraFunctions();
     //RingDeterminationPipeline ringPipeline = new RingDeterminationPipeline();
@@ -43,7 +39,7 @@ public class Blue_1_NoCycle extends LinearOpMode {
 
         //Construct trajectories for the robot to follow.
         //https://learnroadrunner.com/trajectorybuilder-functions.html
-        Pose2d startPose = new Pose2d(0, 63, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-24, 63, Math.toRadians(90));
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)),

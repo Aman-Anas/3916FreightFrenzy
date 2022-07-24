@@ -125,9 +125,9 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
             }
             if (Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-                bot.runKickerArmServo(TeleOpConfig.KICK_SERVO_MIN);
-            } else {
                 bot.runKickerArmServo(TeleOpConfig.KICK_SERVO_MAX);
+            } else {
+                bot.runKickerArmServo(TeleOpConfig.KICK_SERVO_MIN);
             }
 
 

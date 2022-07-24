@@ -102,10 +102,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         //BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "left front");
-        leftRear = hardwareMap.get(DcMotorEx.class, "left back");
-        rightRear = hardwareMap.get(DcMotorEx.class, "right back");
-        rightFront = hardwareMap.get(DcMotorEx.class, "right front");
+        leftFront = hardwareMap.get(DcMotorEx.class, "right back");
+        leftRear = hardwareMap.get(DcMotorEx.class, "right front");
+        rightRear = hardwareMap.get(DcMotorEx.class, "left front");
+        rightFront = hardwareMap.get(DcMotorEx.class, "left back");
 
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
@@ -127,10 +127,11 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        //rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        //
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        //leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        
+        //leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         // TODO: if desired, use setLocalizer() to change the localization method
@@ -322,7 +323,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         // Rotate about the z axis is the default assuming your REV Hub/Control Hub is laying
         // flat on a surface
 
-        return (double) imu.getAngularVelocity().yRotationRate;
+        return  (double) imu.getAngularVelocity().yRotationRate;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {

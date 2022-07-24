@@ -19,7 +19,7 @@ public class MeepMeepVisualizer {
 
         // Declare a MeepMeep instance
         // With a field size of 800 pixels
-        MeepMeep mm = new MeepMeep(800);
+        MeepMeep mm = new MeepMeep(600);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(mm)
 
@@ -31,12 +31,12 @@ public class MeepMeepVisualizer {
 
                 // Set path for bot to follow
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(12, 63.0, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(-52.0, 53.0, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(-57.0, 59.1, Math.toRadians(40)))
-                                .lineToLinearHeading(new Pose2d(-23.7, 33.1, Math.toRadians(90)+Math.toRadians(46)))
-                                .lineToLinearHeading(new Pose2d(-30.0, 42.0, Math.toRadians(136)))
-                                .lineToLinearHeading(new Pose2d(-60.0, 35.0, Math.toRadians(90)+Math.toRadians(0)))
+                        drive.trajectorySequenceBuilder(new Pose2d(0, -63.0, Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(-52.0, -53.0, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(-57.0, -59.1, Math.toRadians(130)))
+                                .lineToLinearHeading(new Pose2d(-24.7, -32.1, Math.toRadians(-90)+Math.toRadians(-46)))
+                                .lineToLinearHeading(new Pose2d(-30.0, -35.0, Math.toRadians(-136)))
+                                .lineToLinearHeading(new Pose2d(-60.0, -35.0, Math.toRadians(-90)+Math.toRadians(-0)))
                                 .build()
                 );
 

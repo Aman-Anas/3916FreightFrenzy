@@ -91,7 +91,7 @@ public class FTCLibMecanumBot {
 
         }
 
-        mecanumDrivetrain.driveRobotCentric(x,y,z);
+        mecanumDrivetrain.driveRobotCentric(x,y,-z);
 
     }
 
@@ -104,7 +104,7 @@ public class FTCLibMecanumBot {
 
         }
 
-        mecanumDrivetrain.driveFieldCentric(x,y,z,imu.getRotation2d().getDegrees()-offset);
+        mecanumDrivetrain.driveFieldCentric(x,y,-z,imu.getRotation2d().getDegrees()-offset);
 
     }
 
@@ -127,6 +127,8 @@ public class FTCLibMecanumBot {
 
         motor_backLeft.setInverted(true);
         motor_backRight.setInverted(true);
+        motor_frontLeft.setInverted(true);
+        motor_frontRight.setInverted(true);
 
         motor_frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         motor_frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
