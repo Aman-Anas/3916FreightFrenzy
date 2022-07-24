@@ -93,7 +93,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             // Left/Right Strafe
             x = bot.correctDeadZoneRemap(leftX);
 
-            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) && Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)){
+            if (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER)){
                 imuOffset = imu.getRotation2d().getDegrees();
             }
             //Send the X, Y, and rotation (Z) to the mecanum drive method
@@ -123,6 +123,11 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
             } else if (Gamepad1.getButton(GamepadKeys.Button.DPAD_LEFT)) {
                 bot.runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
+            }
+            if (Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+                bot.runKickerArmServo(TeleOpConfig.KICK_SERVO_MIN);
+            } else {
+                bot.runKickerArmServo(TeleOpConfig.KICK_SERVO_MAX);
             }
 
 
@@ -173,7 +178,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor", "pos: "+bot.slideMotor.encoder.getPosition());
             telemetry.addData("Limit Switch", "isTouched"+bot.slideLimit.isPressed());
-            telemetry.addData("speed sent to slide", g1triggers+" "+bot.sentToSlide+" "+bot.sentToSlide2);
+            telemetry.addData("speed sent to slide", g1triggers+" ");
             telemetry.update();
         }
     }

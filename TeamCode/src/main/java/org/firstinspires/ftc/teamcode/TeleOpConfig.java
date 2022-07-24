@@ -21,6 +21,8 @@ public class TeleOpConfig {
     public static double BUCKET_SERVO_MIN = 0.273;
     public static double GATE_SERVO_MAX = 0.65;
     public static double GATE_SERVO_MIN = 0.276;
+    public static double KICK_SERVO_MAX = 0.0;
+    public static double KICK_SERVO_MIN = 0.48;
     public static double SLIDE_MOTOR_MAX = 2500;
     public static double BUCKET_LIFT_POINT = -2000; // Point where the bucket lifts a little bit to prevent freight falling out
     public static double BUCKET_DROP_POINT = 1700; // Point where the bucket drops down to intake again

@@ -40,7 +40,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
 
     public MotorEx slideMotor, intakeMotor, duckMotor, forearmMotor;
-    public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo;
+    public ServoEx intakeBucketServo, intakeArmServo, forearmServo, clawServo, kickerArmServo;
     public TouchSensor slideLimit;
 
     //Initialize enums
@@ -72,6 +72,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         intakeBucketServo = new SimpleServo(hw, "intake bucket", 0, 180);
 
         intakeArmServo = new SimpleServo(hw, "intake arm", 0, 270);
+        kickerArmServo = new SimpleServo(hw, "kicker arm", 0, 270);
 
         forearmServo = new SimpleServo(hw, "forearm servo", 0, 180);
 
@@ -268,6 +269,9 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void runIntakeArmServo(double pos){
         intakeArmServo.setPosition(pos);
     }
+    public void runKickerArmServo(double pos){
+        kickerArmServo.setPosition(pos);
+    }
 
     public void updateBucketServo(double leftY, double slidePos) {
         if (leftY > 0) {
@@ -289,7 +293,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
         //sleep(1500);
         runIntakeArmServo(TeleOpConfig.GATE_SERVO_MAX);
-        //sleep(1500);
+        // sleep(1500);
         runIntakeArmServo(TeleOpConfig.GATE_SERVO_MIN);
         slideState = FTCLibRobotFunctions.SlideState.GOING_DOWN;
         while (slideState == FTCLibRobotFunctions.SlideState.GOING_DOWN) {
